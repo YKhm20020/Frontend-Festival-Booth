@@ -1,5 +1,14 @@
 # Frontend-Festival-Booth
+
 Frontend-Festival-Booth
+
+# npm audit による脆弱性について
+
+npm audit コマンドによる脆弱性のチェックは、不正確なものが多いとされている。
+詳細は以下リンクを参照。
+https://zenn.dev/appare45/articles/7f667031aab94b
+
+脆弱性を確認する際は、`npm audit fix --production` コマンドを用いること。
 
 # Getting Started with Create React App
 
