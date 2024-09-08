@@ -10,6 +10,11 @@ https://zenn.dev/appare45/articles/7f667031aab94b
 
 脆弱性を確認する際は、`npm audit fix --production` コマンドを用いること。
 
+# npm update による環境の破壊について
+
+npm update や、node_modules ディレクトリと package-lock.json ファイルの削除による `npm install` 実行などで、環境を構築し直すと App.js などで runtime.js エラーが発生する。
+環境を構築し直したい場合は、`npm ci` コマンドでインストールし直すこと。原因は現在調査中
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
