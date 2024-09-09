@@ -1,73 +1,172 @@
 # Frontend-Festival-Booth
 Frontend-Festival-Booth
 
-# Getting Started with Create React App
+# TanStack Router の導入と使い方
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ルーティングに関する設定は、ビルド時に自動でプロジェクトを走査し、設定してくれる。
 
-## Available Scripts
 
-In the project directory, you can run:
+1. TanStack Router とその開発ツールの導入
 
-### `npm start`
+以下のコマンドを実行する。下のインストールコマンドは、開発ツールのインストール。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```sh
+npm i @tanstack/react-router
+npm i -D @tanstack/router-plugin @tanstack/router-devtools
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+また、tsconfig.json に以下の記述を追加する。
 
-### `npm test`
+```json:
+// tsconfig.json
+  "routesDirectory": "./src/routes",
+  "generatedRouteTree": "./src/routeTree.gen.ts",
+  "routeFileIgnorePrefix": "-",
+  "quoteStyle": "single"
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+さらに、vite.config.ts の plugins: に、TanStackRouterVite を追加する。
 
-### `npm run build`
+```ts:
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite' // 追加！
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    TanStackRouterVite(), // 追加！
+],
+  optimizeDeps: {
+    force: true,
+	exclude: ['node_modules/.cache/storybook']
+  },
+})
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. 遷移先・遷移元のページを作成する
+各ページに必要なコンポーネントを記述し、どのページにどのコンポーネントがあり、さらにそのコンポーネントではどのページへと遷移する予定なのかを記述する。なお、Linkコンポーネントは、@tanstack/react-router からimportすること。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```tsx
+// Header.tsx
+import type React from 'react';
+import { Link } from '@tanstack/react-router';
 
-### `npm run eject`
+export const Header: React.FC = () => {
+	return (
+		<header className='bg-black'>
+			<ul className=''>
+				<Link to='/' className=''>
+					Home
+				</Link>
+			</ul>
+			<ul className=''>
+				<Link to='/write' className=''>
+					Write
+				</Link>
+			</ul>
+		</header>
+	);
+};
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```tsx
+// Write.tsx
+import type React from 'react';
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+export const Write: React.FC = () => {
+	return (
+		<div>
+			<h1>Write Page</h1>
+		</div>
+	);
+};
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. routesディレクトリとその直下に __root.tsx ファイルを作成する
+```tsx
+// routes/__root.tsx
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export const Route = createRootRoute({
+	component: () => (
+		<>
+			<Outlet />
+			<TanStackRouterDevtools />
+		</>
+	),
+});
+```
 
-## Learn More
+4. xx.lazy.tsx ファイルを、routesディレクトリに作成する。
+xx は、新たに追加するページの名前を入れる。ページを別ディレクトリで作成済みである場合は、それをコンポーネントとしてimport、呼び出しするとよい。
+なお、lazyとつけなくてもよいが、lazyとつけることにより、初期のロードから遅延させてロードすることにより、初期ページの表示を高速化することができるため、遷移先のページについては基本lazyをおすすめする。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```tsx
+// routes/write.lazy.tsx
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { Write } from '../pages/Write';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export const Route = createLazyFileRoute('/write')({
+	component: () => <Write />,
+});
+```
 
-### Code Splitting
+5. `npm run dev` コマンドで routeTree.gen.ts を更新する
+`npm run dev`コマンドにより、自動でファイルの位置関係を走査し、xx.lazy.tsxの記述をもとに自動でルーティングを作成してくれる。この際、routeTree.gen.ts ファイルが自動で更新される。これにより、最新のルーティング設定が反映される。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# React + TypeScript + Vite
 
-### Making a Progressive Web App
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Currently, two official plugins are available:
 
-### Advanced Configuration
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Expanding the ESLint configuration
 
-### Deployment
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Configure the top-level `parserOptions` property like this:
 
-### `npm run build` fails to minify
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
