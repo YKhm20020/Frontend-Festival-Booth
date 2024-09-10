@@ -3,7 +3,7 @@ import { ToProductsPageButton } from "./ToProductsPageButton";
 import { Component } from "react";
 
 const meta = {
-    title: 'FestivalBooth/Buttons/ToProductsPageButtn',
+    title: 'FestivalBooth/Buttons',
     component: ToProductsPageButton,
 } satisfies Meta<typeof ToProductsPageButton>;
 
