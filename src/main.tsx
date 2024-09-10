@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 
@@ -14,14 +14,27 @@ declare module '@tanstack/react-router' {
 		router: typeof router;
 	}
 }
+const domElementId = 'root'; // Assuming you have a root element with the id 'root'
 
 // Render the app
-const rootElement = document.getElementById('root')!;
-if (!rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
-	root.render(
-		<StrictMode>
-			<RouterProvider router={router} />
-		</StrictMode>,
-	);
+const rootElement = document.getElementById(domElementId);
+if (!rootElement) {
+	throw new Error(`Element with id ${domElementId} not found`);
 }
+
+ReactDOM.createRoot(rootElement).render(
+	<StrictMode>
+		<RouterProvider router={router} />
+	</StrictMode>,
+);
+
+// Render the app
+// const rootElement = document.getElementById('root')!;
+// if (!rootElement.innerHTML) {
+// 	const root = ReactDOM.createRoot(rootElement);
+// 	root.render(
+// 		<StrictMode>
+// 			<RouterProvider router={router} />
+// 		</StrictMode>,
+// 	);
+// }
