@@ -10,7 +10,7 @@ import { ToPostsProductsPageButton } from './components/Buttons/ToPostsProductsP
 
 function App() {
 	return (
-		<div class = "bg-slate-100">
+		<div>
 			<Header />
 			<div className = "bg-slate-100">
 				<h1 className='text-3xl font-bold underline'>Hello world!</h1>
