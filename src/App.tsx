@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import './App.css';
+import '../styles/globals.css';
 import { Header } from './components/Header/Header';
 import { ToProductsPageButton } from './components/Buttons/ToProductsPageButton';
 
