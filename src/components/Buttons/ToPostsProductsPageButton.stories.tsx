@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ToPostsProductsPageButton } from "./ToPostsProductsPageButton";
-import { Component } from "react";
 
 const meta = {
     title: 'FestivalBooth/Buttons/ToPostsProductsPageButton',
