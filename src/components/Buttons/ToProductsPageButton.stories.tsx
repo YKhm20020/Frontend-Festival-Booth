@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { ToProductsPageButton } from "./ToProductsPageButton";
-import { Component } from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { ToProductsPageButton } from './ToProductsPageButton';
 
 const meta = {
-    title: 'FestivalBooth/Buttons',
-    component: ToProductsPageButton,
+	title: 'FestivalBooth/Buttons/ToProductsPageButton',
+	component: ToProductsPageButton,
 } satisfies Meta<typeof ToProductsPageButton>;
 
 export default meta;

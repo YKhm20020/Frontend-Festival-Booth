@@ -1,8 +1,11 @@
 export const ToProductsPageButton = () => {
-    return (
-        <button href="#_" class="rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-indigo-600 text-indigo-600 text-white">
-        <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-indigo-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
-        <span class="relative text-indigo-600 transition duration-300 group-hover:text-white ease">自信アリなこれこれ</span>
-        </button>
-    );
+	return (
+		<button
+			href='#_'
+			className='w-72 h-44 text-2xl relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-4 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300'
+		>
+			<span className='absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease' />
+			<span className='relative'>自信アリなこれこれを見る</span>
+		</button>
+	);
 };
