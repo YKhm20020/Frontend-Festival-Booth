@@ -16,12 +16,20 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const WriteProductsLazyImport = createFileRoute('/write-products')()
 const WriteIntroductionLazyImport = createFileRoute('/write-introduction')()
 const ProductsListLazyImport = createFileRoute('/products-list')()
 const IntroductionListLazyImport = createFileRoute('/introduction-list')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const WriteProductsLazyRoute = WriteProductsLazyImport.update({
+  path: '/write-products',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/write-products.lazy').then((d) => d.Route),
+)
 
 const WriteIntroductionLazyRoute = WriteIntroductionLazyImport.update({
   path: '/write-introduction',
@@ -79,6 +87,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WriteIntroductionLazyImport
       parentRoute: typeof rootRoute
     }
+    '/write-products': {
+      id: '/write-products'
+      path: '/write-products'
+      fullPath: '/write-products'
+      preLoaderRoute: typeof WriteProductsLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -89,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/introduction-list': typeof IntroductionListLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
+  '/write-products': typeof WriteProductsLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -96,6 +112,7 @@ export interface FileRoutesByTo {
   '/introduction-list': typeof IntroductionListLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
+  '/write-products': typeof WriteProductsLazyRoute
 }
 
 export interface FileRoutesById {
@@ -104,6 +121,7 @@ export interface FileRoutesById {
   '/introduction-list': typeof IntroductionListLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
+  '/write-products': typeof WriteProductsLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -113,14 +131,21 @@ export interface FileRouteTypes {
     | '/introduction-list'
     | '/products-list'
     | '/write-introduction'
+    | '/write-products'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/introduction-list' | '/products-list' | '/write-introduction'
+  to:
+    | '/'
+    | '/introduction-list'
+    | '/products-list'
+    | '/write-introduction'
+    | '/write-products'
   id:
     | '__root__'
     | '/'
     | '/introduction-list'
     | '/products-list'
     | '/write-introduction'
+    | '/write-products'
   fileRoutesById: FileRoutesById
 }
 
@@ -129,6 +154,7 @@ export interface RootRouteChildren {
   IntroductionListLazyRoute: typeof IntroductionListLazyRoute
   ProductsListLazyRoute: typeof ProductsListLazyRoute
   WriteIntroductionLazyRoute: typeof WriteIntroductionLazyRoute
+  WriteProductsLazyRoute: typeof WriteProductsLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -136,6 +162,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntroductionListLazyRoute: IntroductionListLazyRoute,
   ProductsListLazyRoute: ProductsListLazyRoute,
   WriteIntroductionLazyRoute: WriteIntroductionLazyRoute,
+  WriteProductsLazyRoute: WriteProductsLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -153,7 +180,8 @@ export const routeTree = rootRoute
         "/",
         "/introduction-list",
         "/products-list",
-        "/write-introduction"
+        "/write-introduction",
+        "/write-products"
       ]
     },
     "/": {
@@ -167,6 +195,9 @@ export const routeTree = rootRoute
     },
     "/write-introduction": {
       "filePath": "write-introduction.lazy.tsx"
+    },
+    "/write-products": {
+      "filePath": "write-products.lazy.tsx"
     }
   }
 }
