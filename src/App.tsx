@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 import { Header } from './components/Header/Header';
-import { ToIntroductionPageButton } from './components/Buttons/ToIntroductionPageButtton';
+import { ToIntroductionPageButton } from './components/Buttons/ToIntroductionPageButton';
 import { ToProductsPageButton } from './components/Buttons/ToProductsPageButton';
 import { ToPostIntroductionPageButton } from './components/Buttons/ToPostIntroductionPageButton';
 import { ToPostProductsPageButton } from './components/Buttons/ToPostProductsPageButton';
