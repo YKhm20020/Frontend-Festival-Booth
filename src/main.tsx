@@ -14,19 +14,17 @@ declare module '@tanstack/react-router' {
 		router: typeof router;
 	}
 }
-const domElementId = 'root'; // Assuming you have a root element with the id 'root'
 
 // Render the app
-const rootElement = document.getElementById(domElementId);
-if (!rootElement) {
-	throw new Error(`Element with id ${domElementId} not found`);
+const rootElement = document.getElementById('root')!;
+if (!rootElement.innerHTML) {
+	const root = ReactDOM.createRoot(rootElement);
+	root.render(
+		<StrictMode>
+			<RouterProvider router={router} />
+		</StrictMode>,
+	);
 }
-
-ReactDOM.createRoot(rootElement).render(
-	<StrictMode>
-		<RouterProvider router={router} />
-	</StrictMode>,
-);
 
 // Render the app
 // const rootElement = document.getElementById('root')!;
