@@ -16,10 +16,18 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const WriteIntroductionLazyImport = createFileRoute('/write-introduction')()
 const IntroductionListLazyImport = createFileRoute('/introduction-list')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const WriteIntroductionLazyRoute = WriteIntroductionLazyImport.update({
+  path: '/write-introduction',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/write-introduction.lazy').then((d) => d.Route),
+)
 
 const IntroductionListLazyRoute = IntroductionListLazyImport.update({
   path: '/introduction-list',
@@ -51,6 +59,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntroductionListLazyImport
       parentRoute: typeof rootRoute
     }
+    '/write-introduction': {
+      id: '/write-introduction'
+      path: '/write-introduction'
+      fullPath: '/write-introduction'
+      preLoaderRoute: typeof WriteIntroductionLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -59,36 +74,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
+  '/write-introduction': typeof WriteIntroductionLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
+  '/write-introduction': typeof WriteIntroductionLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
+  '/write-introduction': typeof WriteIntroductionLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/introduction-list'
+  fullPaths: '/' | '/introduction-list' | '/write-introduction'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/introduction-list'
-  id: '__root__' | '/' | '/introduction-list'
+  to: '/' | '/introduction-list' | '/write-introduction'
+  id: '__root__' | '/' | '/introduction-list' | '/write-introduction'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   IntroductionListLazyRoute: typeof IntroductionListLazyRoute
+  WriteIntroductionLazyRoute: typeof WriteIntroductionLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   IntroductionListLazyRoute: IntroductionListLazyRoute,
+  WriteIntroductionLazyRoute: WriteIntroductionLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -104,7 +124,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/introduction-list"
+        "/introduction-list",
+        "/write-introduction"
       ]
     },
     "/": {
@@ -112,6 +133,9 @@ export const routeTree = rootRoute
     },
     "/introduction-list": {
       "filePath": "introduction-list.lazy.tsx"
+    },
+    "/write-introduction": {
+      "filePath": "write-introduction.lazy.tsx"
     }
   }
 }
