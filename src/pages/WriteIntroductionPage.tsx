@@ -13,7 +13,7 @@ export const WriteIntroductionPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		console.log("Submitted Data:", data);
-		alert(`Name: ${data.name}\nintroduction: ${data.introduction}\ngithub-URL: ${data.githubUrl}\nX-URL: ${data.XUrl}`);
+		alert(`Name: ${data.name}\nintroduction: ${data.introduction}\nGitHub URL: ${data.githubUrl}\nX URL: ${data.XUrl}`);
 	};
 
 	return (
@@ -45,13 +45,13 @@ export const WriteIntroductionPage: React.FC = () => {
 				
 				{/* GithubURL入力フィールド */}
 				<div>
-					<label htmlFor='githubUrl'>Github-URL</label>
+					<label htmlFor='githubUrl'>GitHub URL</label>
 					<input
 						id='githubUrl'
 						{...register('githubUrl',{
 							pattern: {
-								value: /^(https?:\/\/github.com)?+(\/[^\s]*)?$/i,
-								message: 'GithubのURLを入力してください'
+								value: /^(https?:\/\/)?(www\.)?github\.com(\/[^\s]*)?$/i,
+								message: '有効なGitHubのURLを入力してください (例: https://github.com/username)'
 							}
 						})}
 						placeholder='https://github.com/username'
@@ -61,7 +61,7 @@ export const WriteIntroductionPage: React.FC = () => {
 
 				{/* XURL入力フィールド */}
 				<div>
-					<label htmlFor='XUrl'>X-URL</label>
+					<label htmlFor='XUrl'>X URL</label>
 					<input
 						id='XUrl'
 						{...register('XUrl',{
