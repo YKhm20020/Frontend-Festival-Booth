@@ -21,7 +21,7 @@ export const WriteProductsPage: React.FC = () => {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				{/* タイトル入力フィールド */}
 				<div>
-				<label htmlFor='title'>タイトル</label>
+					<label htmlFor='title'>タイトル</label>
 					<input
 						id='title'
 						{...register('title',{
@@ -31,7 +31,7 @@ export const WriteProductsPage: React.FC = () => {
 					/>
 					{errors.title && <p style={{ color: 'red' }}>{errors.title.message}</p>}
 				</div>
-				
+
 				{/* URL入力フィールド */}
 				<div>
 					<label htmlFor='url'>URL</label>
