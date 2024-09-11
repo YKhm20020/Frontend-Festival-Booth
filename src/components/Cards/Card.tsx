@@ -21,7 +21,7 @@ export const Card: React.FC<CardProps> = ({
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-	const openModal = (e: React.MouseEvent) => {
+	const openModal = () => {
 		setIsModalOpen(true);
 		console.log(isModalOpen);
 	};
