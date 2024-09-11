@@ -30,7 +30,7 @@ export const WriteIntroductionPage: React.FC = () => {
 							{...register('name',{
 								required: 'ユーザ名は必須です'
 							})}
-							placeholder='ユーザ名を入力してください'
+							placeholder='君の名前は？'
 						/>
 						{errors.name && <p className='text-red-500 text-xs italic'>{errors.name.message}</p>}
 					</div>
@@ -84,7 +84,12 @@ export const WriteIntroductionPage: React.FC = () => {
 					</div>
 
 					{/* 送信ボタン */}
-					<button type='submit'>投稿する！！</button>
+					<div className='flex justify-center'>
+						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-4' 
+								type='submit'>
+							登録する！！
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>
