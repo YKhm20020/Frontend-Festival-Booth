@@ -32,12 +32,12 @@ export const Card: React.FC<CardProps> = ({
 	return (
 		<>
 			<div
-				className='relative group flex flex-col shadow-2xl rounded-xl overflow-hidden w-40 md:w-48 lg:w-56 cursor-pointer transition-all duration-300 ease-in-out
-                    hover:scale-105'
+				className='relative group flex flex-col shadow-2xl rounded-xl overflow-hidden w-60 md:w-48 lg:w-56 cursor-pointer transition-all duration-300 ease-in-out
+                hover:scale-105'
 				onClick={openModal}
 			>
 				<img
-					className='object-cover object-center w-40 h-60 md:w-72 lg:w-80'
+					className='object-cover object-center w-60 md:w-48 lg:w-56 h-60 '
 					src={src}
 					alt={alt ?? title}
 					width={300}
