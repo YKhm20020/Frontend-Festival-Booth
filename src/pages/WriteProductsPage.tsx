@@ -31,7 +31,11 @@ export const WriteProductsPage: React.FC = () => {
 							className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
 							id='name'
 							{...register('name',{
-								required: 'ユーザ名は必須です'
+								required: 'ユーザ名は必須です',
+								maxLength: {
+									value: 20,
+									message: '最大20文字です'
+								}
 							})}
 							placeholder='ユーザ名を入力してけろ'
 						/>
@@ -45,7 +49,11 @@ export const WriteProductsPage: React.FC = () => {
 							className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.title ? 'border-red-500' : 'border-grey-100'}`}
 							id='title'
 							{...register('title',{
-								required: 'タイトルは必須です'
+								required: 'タイトルは必須です',
+								maxLength: {
+									value: 50,
+									message: '最大50文字です'
+								}
 							})}
 							placeholder='タイトルを入力してください'
 						/>
@@ -76,9 +84,15 @@ export const WriteProductsPage: React.FC = () => {
 						<textarea
 							className='border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline'
 							id='comment'
-							{...register('comment')}
+							{...register('comment',{
+								maxLength: {
+									value: 200,
+									message: '最大200文字です'
+								}
+							})}
 							placeholder='成果物についての説明やコメントを入力してください'
 						/>
+						{errors.comment && <p className='absolute text-red-500 text-xs italic'>{errors.comment.message}</p>}
 					</div>
 
 					{/* 送信ボタン */}

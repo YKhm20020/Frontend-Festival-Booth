@@ -28,7 +28,11 @@ export const WriteIntroductionPage: React.FC = () => {
 							className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
 							id='name'
 							{...register('name',{
-								required: 'ユーザ名は必須です'
+								required: 'ユーザ名は必須です',
+								maxLength: {
+									value: 20,
+									message: '最大20文字です'
+								}
 							})}
 							placeholder='君の名前は？'
 						/>
@@ -42,7 +46,11 @@ export const WriteIntroductionPage: React.FC = () => {
 							className={`shadow appearance-none border rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
 							id='introduction'
 							{...register('introduction',{
-								required: '自己紹介コメントは必須です'
+								required: '自己紹介コメントは必須です',
+								maxLength: {
+									value: 200,
+									message: '最大200文字です'
+								}
 							})}
 							placeholder='自己紹介スペース'
 						/>
