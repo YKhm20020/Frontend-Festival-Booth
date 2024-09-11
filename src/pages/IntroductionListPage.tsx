@@ -69,6 +69,40 @@ export const IntroductionListPage: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
+				<button
+					type='button'
+					data-twe-slide-to='0'
+					data-twe-carousel-active
+					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
+					aria-current='true'
+					aria-label='Tab 0'
+				></button>
+				<button
+					type='button'
+					data-twe-slide-to='1'
+					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
+					aria-label='Tab 1'
+				></button>
+				<button
+					type='button'
+					data-twe-slide-to='2'
+					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
+					aria-label='Tab 2'
+				></button>
+				<button
+					type='button'
+					data-twe-slide-to='3'
+					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
+					aria-label='Tab 3'
+				></button>
+				<button
+					type='button'
+					data-twe-slide-to='4'
+					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
+					aria-label='Tab 4'
+				></button>
+			</div>
 		</>
 	);
 };
