@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 
 type FormData = {
+	name: string;
 	title: string;
 	url: string;
 	comment?: string;
@@ -23,8 +24,22 @@ export const WriteProductsPage: React.FC = () => {
 			<div className='w-full max-w-xl'>
 				<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>Write Products Page</h1>
 				<form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8' onSubmit={handleSubmit(onSubmit)}>
+					{/* ユーザ名入力フィールド */}
+					<div className='mt-4'>
+						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>ユーザ名</label>
+						<input
+							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
+							id='name'
+							{...register('name',{
+								required: 'ユーザ名は必須です'
+							})}
+							placeholder='ユーザ名を入力してけろ'
+						/>
+						{errors.name && <p className='absolute text-red-500 text-xs italic'>{errors.name.message}</p>}
+					</div>
+
 					{/* タイトル入力フィールド */}
-					<div>
+					<div className='mt-8'>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='title'>タイトル</label>
 						<input
 							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.title ? 'border-red-500' : 'border-grey-100'}`}
