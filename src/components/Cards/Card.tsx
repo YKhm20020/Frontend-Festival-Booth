@@ -31,9 +31,7 @@ export const Card: React.FC<CardProps> = ({
 		setIsModalOpen(false);
 	};
 
-	// const { isOpen, onClose, onOpen } = useModal();
-
-	if (!Array.isArray(links) || links === undefined) {
+	if (!Array.isArray(links)) {
 		return null;
 	}
 
