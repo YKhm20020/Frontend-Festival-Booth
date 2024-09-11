@@ -18,22 +18,24 @@ type Story = StoryObj<typeof Modal>;
 
 export const Default: Story = {
 	args: {
-		isModalOpen: true,
+		isOpen: true,
 		src: '/images/robot_and_hogeta.jpeg',
 		alt: 'Modal',
 		modalTitle: 'Sample Title',
 		modalText: 'Sample Text',
+		links: ['link1', 'link2'],
 		closeModal: fn(),
 	},
 };
 
 export const CloseModal: Story = {
 	args: {
-		isModalOpen: true,
+		isOpen: true,
 		src: '/images/robot_and_hogeta.jpeg',
 		alt: 'Modal',
 		modalTitle: 'Sample Title',
 		modalText: 'Sample Text',
+		links: ['link1', 'link2'],
 		closeModal: fn(),
 	},
 	play: async ({ args, canvasElement }) => {
