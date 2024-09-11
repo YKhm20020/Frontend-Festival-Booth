@@ -66,7 +66,7 @@ export const WriteIntroductionPage: React.FC = () => {
 						{errors.githubUrl && <p className='text-red-500 text-xs italic'>{errors.githubUrl.message}</p>}
 					</div>
 
-					{/* XURL入力フィールド */}
+					{/* X URL入力フィールド */}
 					<div>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='XUrl'>X URL</label>
 						<input
