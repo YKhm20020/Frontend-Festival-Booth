@@ -20,40 +20,40 @@ export const WriteIntroductionPage: React.FC = () => {
 		<div className='flex justify-center bg-gray-100'>
 			<div className='w-full max-w-xl'>
 				<h1 className='text-lg font-bold text-gray-800 mt-4 mb-4 text-center'>Write Introduction Page</h1>
-				<form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={handleSubmit(onSubmit)}>
+				<form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8' onSubmit={handleSubmit(onSubmit)}>
 					{/* ユーザ名入力フィールド */}
-					<div>
+					<div className='mt-4'>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>ユーザ名</label>
 						<input
-							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
+							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
 							id='name'
 							{...register('name',{
 								required: 'ユーザ名は必須です'
 							})}
 							placeholder='君の名前は？'
 						/>
-						{errors.name && <p className='text-red-500 text-xs italic'>{errors.name.message}</p>}
+						{errors.name && <p className='absolute text-red-500 text-xs italic'>{errors.name.message}</p>}
 					</div>
 
 					{/* 自己紹介コメント入力フィールド */}
-					<div>
+					<div className='mt-8'>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='introduction'>自己紹介コメント</label>
 						<textarea
-							className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
+							className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
 							id='introduction'
 							{...register('introduction',{
 								required: '自己紹介コメントは必須です'
 							})}
 							placeholder='自己紹介スペース'
 						/>
-						{errors.introduction && <p className='text-red-500 text-xs italic'>{errors.introduction.message}</p>}
+						{errors.introduction && <p className='absolute text-red-500 text-xs italic'>{errors.introduction.message}</p>}
 					</div>
 					
 					{/* GithubURL入力フィールド */}
-					<div>
+					<div className='mt-8'>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='githubUrl'>GitHub URL</label>
 						<input
-							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${errors.githubUrl ? 'border-red-500' : 'border-grey-100'}`}
+							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.githubUrl ? 'border-red-500' : 'border-grey-100'}`}
 							id='githubUrl'
 							{...register('githubUrl',{
 								pattern: {
@@ -63,29 +63,29 @@ export const WriteIntroductionPage: React.FC = () => {
 							})}
 							placeholder='https://github.com/username'
 						/>
-						{errors.githubUrl && <p className='text-red-500 text-xs italic'>{errors.githubUrl.message}</p>}
+						{errors.githubUrl && <p className='absolute text-red-500 text-xs italic'>{errors.githubUrl.message}</p>}
 					</div>
 
 					{/* X URL入力フィールド */}
-					<div>
+					<div className='mt-8'>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='XUrl'>X URL</label>
 						<input
-							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${errors.XUrl ? 'border-red-500' : 'border-grey-100'}`}
+							className={`border shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.XUrl ? 'border-red-500' : 'border-grey-100'}`}
 							id='XUrl'
 							{...register('XUrl',{
 								pattern: {
-									value: /^(https?:\/\/)?([a-z0-9]+[.])*[a-z0-9]+\.[a-z]+(\/[^\s]*)?$/i,
+									value: /^(https?:\/\/)?(www\.)?x\.com(\/[^\s]*)?$/i,
 									message: '有効なURLを入力してください'
 								}
 							})}
-							placeholder='XのURLを記載してください'
+							placeholder='https://x.com/username'
 						/>
-						{errors.XUrl && <p className='text-red-500 text-xs italic'>{errors.XUrl.message}</p>}
+						{errors.XUrl && <p className='absolute text-red-500 text-xs italic'>{errors.XUrl.message}</p>}
 					</div>
 
 					{/* 送信ボタン */}
 					<div className='flex justify-center'>
-						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-4' 
+						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-12' 
 								type='submit'>
 							登録する！！
 						</button>
