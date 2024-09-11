@@ -1,8 +1,22 @@
 import type React from 'react';
+import { useState } from 'react';
 import { Card } from '../components/Cards/Card';
 import { Header } from '../components/Header/Header';
 
 export const IntroductionListPage: React.FC = () => {
+	const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+	// タブの合計
+	const numOfSlides = 5;
+
+	const prevSlide = (): void => {
+		setCurrentIndex((prevIndex) => (prevIndex - 1 + numOfSlides) % numOfSlides);
+	};
+
+	const nextSlide = (): void => {
+		setCurrentIndex((prevIndex) => (prevIndex + 1) % numOfSlides);
+	};
+
 	return (
 		<>
 			<Header />
@@ -28,7 +42,9 @@ export const IntroductionListPage: React.FC = () => {
 					<div className='absolute left-0 lg:-left-12 top-1/2 -translate-y-1/2'>
 						<button
 							id='slider-button-left'
-							className='group p-2 flex justify-center items-center border border-solid border-indigo-600 w-20 h-20 md:w-16 md:h-16 transition-all duration-500 rounded-full hover:bg-indigo-600 bg-white bg-opacity-50'
+							className='group p-2 flex justify-center items-center border border-solid border-indigo-600 w-20 h-20 md:w-16 md:h-16 transition-all duration-500 rounded-full
+                            hover:bg-indigo-600 bg-white bg-opacity-50'
+							onClick={prevSlide}
 						>
 							<svg
 								className='h-10 w-10 md:h-6 md:w-6 text-indigo-600 group-hover:text-white'
@@ -49,7 +65,9 @@ export const IntroductionListPage: React.FC = () => {
 					<div className='absolute right-0 lg:-right-12 top-1/2 -translate-y-1/2'>
 						<button
 							id='slider-button-right'
-							className='group p-2 flex justify-center items-center border border-solid border-indigo-600 w-20 h-20 md:w-16 md:h-16 transition-all duration-500 rounded-full hover:bg-indigo-600 bg-white bg-opacity-50'
+							className='group p-2 flex justify-center items-center border border-solid border-indigo-600 w-20 h-20 md:w-16 md:h-16 transition-all duration-500 rounded-full
+                            hover:bg-indigo-600 bg-white bg-opacity-50'
+							onClick={nextSlide}
 						>
 							<svg
 								className='h-10 w-10 md:h-6 md:w-6 text-indigo-600 group-hover:text-white'
@@ -70,37 +88,20 @@ export const IntroductionListPage: React.FC = () => {
 				</div>
 			</div>
 			<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
-				<button
-					type='button'
-					data-twe-slide-to='0'
-					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
-					aria-current='true'
-					aria-label='Tab 0'
-				/>
-				<button
-					type='button'
-					data-twe-slide-to='1'
-					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
-					aria-label='Tab 1'
-				/>
-				<button
-					type='button'
-					data-twe-slide-to='2'
-					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
-					aria-label='Tab 2'
-				/>
-				<button
-					type='button'
-					data-twe-slide-to='3'
-					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
-					aria-label='Tab 3'
-				/>
-				<button
-					type='button'
-					data-twe-slide-to='4'
-					className='mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-black bg-clip-padding p-0 opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none'
-					aria-label='Tab 4'
-				/>
+				<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
+					{[...Array(numOfSlides)].map((_, index) => (
+						<button
+							key={index}
+							type='button'
+							onClick={() => setCurrentIndex(index)}
+							className={`mx-1 box-content h-1 w-16 flex-initial cursor-pointer border-0 border-y-8 border-solid border-transparent bg-clip-padding p-0 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none
+                            ${currentIndex === index ? 'bg-indigo-600 opacity-100' : 'bg-black opacity-50'}
+                            `}
+							aria-current={currentIndex === index ? 'true' : 'false'}
+							aria-label={`Tab ${index}`}
+						/>
+					))}
+				</div>
 			</div>
 		</>
 	);
