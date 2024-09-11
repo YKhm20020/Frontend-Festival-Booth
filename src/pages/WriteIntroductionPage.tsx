@@ -19,7 +19,7 @@ export const WriteIntroductionPage: React.FC = () => {
 	return (
 		<div className='flex justify-center bg-gray-100'>
 			<div className='w-full max-w-xl'>
-				<h1 className='text-lg font-bold text-gray-800 mt-4 mb-4 text-center'>Write Introduction Page</h1>
+				<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>Write Introduction Page</h1>
 				<form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8' onSubmit={handleSubmit(onSubmit)}>
 					{/* ユーザ名入力フィールド */}
 					<div className='mt-4'>
