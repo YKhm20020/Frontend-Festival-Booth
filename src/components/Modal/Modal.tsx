@@ -2,20 +2,22 @@ import type React from 'react';
 import { useEffect } from 'react';
 
 type ModalProps = {
-	isModalOpen: boolean;
+	isOpen: boolean;
 	src: string;
 	alt: string;
 	modalTitle: string;
-	modalText: string;
+	modalText?: string;
+	links?: string[];
 	closeModal: () => void;
 };
 
 export const Modal: React.FC<ModalProps> = ({
-	isModalOpen,
+	isOpen,
 	src,
 	alt,
 	modalTitle,
 	modalText,
+	links,
 	closeModal,
 }) => {
 	useEffect(() => {
@@ -25,7 +27,7 @@ export const Modal: React.FC<ModalProps> = ({
 			}
 		};
 
-		if (isModalOpen) {
+		if (isOpen) {
 			document.body.style.overflow = 'hidden';
 			window.addEventListener('keydown', handleEscapeKey);
 		} else {
@@ -36,9 +38,13 @@ export const Modal: React.FC<ModalProps> = ({
 		return () => {
 			window.removeEventListener('keydown', handleEscapeKey);
 		};
-	}, [isModalOpen, closeModal]);
+	}, [isOpen, closeModal]);
 
-	if (!isModalOpen) {
+	if (!isOpen) {
+		return null;
+	}
+
+	if (!Array.isArray(links)) {
 		return null;
 	}
 
@@ -83,10 +89,17 @@ export const Modal: React.FC<ModalProps> = ({
 							alt={alt}
 						/>
 					</div>
-					<div className='ml-4 md:w-1/2 flex items-center'>
-						<p className='sm:text-center animate-fade-right animate-duration-[1600ms]'>
+					<div className='ml-4 md:w-1/2 flex flex-col items-center'>
+						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>
 							{modalText}
 						</p>
+						<div className='container cursor-pointer mt-auto mb-4'>
+							{links.map((item, index) => (
+								<p key={index} className='text-base text-blue-300'>
+									{item}
+								</p>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
