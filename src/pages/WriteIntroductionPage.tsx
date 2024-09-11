@@ -38,9 +38,12 @@ export const WriteIntroductionPage: React.FC = () => {
 					<label htmlFor='introduction'>自己紹介コメント</label>
 					<textarea
 						id='introduction'
-						{...register('introduction')}
+						{...register('introduction',{
+							required: '自己紹介コメントは必須です'
+						})}
 						placeholder='自己紹介スペース'
 					/>
+					{errors.introduction && <p style={{ color: 'red' }}>{errors.introduction.message}</p>}
 				</div>
 				
 				{/* GithubURL入力フィールド */}
