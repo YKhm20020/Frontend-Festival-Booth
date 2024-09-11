@@ -12,8 +12,8 @@ export const WriteIntroductionPage: React.FC = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
-		console.log("Submitted Data:", data);
-		alert(`Name: ${data.name}\nintroduction: ${data.introduction}\nGitHub URL: ${data.githubUrl}\nX URL: ${data.XUrl}`);
+		console.log('Submitted Data:', data);
+		alert('投稿できました！！！');
 	};
 
 	return (

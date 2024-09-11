@@ -11,8 +11,8 @@ export const WriteProductsPage: React.FC = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
-		console.log("Submitted Data:", data);
-		alert(`Title: ${data.title}\nURL: ${data.url}\nComment: ${data.comment}`);
+		console.log('Submitted Data:', data);
+		alert('投稿できました！！！');
 	};
 
 	return (
