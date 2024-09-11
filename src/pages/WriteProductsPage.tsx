@@ -4,15 +4,15 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 type FormData = {
 	title: string;
 	url: string;
-	comment: string;
+	comment?: string;
 };
 
 export const WriteProductsPage: React.FC = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
-		console.log("Submitted Data:", data);
-		alert(`Title: ${data.title}\nURL: ${data.url}\nComment: ${data.comment}`);
+		console.log('Submitted Data:', data);
+		alert('投稿できました！！！');
 	};
 
 	return (

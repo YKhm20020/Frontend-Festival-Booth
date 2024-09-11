@@ -4,8 +4,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 type FormData = {
 	name: string;
 	introduction: string;
-	githubUrl: string;
-	XUrl: string;
+	githubUrl?: string;
+	XUrl?: string;
 };
 
 export const WriteIntroductionPage: React.FC = () => {
@@ -13,7 +13,7 @@ export const WriteIntroductionPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		console.log('Submitted Data:', data);
-		alert(`Name: ${data.name}\nintroduction: ${data.introduction}\nGitHub URL: ${data.githubUrl}\nX URL: ${data.XUrl}`);
+		alert('自己紹介おめでとう！');
 	};
 
 	return (
@@ -41,9 +41,12 @@ export const WriteIntroductionPage: React.FC = () => {
 						<textarea
 							className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 							id='introduction'
-							{...register('introduction')}
+							{...register('introduction',{
+								required: '自己紹介コメントは必須です'
+							})}
 							placeholder='自己紹介スペース'
 						/>
+						{errors.introduction && <p style={{ color: 'red' }}>{errors.introduction.message}</p>}
 					</div>
 					
 					{/* GithubURL入力フィールド */}
