@@ -31,10 +31,6 @@ export const Card: React.FC<CardProps> = ({
 		setIsModalOpen(false);
 	};
 
-	if (!Array.isArray(links)) {
-		return null;
-	}
-
 	return (
 		<>
 			<div className='flex justify-center w-full'>
