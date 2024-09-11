@@ -10,7 +10,8 @@ type FormData = {
 
 export const WriteProductsPage: React.FC = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-	const [text, setText] = useState('投稿する？');
+	const initText: string = '投稿する？' ;
+	const [text, setText] = useState(initText);
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		console.log('Submitted Data:', data);

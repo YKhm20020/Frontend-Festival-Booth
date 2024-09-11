@@ -58,7 +58,7 @@ export const WriteIntroductionPage: React.FC = () => {
 							{...register('githubUrl',{
 								pattern: {
 									value: /^(https?:\/\/)?(www\.)?github\.com(\/[^\s]*)?$/i,
-									message: '有効なGitHubのURLを入力してください (例: https://github.com/username)'
+									message: 'GitHubのURLを入力してください (例: https://github.com/username)'
 								}
 							})}
 							placeholder='https://github.com/username'
@@ -75,7 +75,7 @@ export const WriteIntroductionPage: React.FC = () => {
 							{...register('XUrl',{
 								pattern: {
 									value: /^(https?:\/\/)?(www\.)?x\.com(\/[^\s]*)?$/i,
-									message: '有効なURLを入力してください'
+									message: 'XのURLを入力してください (例: https://x.com/username)'
 								}
 							})}
 							placeholder='https://x.com/username'
