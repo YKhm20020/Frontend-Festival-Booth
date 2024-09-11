@@ -23,11 +23,9 @@ export const Card: React.FC<CardProps> = ({
 
 	const openModal = () => {
 		setIsModalOpen(true);
-		console.log(isModalOpen);
 	};
 
 	const closeModal = () => {
-		console.log(isModalOpen);
 		setIsModalOpen(false);
 	};
 
