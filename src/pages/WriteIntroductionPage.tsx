@@ -4,8 +4,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 type FormData = {
 	name: string;
 	introduction: string;
-	githubUrl: string;
-	XUrl: string;
+	githubUrl?: string;
+	XUrl?: string;
 };
 
 export const WriteIntroductionPage: React.FC = () => {
@@ -13,7 +13,7 @@ export const WriteIntroductionPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		console.log('Submitted Data:', data);
-		alert('投稿できました！！！');
+		alert('自己紹介おめでとう！');
 	};
 
 	return (

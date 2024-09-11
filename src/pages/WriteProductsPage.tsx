@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 type FormData = {
 	title: string;
 	url: string;
-	comment: string;
+	comment?: string;
 };
 
 export const WriteProductsPage: React.FC = () => {
