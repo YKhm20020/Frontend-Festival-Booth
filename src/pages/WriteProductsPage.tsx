@@ -2,6 +2,7 @@ import type React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type FormData = {
+	title: string;
 	url: string;
 	comment: string;
 };
@@ -11,13 +12,26 @@ export const WriteProductsPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		console.log("Submitted Data:", data);
-		alert(`URL: ${data.url}\nComment: ${data.comment}`);
+		alert(`Title: ${data.title}\nURL: ${data.url}\nComment: ${data.comment}`);
 	};
 
 	return (
 		<div>
 			<h1>Write Products Page</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
+				{/* タイトル入力フィールド */}
+				<div>
+				<label htmlFor='title'>タイトル</label>
+					<input
+						id='title'
+						{...register('title',{
+							required: 'タイトルは必須です'
+						})}
+						placeholder='タイトルを入力してください'
+					/>
+					{errors.title && <p style={{ color: 'red' }}>{errors.title.message}</p>}
+				</div>
+				
 				{/* URL入力フィールド */}
 				<div>
 					<label htmlFor='url'>URL</label>
