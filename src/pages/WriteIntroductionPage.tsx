@@ -19,7 +19,7 @@ export const WriteIntroductionPage: React.FC = () => {
 	return (
 		<div className='flex justify-center bg-gray-100'>
 			<div className='w-full max-w-xl'>
-				<h1>Write Introduction Page</h1>
+				<h1 className='text-lg font-bold text-gray-800 mt-4 mb-4 text-center'>Write Introduction Page</h1>
 				<form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={handleSubmit(onSubmit)}>
 					{/* ユーザ名入力フィールド */}
 					<div>
@@ -39,14 +39,14 @@ export const WriteIntroductionPage: React.FC = () => {
 					<div>
 						<label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='introduction'>自己紹介コメント</label>
 						<textarea
-							className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+							className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
 							id='introduction'
 							{...register('introduction',{
 								required: '自己紹介コメントは必須です'
 							})}
 							placeholder='自己紹介スペース'
 						/>
-						{errors.introduction && <p style={{ color: 'red' }}>{errors.introduction.message}</p>}
+						{errors.introduction && <p className='text-red-500 text-xs italic'>{errors.introduction.message}</p>}
 					</div>
 					
 					{/* GithubURL入力フィールド */}
