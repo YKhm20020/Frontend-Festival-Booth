@@ -6,6 +6,7 @@ type FormData = {
 	introduction: string;
 	githubUrl?: string;
 	XUrl?: string;
+	image: string;
 };
 
 export const WriteIntroductionPage: React.FC = () => {
@@ -89,6 +90,46 @@ export const WriteIntroductionPage: React.FC = () => {
 							placeholder='https://x.com/username'
 						/>
 						{errors.XUrl && <p className='absolute text-red-500 text-xs italic'>{errors.XUrl.message}</p>}
+					</div>
+
+					{/* イメージ画像選択フィールド */}
+					<div className='mt-8'>
+						<label className={`block text-sm font-bold mb-2 ${errors.image ? 'text-red-500' : 'text-grey-700'}`} htmlFor='image'>画像を選択してください</label>
+						<label>
+							<input
+								type='radio'
+								value='Fig_1'
+								{...register('image', {required: '画像を選択してください'})}
+							/>
+							画像1
+						</label><br />
+
+						<label>
+							<input
+								type='radio'
+								value='Fig_2'
+								{...register('image')}
+							/>
+							画像2
+						</label><br />
+
+						<label>
+							<input
+								type='radio'
+								value='Fig_3'
+								{...register('image')}
+							/>
+							画像3
+						</label><br />
+
+						<label>
+							<input
+								type='radio'
+								value='Fig_4'
+								{...register('image')}
+							/>
+							画像4
+						</label><br />
 					</div>
 
 					{/* 送信ボタン */}
