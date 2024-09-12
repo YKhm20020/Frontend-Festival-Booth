@@ -46,7 +46,7 @@ export const Modal: React.FC<ModalProps> = ({
 
 	return (
 		<div className='fixed inset-0 z-50 flex items-center justify-center'>
-			<div className='fixed inset-0 bg-black bg-opacity-50' onClick={closeModal}></div>
+			<div className='fixed inset-0 bg-black bg-opacity-50' onClick={closeModal} />
 			<div className='bg-white w-3/4 rounded-md p-5 flex flex-col items-center justify-center z-10'>
 				<div className='relative flex justify-between mb-2 w-full'>
 					<button
