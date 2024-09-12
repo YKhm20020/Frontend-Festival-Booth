@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-type UseGetProductsByUserNameProps = {
+type UseGetProductByUserNameProps = {
 	user_name: string; // ユーザー名
 };
 
-export const useGetProductsByUserName = ({ user_name }: UseGetProductsByUserNameProps) => {
-	const [data, setData] = useState<any>(null);
+type ProductData = {
+	user_name: string; // ユーザー名
+	title: string; // タイトル (1文字以上50文字以下)
+	url: string; // 成果物のURL
+	description?: string; // 成果物についての説明 (任意入力、1文字以上200文字以下)
+};
+
+export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNameProps) => {
+	const [data, setData] = useState<ProductData | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
