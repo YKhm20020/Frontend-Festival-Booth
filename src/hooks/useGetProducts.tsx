@@ -6,8 +6,15 @@ type useGetProductsProps = {
 	limit?: string; // 取得する成果物の数の上限
 };
 
+type ProductData = {
+	user_name: string; // ユーザー名
+	title: string; // タイトル (1文字以上50文字以下)
+	url: string; // 成果物のURL
+	description?: string; // 成果物についての説明 (任意入力、1文字以上200文字以下)
+};
+
 export const useGetProducts = ({ page, limit }: useGetProductsProps) => {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<ProductData[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +30,16 @@ export const useGetProducts = ({ page, limit }: useGetProductsProps) => {
 				});
 				setData(response.data);
 			} catch (err) {
-				setError(err.message);
+				if (err.response) {
+					// リクエストしたけど2xxの範囲外
+					setError(err.response.data?.message || 'Failed to fetch products');
+				} else if (err.request) {
+					// リクエストしたけど応答がない
+					setError('No response from server.');
+				} else {
+					// その他のエラー
+					setError('Error: ', err.message);
+				}
 			} finally {
 				setLoading(false);
 			}
