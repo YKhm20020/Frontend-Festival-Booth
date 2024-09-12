@@ -7,7 +7,7 @@ type ModalProps = {
 	alt: string;
 	modalTitle: string;
 	modalText?: string;
-	links?: string[];
+	links?: object;
 	closeModal: () => void;
 };
 
@@ -17,7 +17,7 @@ export const Modal: React.FC<ModalProps> = ({
 	alt,
 	modalTitle,
 	modalText,
-	links,
+	links = {},
 	closeModal,
 }) => {
 	useEffect(() => {
@@ -90,7 +90,10 @@ export const Modal: React.FC<ModalProps> = ({
 							{modalText}
 						</p>
 						<div className='container cursor-pointer mt-auto mb-4'>
-							{links.map((item, index) => (
+							{(Object.keys(links).length > 0
+								? Object.values(links)
+								: ['No links available']
+							).map((item, index) => (
 								<p key={index} className='text-base text-blue-300'>
 									{item}
 								</p>
