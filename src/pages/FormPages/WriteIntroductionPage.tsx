@@ -1,5 +1,6 @@
 import type React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { DispImage } from './_components/DispImage';
 
 type FormData = {
 	name: string;
@@ -102,12 +103,9 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image', {required: '画像を選択してください'})}
 							/>
 							画像1
-							<img 
+							<DispImage
 								src='/images/robot_and_hogeta.jpeg'
-								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
 								alt='sample-alt'
-								width={300}
-								height={300} 
 							/>
 						</label><br />
 
@@ -118,12 +116,9 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image')}
 							/>
 							画像2
-							<img 
+							<DispImage
 								src='/images/robot_and_hogeta.jpeg'
-								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
 								alt='sample-alt'
-								width={300}
-								height={300} 
 							/>
 						</label><br />
 
@@ -134,12 +129,9 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image')}
 							/>
 							画像3
-							<img 
+							<DispImage
 								src='/images/robot_and_hogeta.jpeg'
-								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
 								alt='sample-alt'
-								width={300}
-								height={300} 
 							/>
 						</label><br />
 
@@ -150,12 +142,9 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image')}
 							/>
 							画像4
-							<img 
+							<DispImage
 								src='/images/robot_and_hogeta.jpeg'
-								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
 								alt='sample-alt'
-								width={300}
-								height={300} 
 							/>
 						</label><br />
 					</div>
