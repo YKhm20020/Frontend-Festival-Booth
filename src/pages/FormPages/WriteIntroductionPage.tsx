@@ -7,7 +7,7 @@ type FormData = {
 	introduction: string;
 	githubUrl?: string;
 	XUrl?: string;
-	image: string;
+	image: number;
 };
 
 export const WriteIntroductionPage: React.FC = () => {
@@ -99,7 +99,7 @@ export const WriteIntroductionPage: React.FC = () => {
 						<label>
 							<input
 								type='radio'
-								value='Fig_1'
+								value='0'
 								{...register('image', {required: '画像を選択してください'})}
 							/>
 							画像1
@@ -112,7 +112,7 @@ export const WriteIntroductionPage: React.FC = () => {
 						<label>
 							<input
 								type='radio'
-								value='Fig_2'
+								value='1'
 								{...register('image')}
 							/>
 							画像2
@@ -125,7 +125,7 @@ export const WriteIntroductionPage: React.FC = () => {
 						<label>
 							<input
 								type='radio'
-								value='Fig_3'
+								value='2'
 								{...register('image')}
 							/>
 							画像3
@@ -138,7 +138,7 @@ export const WriteIntroductionPage: React.FC = () => {
 						<label>
 							<input
 								type='radio'
-								value='Fig_4'
+								value='3'
 								{...register('image')}
 							/>
 							画像4
