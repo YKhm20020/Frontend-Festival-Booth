@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ProductsListPage } from "./ProductsListPage";
 
 const meta = {
-    title: 'FestivalBooth/Pages/ProductsListPage',
+    title: 'FestivalBooth/Pages/MainPages/ProductsListPage',
     component: ProductsListPage,
 } satisfies Meta<typeof ProductsListPage>;
 
