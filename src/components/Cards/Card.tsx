@@ -44,7 +44,7 @@ export const Card: React.FC<CardProps> = ({
 					height={300}
 				/>
 				<div className='inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-				<div className='absolute bg-white inset-x-0 bottom-0 p-4 transform translate-y-[calc(100%-4.5rem)] group-hover:translate-y-0 transition-transform duration-500 ease-in-out'>
+				<div className='absolute bg-white inset-x-0 bottom-0 p-4 transform translate-y-24 group-hover:translate-y-0 transition-transform duration-500 ease-in-out'>
 					<h1 className='text-2xl font-semibold text-neutral-800 mb-4 truncate py-1'>
 						{title}
 					</h1>
