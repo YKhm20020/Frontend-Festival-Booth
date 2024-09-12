@@ -1,26 +1,41 @@
 import type React from 'react';
 import { useState, useMemo } from 'react';
+import { useGetProfile } from '../../hooks/useGetProfile';
 import { Header } from '../../components/Header/Header';
 import { Card } from '../../components/Cards/Card';
 
 export const IntroductionListPage: React.FC = () => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-	const numOfSlides = 5; // タブの合計
-	const cardsPerPage = 8; // 1ページあたりに配置するカードの数
+	// 1ページあたりに配置するカードの数
+	const cardsPerPage = 8;
+
+	// モックデータ
+	// const allCards = useMemo(() => {
+	// 	return Array(numOfSlides * cardsPerPage)
+	// 		.fill(null)
+	// 		.map((_, index) => ({
+	// 			src: '/images/robot_and_hogeta.jpeg',
+	// 			alt: 'Sample Alt',
+	// 			title: `Card ${index + 1}`,
+	// 			links: ['link1', 'link2', 'link3'],
+	// 			modalTitle: `Sample Title ${index + 1}`,
+	// 			modalText: `Sample Text for card ${index + 1}`,
+	// 		}));
+	// }, []);
+
+	const {
+		data: introduction = [],
+		loading,
+		error,
+	} = useGetProfile({ page: String(currentIndex), limit: String(cardsPerPage) });
 
 	const allCards = useMemo(() => {
-		return Array(numOfSlides * cardsPerPage)
-			.fill(null)
-			.map((_, index) => ({
-				src: '/images/robot_and_hogeta.jpeg',
-				alt: 'Sample Alt',
-				title: `Card ${index + 1}`,
-				links: ['link1', 'link2', 'link3'],
-				modalTitle: `Sample Title ${index + 1}`,
-				modalText: `Sample Text for card ${index + 1}`,
-			}));
-	}, []);
+		return Array.isArray(introduction) ? introduction : [];
+	}, [introduction]);
+
+	// タブの合計、小数点以下切り捨て
+	const numOfSlides = Math.floor(allCards.length / cardsPerPage);
 
 	// 現在のページのカードを取得
 	const currentPageCards = allCards.slice(
@@ -43,16 +58,22 @@ export const IntroductionListPage: React.FC = () => {
 				<div className='relative'>
 					{/* カードのグリッド */}
 					<div className='grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 lg:gap-x-6 gap-y-8 place-items-center justify-center items-center'>
+						{/* ローディング中またはエラーがある場合の処理 */}
+						{loading && <p>Loading...</p>}
+						{error && <p>Error: {error}</p>}
 						{/* カードコンポーネント（1ページにつき8個） */}
 						{currentPageCards.map((card, index) => (
 							<Card
 								key={currentIndex * cardsPerPage + index}
-								src={card.src}
-								alt={card.alt}
-								title={card.title}
-								links={card.links}
-								modalTitle={card.modalTitle}
-								modalText={card.modalText}
+								src='/images/robot_and_hogeta.jpeg' // src を card.url に変更
+								alt='Sample Alt' // alt はデータに合わせて変更
+								title={card.name}
+								links={{
+									github_url: card.github_url,
+									x_url: card.x_url,
+								}} // リンクはデータに合わせて変更
+								modalTitle={card.user_name}
+								modalText={card.introduction || 'Sample Text'} // modalText を card.description に変更
 							/>
 						))}
 					</div>
@@ -108,7 +129,7 @@ export const IntroductionListPage: React.FC = () => {
 			</div>
 			<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
 				<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
-					{[...Array(numOfSlides)].map((_, index) => (
+					{[...Array(numOfSlides + 1)].map((_, index) => (
 						<button
 							key={index}
 							type='button'
