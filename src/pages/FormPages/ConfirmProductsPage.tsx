@@ -2,7 +2,7 @@ import type React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useLocation, useRouter } from '@tanstack/react-router';
 
-type FormData = {
+type ProductsFormData = {
 	name: string;
 	title: string;
 	url: string;
@@ -14,14 +14,14 @@ export const ConfirmProductsPage: React.FC = () => {
     const location = useLocation();
     const { name, title, url, comment } = location.state;
 
-    const confirmData: FormData = {
+    const confirmData: ProductsFormData = {
         name: name,
         title: title,
         url: url,
         comment: comment,
     };
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+    const onSubmit: SubmitHandler<ProductsFormData> = (data) => {
 		console.log('Submitted Data:', data);
         alert('投稿できました!!!');
 		router.navigate({

@@ -2,7 +2,7 @@ import type React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useLocation, useRouter } from '@tanstack/react-router';
 
-type FormData = {
+type IntroductionFormData = {
 	name: string;
 	introduction: string;
 	githubUrl?: string;
@@ -15,7 +15,7 @@ export const ConfirmIntroductionPage: React.FC = () => {
     const location = useLocation();
     const { name, introduction, githubUrl, XUrl, image } = location.state;
 
-    const confirmData: FormData = {
+    const confirmData: IntroductionFormData = {
         name: name,
         introduction: introduction,
         githubUrl: githubUrl,
@@ -23,7 +23,7 @@ export const ConfirmIntroductionPage: React.FC = () => {
         image: image,
     };
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+    const onSubmit: SubmitHandler<IntroductionFormData> = (data) => {
 		console.log('Submitted Data:', data);
         alert('自己紹介おめでとう！');
 		router.navigate({

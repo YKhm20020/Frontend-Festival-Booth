@@ -4,7 +4,7 @@ import { DispImage } from './_components/DispImage';
 import { useLocation } from '@tanstack/react-router';
 import { useRouter } from '@tanstack/react-router';
 
-type FormData = {
+type IntroductionFormData = {
 	name: string;
 	introduction: string;
 	githubUrl?: string;
@@ -17,7 +17,7 @@ export const WriteIntroductionPage: React.FC = () => {
     const { name, introduction, githubUrl, XUrl, image } = location.state || { name: '', introduction: '', githubUrl: '', Xurl: '', image: '' };
 	const router = useRouter();
 
-	const defaultValues: FormData = {
+	const defaultValues: IntroductionFormData = {
 		name: name,
 		introduction: introduction,
 		githubUrl: githubUrl,
@@ -25,12 +25,12 @@ export const WriteIntroductionPage: React.FC = () => {
 		image: image,
 	}
 
-	const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+	const { register, handleSubmit, formState: { errors } } = useForm<IntroductionFormData>({
 		mode: 'onChange',
     	defaultValues,
 	});
 
-	const onSubmit: SubmitHandler<FormData> = (data) => {
+	const onSubmit: SubmitHandler<IntroductionFormData> = (data) => {
 		console.log('Submitted Data:', data);
 		router.navigate({
 			to: '/confirm-introduction',

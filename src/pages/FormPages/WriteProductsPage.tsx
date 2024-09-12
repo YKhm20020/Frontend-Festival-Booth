@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLocation } from '@tanstack/react-router';
 import { useRouter } from '@tanstack/react-router';
 
-type FormData = {
+type ProductsFormData = {
 	name: string;
 	title: string;
 	url: string;
@@ -16,21 +16,21 @@ export const WriteProductsPage: React.FC = () => {
     const { name, title, url, comment } = location.state || { name: '', title: '', url: '', comment: '', };
 	const router = useRouter();
 
-	const defaultValues: FormData = {
+	const defaultValues: ProductsFormData = {
 		name: name,
 		title: title,
 		url: url,
 		comment: comment,
 	};
 
-	const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+	const { register, handleSubmit, formState: { errors } } = useForm<ProductsFormData>({
 		mode: 'onChange',
     	defaultValues,
 	});
 	const initText: string = '投稿する？' ;
 	const [text, setText] = useState(initText);
 
-	const onSubmit: SubmitHandler<FormData> = (data) => {
+	const onSubmit: SubmitHandler<ProductsFormData> = (data) => {
 		console.log('Submitted Data:', data);
 		router.navigate({
 			to: '/confirm-products',
