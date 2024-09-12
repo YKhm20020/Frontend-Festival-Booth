@@ -10,20 +10,6 @@ export const IntroductionListPage: React.FC = () => {
 	// 1ページあたりに配置するカードの数
 	const cardsPerPage = 8;
 
-	// モックデータ
-	// const allCards = useMemo(() => {
-	// 	return Array(numOfSlides * cardsPerPage)
-	// 		.fill(null)
-	// 		.map((_, index) => ({
-	// 			src: '/images/robot_and_hogeta.jpeg',
-	// 			alt: 'Sample Alt',
-	// 			title: `Card ${index + 1}`,
-	// 			links: ['link1', 'link2', 'link3'],
-	// 			modalTitle: `Sample Title ${index + 1}`,
-	// 			modalText: `Sample Text for card ${index + 1}`,
-	// 		}));
-	// }, []);
-
 	const {
 		data: introduction = [],
 		loading,
@@ -42,6 +28,20 @@ export const IntroductionListPage: React.FC = () => {
 		currentIndex * cardsPerPage,
 		(currentIndex + 1) * cardsPerPage,
 	);
+
+	// カードのモックデータ
+	// const allCards = useMemo(() => {
+	// 	return Array(numOfSlides * cardsPerPage)
+	// 		.fill(null)
+	// 		.map((_, index) => ({
+	// 			src: '/images/robot_and_hogeta.jpeg',
+	// 			alt: 'Sample Alt',
+	// 			title: `Card ${index + 1}`,
+	// 			links: ['link1', 'link2', 'link3'],
+	// 			modalTitle: `Sample Title ${index + 1}`,
+	// 			modalText: `Sample Text for card ${index + 1}`,
+	// 		}));
+	// }, []);
 
 	const prevSlide = (): void => {
 		setCurrentIndex((prevIndex) => (prevIndex - 1 + numOfSlides) % numOfSlides);
@@ -65,15 +65,15 @@ export const IntroductionListPage: React.FC = () => {
 						{currentPageCards.map((card, index) => (
 							<Card
 								key={currentIndex * cardsPerPage + index}
-								src='/images/robot_and_hogeta.jpeg' // src を card.url に変更
-								alt='Sample Alt' // alt はデータに合わせて変更
+								src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
+								alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
 								title={card.name}
 								links={{
 									github_url: card.github_url,
 									x_url: card.x_url,
-								}} // リンクはデータに合わせて変更
-								modalTitle={card.user_name}
-								modalText={card.introduction || 'Sample Text'} // modalText を card.description に変更
+								}}
+								modalTitle={card.name}
+								modalText={card.introduction || 'Sample Text'}
 							/>
 						))}
 					</div>
