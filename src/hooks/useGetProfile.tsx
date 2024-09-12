@@ -7,7 +7,7 @@ type UseGetProfileProps = {
 };
 
 type ProfileData = {
-	user_name: string; // ユーザー名
+	name: string; // ユーザー名
 	introduction: string; // 自己紹介
 	icon_num: number; // アイコンの番号
 	github_url?: string; // GithubのURL (任意入力)
@@ -23,13 +23,14 @@ export const useGetProfile = ({ page, limit }: UseGetProfileProps) => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get('/profiles', {
+				const response = await axios.get('http://localhost:8080/profiles', {
 					params: {
 						page: page || undefined,
 						limit: limit || undefined,
 					},
 				});
 				setData(response.data);
+				console.log(response);
 			} catch (err) {
 				if (err.response) {
 					// リクエストしたけど2xxの範囲外
@@ -41,6 +42,7 @@ export const useGetProfile = ({ page, limit }: UseGetProfileProps) => {
 					// その他のエラー
 					setError('Error: ', err.message);
 				}
+				console.log(err);
 			} finally {
 				setLoading(false);
 			}
