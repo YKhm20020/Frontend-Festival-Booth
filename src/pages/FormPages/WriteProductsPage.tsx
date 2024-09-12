@@ -1,6 +1,8 @@
 import type React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
+import { useLocation } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 
 type FormData = {
 	name: string;
@@ -10,13 +12,30 @@ type FormData = {
 };
 
 export const WriteProductsPage: React.FC = () => {
-	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+	const location = useLocation();
+    const { name, title, url, comment } = location.state || { name: '', title: '', url: '', comment: '', };
+	const router = useRouter();
+
+	const defaultValues: FormData = {
+		name: name,
+		title: title,
+		url: url,
+		comment: comment,
+	};
+
+	const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+		mode: 'onChange',
+    	defaultValues,
+	});
 	const initText: string = '投稿する？' ;
 	const [text, setText] = useState(initText);
 
 	const onSubmit: SubmitHandler<FormData> = (data) => {
 		console.log('Submitted Data:', data);
-		alert('投稿できました！！！');
+		router.navigate({
+			to: '/confirm-products',
+			state: data,
+		});
 	};
 
 	return (
