@@ -1,32 +1,47 @@
 import type React from 'react';
 import { useState, useMemo } from 'react';
+import { useGetProfile } from '../../hooks/useGetProfile';
 import { Header } from '../../components/Header/Header';
 import { Card } from '../../components/Cards/Card';
 
 export const IntroductionListPage: React.FC = () => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-	const numOfSlides = 5; // タブの合計
-	const cardsPerPage = 8; // 1ページあたりに配置するカードの数
+	// 1ページあたりに配置するカードの数
+	const cardsPerPage = 8;
+
+	const {
+		data: introduction = [],
+		loading,
+		error,
+	} = useGetProfile({ page: String(currentIndex), limit: String(cardsPerPage) });
 
 	const allCards = useMemo(() => {
-		return Array(numOfSlides * cardsPerPage)
-			.fill(null)
-			.map((_, index) => ({
-				src: '/images/robot_and_hogeta.jpeg',
-				alt: 'Sample Alt',
-				title: `Card ${index + 1}`,
-				links: ['link1', 'link2', 'link3'],
-				modalTitle: `Sample Title ${index + 1}`,
-				modalText: `Sample Text for card ${index + 1}`,
-			}));
-	}, []);
+		return Array.isArray(introduction) ? introduction : [];
+	}, [introduction]);
+
+	// タブの合計、小数点以下切り上げ
+	const numOfSlides = Math.ceil(allCards.length / cardsPerPage);
 
 	// 現在のページのカードを取得
 	const currentPageCards = allCards.slice(
 		currentIndex * cardsPerPage,
 		(currentIndex + 1) * cardsPerPage,
 	);
+
+	// カードのモックデータ
+	// const allCards = useMemo(() => {
+	// 	return Array(numOfSlides * cardsPerPage)
+	// 		.fill(null)
+	// 		.map((_, index) => ({
+	// 			src: '/images/robot_and_hogeta.jpeg',
+	// 			alt: 'Sample Alt',
+	// 			title: `Card ${index + 1}`,
+	// 			links: ['link1', 'link2', 'link3'],
+	// 			modalTitle: `Sample Title ${index + 1}`,
+	// 			modalText: `Sample Text for card ${index + 1}`,
+	// 		}));
+	// }, []);
 
 	const prevSlide = (): void => {
 		setCurrentIndex((prevIndex) => (prevIndex - 1 + numOfSlides) % numOfSlides);
@@ -43,16 +58,22 @@ export const IntroductionListPage: React.FC = () => {
 				<div className='relative'>
 					{/* カードのグリッド */}
 					<div className='grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 lg:gap-x-6 gap-y-8 place-items-center justify-center items-center'>
+						{/* ローディング中またはエラーがある場合の処理 */}
+						{loading && <p>Loading...</p>}
+						{error && <p>Error: {error}</p>}
 						{/* カードコンポーネント（1ページにつき8個） */}
 						{currentPageCards.map((card, index) => (
 							<Card
 								key={currentIndex * cardsPerPage + index}
-								src={card.src}
-								alt={card.alt}
-								title={card.title}
-								links={card.links}
-								modalTitle={card.modalTitle}
-								modalText={card.modalText}
+								src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
+								alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
+								title={card.name}
+								links={{
+									github_url: card.github_url,
+									x_url: card.x_url,
+								}}
+								modalTitle={card.name}
+								modalText={card.introduction || 'Sample Text'}
 							/>
 						))}
 					</div>

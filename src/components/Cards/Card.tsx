@@ -6,7 +6,7 @@ type CardProps = {
 	src: string;
 	alt?: string;
 	title: string;
-	links?: string[];
+	links?: object;
 	modalTitle: string;
 	modalText?: string;
 };
@@ -15,7 +15,7 @@ export const Card: React.FC<CardProps> = ({
 	src,
 	alt,
 	title,
-	links = [],
+	links = {},
 	modalTitle,
 	modalText,
 }) => {
@@ -44,12 +44,15 @@ export const Card: React.FC<CardProps> = ({
 					height={300}
 				/>
 				<div className='inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-				<div className='absolute bg-white inset-x-0 bottom-0 p-4 transform translate-y-24 group-hover:translate-y-0 transition-transform duration-500 ease-in-out'>
-					<h1 className='text-2xl font-semibold text-neutral-800 mb-4 truncate py-1'>
+				<div className='absolute bg-white h-full inset-x-0 bottom-1 p-4 transform translate-y-44 group-hover:translate-y-24 transition-transform duration-500 ease-in-out'>
+					<h1 className='text-2xl font-semibold text-neutral-800 mb-5 truncate py-1'>
 						{title}
 					</h1>
 					<div className='space-y-1 overflow-hidden'>
-						{links.map((item, index) => (
+						{(Object.keys(links).length > 0
+							? Object.values(links)
+							: ['No links available']
+						).map((item, index) => (
 							<p
 								key={index}
 								className='text-base text-transparent group-hover:text-gray-600 truncate transition-colors duration-500 delay-200 ease-in-out'

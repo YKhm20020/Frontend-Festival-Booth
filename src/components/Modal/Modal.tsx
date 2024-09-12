@@ -7,7 +7,7 @@ type ModalProps = {
 	alt: string;
 	modalTitle: string;
 	modalText?: string;
-	links?: string[];
+	links?: object;
 	closeModal: () => void;
 };
 
@@ -17,7 +17,7 @@ export const Modal: React.FC<ModalProps> = ({
 	alt,
 	modalTitle,
 	modalText,
-	links,
+	links = {},
 	closeModal,
 }) => {
 	useEffect(() => {
@@ -46,7 +46,7 @@ export const Modal: React.FC<ModalProps> = ({
 
 	return (
 		<div className='fixed inset-0 z-50 flex items-center justify-center'>
-			<div className='fixed inset-0 bg-black bg-opacity-50' onClick={closeModal}></div>
+			<div className='fixed inset-0 bg-black bg-opacity-50' onClick={closeModal} />
 			<div className='bg-white w-3/4 rounded-md p-5 flex flex-col items-center justify-center z-10'>
 				<div className='relative flex justify-between mb-2 w-full'>
 					<button
@@ -90,7 +90,10 @@ export const Modal: React.FC<ModalProps> = ({
 							{modalText}
 						</p>
 						<div className='container cursor-pointer mt-auto mb-4'>
-							{links.map((item, index) => (
+							{(Object.keys(links).length > 0
+								? Object.values(links)
+								: ['No links available']
+							).map((item, index) => (
 								<p key={index} className='text-base text-blue-300'>
 									{item}
 								</p>
