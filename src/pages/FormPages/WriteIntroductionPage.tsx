@@ -7,7 +7,7 @@ type FormData = {
 	introduction: string;
 	githubUrl?: string;
 	XUrl?: string;
-	image: number;
+	image: string;
 };
 
 export const WriteIntroductionPage: React.FC = () => {
