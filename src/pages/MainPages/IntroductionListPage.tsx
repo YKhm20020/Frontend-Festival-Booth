@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useState, useMemo } from 'react';
-import { Card } from '../components/Cards/Card';
-import { Header } from '../components/Header/Header';
+import { Header } from '../../components/Header/Header';
+import { Card } from '../../components/Cards/Card';
 
 export const IntroductionListPage: React.FC = () => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
