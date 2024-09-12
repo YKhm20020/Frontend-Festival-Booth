@@ -20,6 +20,7 @@ const WriteProductsLazyImport = createFileRoute('/write-products')()
 const WriteIntroductionLazyImport = createFileRoute('/write-introduction')()
 const ProductsListLazyImport = createFileRoute('/products-list')()
 const IntroductionListLazyImport = createFileRoute('/introduction-list')()
+const ConfirmProductsLazyImport = createFileRoute('/confirm-products')()
 const ConfirmIntroductionLazyImport = createFileRoute('/confirm-introduction')()
 const IndexLazyImport = createFileRoute('/')()
 
@@ -51,6 +52,13 @@ const IntroductionListLazyRoute = IntroductionListLazyImport.update({
   import('./routes/introduction-list.lazy').then((d) => d.Route),
 )
 
+const ConfirmProductsLazyRoute = ConfirmProductsLazyImport.update({
+  path: '/confirm-products',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/confirm-products.lazy').then((d) => d.Route),
+)
+
 const ConfirmIntroductionLazyRoute = ConfirmIntroductionLazyImport.update({
   path: '/confirm-introduction',
   getParentRoute: () => rootRoute,
@@ -79,6 +87,13 @@ declare module '@tanstack/react-router' {
       path: '/confirm-introduction'
       fullPath: '/confirm-introduction'
       preLoaderRoute: typeof ConfirmIntroductionLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/confirm-products': {
+      id: '/confirm-products'
+      path: '/confirm-products'
+      fullPath: '/confirm-products'
+      preLoaderRoute: typeof ConfirmProductsLazyImport
       parentRoute: typeof rootRoute
     }
     '/introduction-list': {
@@ -117,6 +132,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
+  '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
@@ -126,6 +142,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
+  '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
@@ -136,6 +153,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
+  '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
@@ -147,6 +165,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/confirm-introduction'
+    | '/confirm-products'
     | '/introduction-list'
     | '/products-list'
     | '/write-introduction'
@@ -155,6 +174,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/confirm-introduction'
+    | '/confirm-products'
     | '/introduction-list'
     | '/products-list'
     | '/write-introduction'
@@ -163,6 +183,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/confirm-introduction'
+    | '/confirm-products'
     | '/introduction-list'
     | '/products-list'
     | '/write-introduction'
@@ -173,6 +194,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   ConfirmIntroductionLazyRoute: typeof ConfirmIntroductionLazyRoute
+  ConfirmProductsLazyRoute: typeof ConfirmProductsLazyRoute
   IntroductionListLazyRoute: typeof IntroductionListLazyRoute
   ProductsListLazyRoute: typeof ProductsListLazyRoute
   WriteIntroductionLazyRoute: typeof WriteIntroductionLazyRoute
@@ -182,6 +204,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   ConfirmIntroductionLazyRoute: ConfirmIntroductionLazyRoute,
+  ConfirmProductsLazyRoute: ConfirmProductsLazyRoute,
   IntroductionListLazyRoute: IntroductionListLazyRoute,
   ProductsListLazyRoute: ProductsListLazyRoute,
   WriteIntroductionLazyRoute: WriteIntroductionLazyRoute,
@@ -202,6 +225,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/confirm-introduction",
+        "/confirm-products",
         "/introduction-list",
         "/products-list",
         "/write-introduction",
@@ -213,6 +237,9 @@ export const routeTree = rootRoute
     },
     "/confirm-introduction": {
       "filePath": "confirm-introduction.lazy.tsx"
+    },
+    "/confirm-products": {
+      "filePath": "confirm-products.lazy.tsx"
     },
     "/introduction-list": {
       "filePath": "introduction-list.lazy.tsx"
