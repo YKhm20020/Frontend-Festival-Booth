@@ -47,6 +47,7 @@ export default defineConfig({
 ```
 
 2. 遷移先・遷移元のページを作成する
+
 各ページに必要なコンポーネントを記述し、どのページにどのコンポーネントがあり、さらにそのコンポーネントではどのページへと遷移する予定なのかを記述する。なお、Linkコンポーネントは、@tanstack/react-router からimportすること。
 
 ```tsx
@@ -86,6 +87,7 @@ export const Write: React.FC = () => {
 ```
 
 3. routesディレクトリとその直下に __root.tsx ファイルを作成する
+
 ```tsx
 // routes/__root.tsx
 import { createRootRoute, Outlet } from '@tanstack/react-router';
@@ -102,6 +104,7 @@ export const Route = createRootRoute({
 ```
 
 4. xx.lazy.tsx ファイルを、routesディレクトリに作成する。
+
 xx は、新たに追加するページの名前を入れる。ページを別ディレクトリで作成済みである場合は、それをコンポーネントとしてimport、呼び出しするとよい。
 なお、lazyとつけなくてもよいが、lazyとつけることにより、初期のロードから遅延させてロードすることにより、初期ページの表示を高速化することができるため、遷移先のページについては基本lazyをおすすめする。
 
@@ -116,6 +119,7 @@ export const Route = createLazyFileRoute('/write')({
 ```
 
 5. `npm run dev` コマンドで routeTree.gen.ts を更新する
+
 `npm run dev`コマンドにより、自動でファイルの位置関係を走査し、xx.lazy.tsxの記述をもとに自動でルーティングを作成してくれる。この際、routeTree.gen.ts ファイルが自動で更新される。これにより、最新のルーティング設定が反映される。
 
 
