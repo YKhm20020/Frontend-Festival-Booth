@@ -102,6 +102,13 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image', {required: '画像を選択してください'})}
 							/>
 							画像1
+							<img 
+								src='/images/robot_and_hogeta.jpeg'
+								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
+								alt='sample-alt'
+								width={300}
+								height={300} 
+							/>
 						</label><br />
 
 						<label>
@@ -111,6 +118,13 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image')}
 							/>
 							画像2
+							<img 
+								src='/images/robot_and_hogeta.jpeg'
+								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
+								alt='sample-alt'
+								width={300}
+								height={300} 
+							/>
 						</label><br />
 
 						<label>
@@ -120,6 +134,13 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image')}
 							/>
 							画像3
+							<img 
+								src='/images/robot_and_hogeta.jpeg'
+								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
+								alt='sample-alt'
+								width={300}
+								height={300} 
+							/>
 						</label><br />
 
 						<label>
@@ -129,12 +150,19 @@ export const WriteIntroductionPage: React.FC = () => {
 								{...register('image')}
 							/>
 							画像4
+							<img 
+								src='/images/robot_and_hogeta.jpeg'
+								className='object-cover object-center mt-1 h-60 md:w-72 lg:w-80 focus:shadow-outline hover:ring-4 hover:ring-blue-600'
+								alt='sample-alt'
+								width={300}
+								height={300} 
+							/>
 						</label><br />
 					</div>
 
 					{/* 送信ボタン */}
 					<div className='flex justify-center'>
-						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-12' 
+						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8' 
 								type='submit'>
 							登録する！！
 						</button>
