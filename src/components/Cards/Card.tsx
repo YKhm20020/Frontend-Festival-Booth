@@ -6,7 +6,7 @@ type CardProps = {
 	src: string;
 	alt?: string;
 	title: string;
-	links?: string[];
+	links?: object;
 	modalTitle: string;
 	modalText?: string;
 };
@@ -15,7 +15,7 @@ export const Card: React.FC<CardProps> = ({
 	src,
 	alt,
 	title,
-	links = [],
+	links = {},
 	modalTitle,
 	modalText,
 }) => {
@@ -49,7 +49,10 @@ export const Card: React.FC<CardProps> = ({
 						{title}
 					</h1>
 					<div className='space-y-1 overflow-hidden'>
-						{links.map((item, index) => (
+						{(Object.keys(links).length > 0
+							? Object.values(links)
+							: ['No links available']
+						).map((item, index) => (
 							<p
 								key={index}
 								className='text-base text-transparent group-hover:text-gray-600 truncate transition-colors duration-500 delay-200 ease-in-out'
