@@ -34,8 +34,8 @@ export const IntroductionListPage: React.FC = () => {
 		return Array.isArray(introduction) ? introduction : [];
 	}, [introduction]);
 
-	// タブの合計、小数点以下切り捨て
-	const numOfSlides = Math.floor(allCards.length / cardsPerPage);
+	// タブの合計、小数点以下切り上げ
+	const numOfSlides = Math.ceil(allCards.length / cardsPerPage);
 
 	// 現在のページのカードを取得
 	const currentPageCards = allCards.slice(
@@ -129,7 +129,7 @@ export const IntroductionListPage: React.FC = () => {
 			</div>
 			<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
 				<div className='absolute mt-auto left-0 right-0 z-10 mx-2 mb-4 flex list-none justify-center p-0'>
-					{[...Array(numOfSlides + 1)].map((_, index) => (
+					{[...Array(numOfSlides)].map((_, index) => (
 						<button
 							key={index}
 							type='button'
