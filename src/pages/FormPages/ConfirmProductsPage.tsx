@@ -1,7 +1,6 @@
 import type React from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { useLocation } from '@tanstack/react-router';
-import { useRouter } from '@tanstack/react-router';
+import { useLocation, useRouter } from '@tanstack/react-router';
 
 type FormData = {
 	name: string;
