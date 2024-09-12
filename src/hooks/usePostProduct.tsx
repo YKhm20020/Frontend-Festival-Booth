@@ -8,7 +8,7 @@ type ProductData = {
 	description?: string; // 成果物についての説明 (任意入力、1文字以上200文字以下)
 };
 
-export const usePostProducts = () => {
+export const usePostProduct = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
