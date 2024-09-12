@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 type UseGetProductsByUserNameProps = {
-	user_name: string; // ユーザー名を指定
+	user_name: string; // ユーザー名
 };
 
 export const useGetProductsByUserName = ({ user_name }: UseGetProductsByUserNameProps) => {

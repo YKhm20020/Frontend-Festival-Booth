@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-type UseGetIntroData = {
-	page?: string;
-	limit?: string;
+type UseGetIntroProps = {
+	page?: string; // ページ数
+	limit?: string; // 取得する自己紹介の数の上限
 };
 
-export const useGetIntro = ({ page, limit }: UseGetIntroData) => {
+export const useGetIntro = ({ page, limit }: UseGetIntroProps) => {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);

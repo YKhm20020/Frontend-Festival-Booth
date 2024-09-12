@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 type useGetProductsProps = {
-	page?: string;
-	limit?: string;
+	page?: string; // ページ数
+	limit?: string; // 取得する成果物の数の上限
 };
 
 export const useGetProducts = ({ page, limit }: useGetProductsProps) => {

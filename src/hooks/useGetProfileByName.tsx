@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 type UseGetProfileByNameProps = {
-	name: string; // ユーザー名を指定
+	name: string; // ユーザー名
 };
 
 export const useGetProfileByName = ({ name }: UseGetProfileByNameProps) => {

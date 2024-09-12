@@ -2,11 +2,11 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type ProfileData = {
-	user_name: string;
-	introduction: string;
-	icon_num: number;
-	github_url?: string;
-	x_url?: string;
+	user_name: string; // ユーザー名
+	introduction: string; // 自己紹介
+	icon_num: number; // アイコンの番号
+	github_url?: string; // GithubのURL (任意入力)
+	x_url?: string; // XのURL (任意入力)
 };
 
 export const usePostProfile = () => {
