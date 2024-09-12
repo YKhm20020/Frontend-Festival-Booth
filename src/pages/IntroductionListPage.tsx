@@ -1,13 +1,32 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card } from '../components/Cards/Card';
 import { Header } from '../components/Header/Header';
 
 export const IntroductionListPage: React.FC = () => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-	// タブの合計
-	const numOfSlides = 5;
+	const numOfSlides = 5; // タブの合計
+	const cardsPerPage = 8; // 1ページあたりに配置するカードの数
+
+	const allCards = useMemo(() => {
+		return Array(numOfSlides * cardsPerPage)
+			.fill(null)
+			.map((_, index) => ({
+				src: '/images/robot_and_hogeta.jpeg',
+				alt: 'Sample Alt',
+				title: `Card ${index + 1}`,
+				links: ['link1', 'link2', 'link3'],
+				modalTitle: `Sample Title ${index + 1}`,
+				modalText: `Sample Text for card ${index + 1}`,
+			}));
+	}, []);
+
+	// 現在のページのカードを取得
+	const currentPageCards = allCards.slice(
+		currentIndex * cardsPerPage,
+		(currentIndex + 1) * cardsPerPage,
+	);
 
 	const prevSlide = (): void => {
 		setCurrentIndex((prevIndex) => (prevIndex - 1 + numOfSlides) % numOfSlides);
@@ -24,16 +43,16 @@ export const IntroductionListPage: React.FC = () => {
 				<div className='relative'>
 					{/* カードのグリッド */}
 					<div className='grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 lg:gap-x-6 gap-y-8 place-items-center justify-center items-center'>
-						{/* カードコンポーネント（8個） */}
-						{[...Array(8)].map((_, index) => (
+						{/* カードコンポーネント（1ページにつき8個） */}
+						{currentPageCards.map((card, index) => (
 							<Card
-								key={index}
-								src='/images/robot_and_hogeta.jpeg'
-								alt='sample-alt'
-								title='Sample title'
-								links={['link1', 'link2', 'link3']}
-								modalTitle='Sample Title'
-								modalText='Sample Text'
+								key={currentIndex * cardsPerPage + index}
+								src={card.src}
+								alt={card.alt}
+								title={card.title}
+								links={card.links}
+								modalTitle={card.modalTitle}
+								modalText={card.modalText}
 							/>
 						))}
 					</div>
