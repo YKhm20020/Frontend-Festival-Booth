@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Card } from '../components/Cards/Card';
+import { Card } from '../../components/Cards/Card';
 
 export const IntroductionListPage: React.FC = () => {
 	return (

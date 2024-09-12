@@ -1,11 +1,13 @@
 import type React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { DispImage } from './_components/DispImage';
 
 type FormData = {
 	name: string;
 	introduction: string;
 	githubUrl?: string;
 	XUrl?: string;
+	image: string;
 };
 
 export const WriteIntroductionPage: React.FC = () => {
@@ -91,9 +93,65 @@ export const WriteIntroductionPage: React.FC = () => {
 						{errors.XUrl && <p className='absolute text-red-500 text-xs italic'>{errors.XUrl.message}</p>}
 					</div>
 
+					{/* イメージ画像選択フィールド */}
+					<div className='mt-8'>
+						<label className={`block text-sm font-bold mb-2 ${errors.image ? 'text-red-500' : 'text-grey-700'}`} htmlFor='image'>画像を選択してください</label>
+						<label>
+							<input
+								type='radio'
+								value='0'
+								{...register('image', {required: '画像を選択してください'})}
+							/>
+							画像1
+							<DispImage
+								src='/images/robot_and_hogeta.jpeg'
+								alt='sample-alt'
+							/>
+						</label><br />
+
+						<label>
+							<input
+								type='radio'
+								value='1'
+								{...register('image')}
+							/>
+							画像2
+							<DispImage
+								src='/images/robot_and_hogeta.jpeg'
+								alt='sample-alt'
+							/>
+						</label><br />
+
+						<label>
+							<input
+								type='radio'
+								value='2'
+								{...register('image')}
+							/>
+							画像3
+							<DispImage
+								src='/images/robot_and_hogeta.jpeg'
+								alt='sample-alt'
+							/>
+						</label><br />
+
+						<label>
+							<input
+								type='radio'
+								value='3'
+								{...register('image')}
+							/>
+							画像4
+							<DispImage
+								src='/images/robot_and_hogeta.jpeg'
+								alt='sample-alt'
+							/>
+						</label><br />
+					</div>
+
 					{/* 送信ボタン */}
 					<div className='flex justify-center'>
-						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-12' 
+						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8' 
 								type='submit'>
 							登録する！！
 						</button>
