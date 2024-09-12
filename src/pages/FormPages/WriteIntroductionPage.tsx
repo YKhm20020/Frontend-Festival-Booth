@@ -17,7 +17,7 @@ export const WriteIntroductionPage: React.FC = () => {
     const { name, introduction, githubUrl, XUrl, image } = location.state || { name: '', introduction: '', githubUrl: '', Xurl: '', image: '' };
 	const router = useRouter();
 
-	const defaultValues = {
+	const defaultValues: FormData = {
 		name: name,
 		introduction: introduction,
 		githubUrl: githubUrl,
