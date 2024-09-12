@@ -3,11 +3,11 @@ import { NavLink } from './_components/NavLink';
 
 export const Header: React.FC = () => {
 	return (
-		<header className='bg-blue-400 flex w-screen h-auto md:h-12'>
+		<header className='bg-blue-400 flex w-screen h-auto my-auto md:h-16 md:py-2'>
 			<div className='container items-center my-auto ml-4 text-lg font-bold'>
 				Festival Booth
 			</div>
-			<div className='container mx-auto my-auto flex flex-wrap flex-col md:flex-row items-center'>
+			<div className='container mx-auto flex flex-col md:flex-row items-center'>
 				<nav className='ml-auto flex flex-wrap items-center justify-center '>
 					<NavLink toLink='/'>Home</NavLink>
 					<NavLink toLink='/read-introduction'>Read Intro</NavLink>
