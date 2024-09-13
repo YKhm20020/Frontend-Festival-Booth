@@ -1,5 +1,5 @@
 import type React from 'react';
-import { SubmitHandler } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { useLocation, useRouter } from '@tanstack/react-router';
 
 type ProductsFormData = {
@@ -12,13 +12,13 @@ type ProductsFormData = {
 export const ConfirmProductsPage: React.FC = () => {
     const router = useRouter();
     const location = useLocation();
-    const { name, title, url, comment } = location.state;
+    const searchParams = new URLSearchParams(location.search);
 
     const confirmData: ProductsFormData = {
-        name: name,
-        title: title,
-        url: url,
-        comment: comment,
+        name: searchParams.get('name') || '',
+        title: searchParams.get('title') || '',
+        url: searchParams.get('url') || '',
+        comment: searchParams.get('comment') || '',
     };
 
     const onSubmit: SubmitHandler<ProductsFormData> = (data) => {
@@ -52,8 +52,11 @@ export const ConfirmProductsPage: React.FC = () => {
 
                         <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8'
                                 onClick={() => router.navigate({to: '/write-products',
-                                                                state: location.state,
-                        })}>
+                                                                search: location.search,
+                                                                })
+                                        }
+                                type="button"
+                        >
                             戻る
                         </button>
                     </div>

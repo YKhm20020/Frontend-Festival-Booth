@@ -1,5 +1,6 @@
 import type React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { useLocation, useRouter } from '@tanstack/react-router';
 
@@ -12,14 +13,14 @@ type ProductsFormData = {
 
 export const WriteProductsPage: React.FC = () => {
 	const location = useLocation();
-    const { name, title, url, comment } = location.state || { name: '', title: '', url: '', comment: '', };
+	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
 
 	const defaultValues: ProductsFormData = {
-		name: name,
-		title: title,
-		url: url,
-		comment: comment,
+		name: searchParams.get('name') || '',
+        title: searchParams.get('title') || '',
+        url: searchParams.get('url') || '',
+        comment: searchParams.get('comment') || '',
 	};
 
 	const { register, handleSubmit, formState: { errors } } = useForm<ProductsFormData>({
@@ -33,7 +34,7 @@ export const WriteProductsPage: React.FC = () => {
 		console.log('Submitted Data:', data);
 		router.navigate({
 			to: '/confirm-products',
-			state: data,
+			search: data,
 		});
 	};
 
