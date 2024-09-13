@@ -22,7 +22,7 @@ export const useGetProducts = ({ page, limit }: useGetProductsProps) => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get('/products', {
+				const response = await axios.get('http://localhost:8080/products', {
 					params: {
 						page: page || undefined,
 						limit: limit || undefined,
