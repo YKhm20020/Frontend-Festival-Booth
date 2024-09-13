@@ -14,9 +14,9 @@ function App() {
 				<div className='my-4' />
 				<div className='items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
 					<ToIntroductionPageButton>自己紹介を見る</ToIntroductionPageButton>
-					<ToProductsPageButton />
+					<ToProductsPageButton>自信アリなこれこれを見る</ToProductsPageButton>
 				</div>
-				<hr className='flex-1 border-4 border-gray-500 my-8'></hr>
+				<hr className='flex-1 border-4 border-gray-500 my-8' />
 				<div className='items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
 					<ToPostIntroductionPageButton>自己紹介する</ToPostIntroductionPageButton>
 					<ToPostProductsPageButton>見せびらかす</ToPostProductsPageButton>
