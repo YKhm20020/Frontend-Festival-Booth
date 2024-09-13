@@ -25,7 +25,6 @@ export const ConfirmProductsPage: React.FC = () => {
     const { postProduct, loading, error, success } = usePostProduct();
 
     const onSubmit: SubmitHandler<ProductsFormData> = async (data) => {
-		console.log('Submitted Data:', data);
         const postProductData = {
             user_name: data.name,
             title: data.title,
@@ -36,7 +35,6 @@ export const ConfirmProductsPage: React.FC = () => {
         await postProduct(postProductData);
         if (error){
             alert('送信に失敗しました');
-            console.log(error);
             router.navigate({
                 to: '/write-products',
                 search: location.search,
