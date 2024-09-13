@@ -24,7 +24,7 @@ export const ConfirmIntroductionPage: React.FC = () => {
 		image: searchParams.get('image') || '',
 	};
 
-	const { postProfile, loading, error, success } = usePostProfile();
+	const { postProfile, error } = usePostProfile();
 
 	const onSubmit: SubmitHandler<IntroductionFormData> = async (data) => {
 		const postProfileData = {
@@ -68,10 +68,10 @@ export const ConfirmIntroductionPage: React.FC = () => {
 					</p>
 					<p className='mt-4'>
 						<strong>自己紹介コメント</strong>
-                    </p>
-                    <div className='border-black appearance-none rounded w-full py-2 px-3 mb-2 leading-tight'>
-                        {confirmData.introduction}
-                    </div>
+					</p>
+					<div className='border-black appearance-none rounded w-full py-2 px-3 mb-2 leading-tight'>
+						{confirmData.introduction}
+					</div>
 					<p className='mt-4'>
 						<strong>GitHub URL:</strong> {confirmData.githubUrl}
 					</p>
