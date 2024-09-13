@@ -19,7 +19,7 @@ function App() {
 				<hr className='flex-1 border-4 border-gray-500 my-8'></hr>
 				<div className='items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
 					<ToPostIntroductionPageButton>自己紹介する</ToPostIntroductionPageButton>
-					<ToPostProductsPageButton />
+					<ToPostProductsPageButton>見せびらかす</ToPostProductsPageButton>
 				</div>
 			</div>
 		</div>
