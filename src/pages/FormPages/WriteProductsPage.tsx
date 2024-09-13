@@ -31,7 +31,6 @@ export const WriteProductsPage: React.FC = () => {
 	const [text, setText] = useState(initText);
 
 	const onSubmit: SubmitHandler<ProductsFormData> = (data) => {
-		console.log('Submitted Data:', data);
 		router.navigate({
 			to: '/confirm-products',
 			search: data,
