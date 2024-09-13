@@ -1,5 +1,6 @@
 import type React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { DispImage } from './_components/DispImage';
 import { useLocation, useRouter } from '@tanstack/react-router';
 
@@ -13,15 +14,15 @@ type IntroductionFormData = {
 
 export const WriteIntroductionPage: React.FC = () => {
 	const location = useLocation();
-    const { name, introduction, githubUrl, XUrl, image } = location.state || { name: '', introduction: '', githubUrl: '', Xurl: '', image: '' };
+	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
 
 	const defaultValues: IntroductionFormData = {
-		name: name,
-		introduction: introduction,
-		githubUrl: githubUrl,
-		XUrl: XUrl,
-		image: image,
+		name: searchParams.get('name') || '',
+		introduction: searchParams.get('introduction') || '',
+		githubUrl: searchParams.get('githubUrl') || '',
+		XUrl: searchParams.get('XUrl') || '',
+		image: searchParams.get('image') || '',
 	}
 
 	const { register, handleSubmit, formState: { errors } } = useForm<IntroductionFormData>({
@@ -32,7 +33,7 @@ export const WriteIntroductionPage: React.FC = () => {
 	const onSubmit: SubmitHandler<IntroductionFormData> = (data) => {
 		router.navigate({
 			to: '/confirm-introduction',
-			state: data,
+			search: data,
 		});
 	};
 

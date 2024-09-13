@@ -14,15 +14,15 @@ type IntroductionFormData = {
 export const ConfirmIntroductionPage: React.FC = () => {
     const router = useRouter();
     const location = useLocation();
-    const { name, introduction, githubUrl, XUrl, image } = location.state;
+    const searchParams = new URLSearchParams(location.search);
 
     const confirmData: IntroductionFormData = {
-        name: name,
-        introduction: introduction,
-        githubUrl: githubUrl,
-        XUrl: XUrl,
-        image: image,
-    };
+		name: searchParams.get('name') || '',
+		introduction: searchParams.get('introduction') || '',
+		githubUrl: searchParams.get('githubUrl') || '',
+		XUrl: searchParams.get('XUrl') || '',
+		image: searchParams.get('image') || '',
+	}
 
     const { postProfile, loading, error, success } = usePostProfile();
 
@@ -48,7 +48,7 @@ export const ConfirmIntroductionPage: React.FC = () => {
             console.log(error);
             router.navigate({
                 to: '/write-introduction',
-                state: location.state,
+                search: location.search,
             });
         }
 	};
@@ -88,8 +88,10 @@ export const ConfirmIntroductionPage: React.FC = () => {
 
                         <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8'
                                 onClick={() => router.navigate({to: '/write-introduction',
-                                                                state: location.state,
-                        })}>
+                                                                search: location.search,
+                                                                })}
+                                type="button"
+                        >
                             戻る
                         </button>
                     </div>
