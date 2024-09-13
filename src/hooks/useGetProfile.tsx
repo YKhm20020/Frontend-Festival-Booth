@@ -31,18 +31,22 @@ export const useGetProfile = ({ page, limit }: UseGetProfileProps) => {
 				});
 				setData(response.data);
 				console.log(response);
-			} catch (err) {
-				if (err.response) {
-					// リクエストしたけど2xxの範囲外
-					setError(err.response.data?.message || 'Failed to fetch profile');
-				} else if (err.request) {
-					// リクエストしたけど応答がない
-					setError('No response from server.');
+			} catch (err: unknown) {
+				if (axios.isAxiosError(err)) {
+					if (err.response) {
+						// リクエストしたけど2xxの範囲外
+						setError(err.response.data?.message || 'Failed to fetch profile');
+					} else if (err.request) {
+						// リクエストしたけど応答がない
+						setError('No response from server.');
+					} else {
+						// その他のエラー
+						setError(`Error: ${err.message}`);
+					}
 				} else {
-					// その他のエラー
-					setError('Error: ', err.message);
+					// axios 以外のエラーハンドリング
+					setError('An unexpected error occurred.');
 				}
-				console.log(err);
 			} finally {
 				setLoading(false);
 			}

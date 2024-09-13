@@ -12,14 +12,14 @@ function App() {
 			<div className='bg-slate-100'>
 				<h1 className='text-3xl font-bold underline'>Hello world!</h1>
 				<div className='my-4' />
-				<div className='flex items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
-					<ToIntroductionPageButton />
-					<ToProductsPageButton />
+				<div className='items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
+					<ToIntroductionPageButton>自己紹介を見る</ToIntroductionPageButton>
+					<ToProductsPageButton>自信アリなこれこれを見る</ToProductsPageButton>
 				</div>
-				<hr className='flex-1 border-4 border-gray-500 my-8'></hr>
-				<div className='flex items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
-					<ToPostIntroductionPageButton />
-					<ToPostProductsPageButton />
+				<hr className='flex-1 border-4 border-gray-500 my-8' />
+				<div className='items-center justify-center grid grid-rows-1 grid-flow-col gap-8'>
+					<ToPostIntroductionPageButton>自己紹介する</ToPostIntroductionPageButton>
+					<ToPostProductsPageButton>見せびらかす</ToPostProductsPageButton>
 				</div>
 			</div>
 		</div>

@@ -23,18 +23,23 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 			try {
 				const response = await axios.get(`/products/${user_name}`);
 				setData(response.data);
-			} catch (err) {
-				if (err.response) {
-					// リクエストしたけど2xxの範囲外
-					setError(
-						err.response.data?.message || `Failed to fetch product of ${user_name}`,
-					);
-				} else if (err.request) {
-					// リクエストしたけど応答がない
-					setError('No response from server.');
+			} catch (err: unknown) {
+				if (axios.isAxiosError(err)) {
+					if (err.response) {
+						// リクエストしたけど2xxの範囲外
+						setError(
+							err.response.data?.message || `Failed to fetch product of ${user_name}`,
+						);
+					} else if (err.request) {
+						// リクエストしたけど応答がない
+						setError('No response from server.');
+					} else {
+						// その他のエラー
+						setError(`Error: ${err.message}`);
+					}
 				} else {
-					// その他のエラー
-					setError('Error: ', err.message);
+					// axios 以外のエラーハンドリング
+					setError('An unexpected error occurred.');
 				}
 			} finally {
 				setLoading(false);
