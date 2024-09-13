@@ -20,7 +20,7 @@ export const usePostProfile = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('https://localhost:8080/profiles', profileData);
+			const response = await axios.post('http://localhost:8080/profiles', profileData);
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true);
 			}

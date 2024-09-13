@@ -1,8 +1,7 @@
 import type React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { DispImage } from './_components/DispImage';
-import { useLocation } from '@tanstack/react-router';
-import { useRouter } from '@tanstack/react-router';
+import { useLocation, useRouter } from '@tanstack/react-router';
 
 type IntroductionFormData = {
 	name: string;
