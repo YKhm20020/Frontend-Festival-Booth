@@ -10,13 +10,7 @@ export const ProductsListPage: React.FC = () => {
 	// 1ページあたりに配置するカードの数
 	const cardsPerPage = 8;
 
-	const {
-		data: products = [],
-		loading,
-		error,
-	} = useGetProducts({ page: String(currentIndex), limit: String(cardsPerPage) });
-
-	console.log(products);
+	const { data: products = [], loading, error } = useGetProducts({});
 
 	const allCards = useMemo(() => {
 		return Array.isArray(products) ? products : [];
