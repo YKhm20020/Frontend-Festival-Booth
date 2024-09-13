@@ -55,11 +55,10 @@ export const ConfirmProductsPage: React.FC = () => {
                     <p><strong>名前:</strong>{confirmData.name}</p>
                     <p className='mt-4'><strong>タイトル:</strong> {confirmData.title}</p>
                     <p className='mt-4'><strong>URL:</strong> {confirmData.url}</p>
-                    <p className='mt-4'><strong>コメント</strong>
-                        <div className='border-black appearance-none rounded w-full py-2 px-3 mb-2 leading-tight'>
-                            {confirmData.comment}
-                        </div>
-                    </p>
+                    <p className='mt-4'><strong>コメント</strong></p>
+                    <div className='border-black appearance-none rounded w-full py-2 px-3 mb-2 leading-tight'>
+                        {confirmData.comment}
+                    </div>
                     <div className='flex justify-center space-x-12'>
                         {/* 送信ボタン */}
                         <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8' 
