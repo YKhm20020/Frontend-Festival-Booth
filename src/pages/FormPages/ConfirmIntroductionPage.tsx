@@ -37,12 +37,6 @@ export const ConfirmIntroductionPage: React.FC = () => {
         };
 
         await postProfile(postProfileData);
-        if (success){
-            alert('自己紹介おめでとう！');
-            router.navigate({
-                to: '/',
-            });
-		};
         if (error){
             alert('送信に失敗しました');
             console.log(error);
@@ -50,7 +44,12 @@ export const ConfirmIntroductionPage: React.FC = () => {
                 to: '/write-introduction',
                 search: location.search,
             });
-        }
+        } else {
+            alert('自己紹介おめでとう！');
+            router.navigate({
+                to: '/',
+            });
+        };
 	};
 
     const dicImage: { [imageNum: string]: string } = {

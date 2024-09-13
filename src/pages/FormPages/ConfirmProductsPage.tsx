@@ -1,6 +1,7 @@
 import type React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useLocation, useRouter } from '@tanstack/react-router';
+import { usePostProduct } from '../../hooks/usePostProduct';
 
 type ProductsFormData = {
 	name: string;
@@ -21,12 +22,31 @@ export const ConfirmProductsPage: React.FC = () => {
         comment: searchParams.get('comment') || '',
     };
 
-    const onSubmit: SubmitHandler<ProductsFormData> = (data) => {
+    const { postProduct, loading, error, success } = usePostProduct();
+
+    const onSubmit: SubmitHandler<ProductsFormData> = async (data) => {
 		console.log('Submitted Data:', data);
-        alert('投稿できました!!!');
-		router.navigate({
-			to: '/',
-		});
+        const postProductData = {
+            user_name: data.name,
+            title: data.title,
+            url: data.url,
+            description: data.comment,
+        };
+
+        await postProduct(postProductData);
+        if (error){
+            alert('送信に失敗しました');
+            console.log(error);
+            router.navigate({
+                to: '/write-products',
+                search: location.search,
+            });
+        } else {
+            alert('投稿できました!!!');
+            router.navigate({
+                to: '/',
+            });
+        }
 	};
 
     return (

@@ -19,7 +19,7 @@ export const usePostProduct = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('/products', productData);
+			const response = await axios.post('http://localhost:8080/products', productData);
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true); // 成功時
 			}
