@@ -1,6 +1,7 @@
 import type React from 'react';
-import { SubmitHandler } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { useLocation, useRouter } from '@tanstack/react-router';
+import { usePostProduct } from '../../hooks/usePostProduct';
 
 type ProductsFormData = {
 	name: string;
@@ -12,21 +13,38 @@ type ProductsFormData = {
 export const ConfirmProductsPage: React.FC = () => {
     const router = useRouter();
     const location = useLocation();
-    const { name, title, url, comment } = location.state;
+    const searchParams = new URLSearchParams(location.search);
 
     const confirmData: ProductsFormData = {
-        name: name,
-        title: title,
-        url: url,
-        comment: comment,
+        name: searchParams.get('name') || '',
+        title: searchParams.get('title') || '',
+        url: searchParams.get('url') || '',
+        comment: searchParams.get('comment') || '',
     };
 
-    const onSubmit: SubmitHandler<ProductsFormData> = (data) => {
-		console.log('Submitted Data:', data);
-        alert('投稿できました!!!');
-		router.navigate({
-			to: '/',
-		});
+    const { postProduct, loading, error, success } = usePostProduct();
+
+    const onSubmit: SubmitHandler<ProductsFormData> = async (data) => {
+        const postProductData = {
+            user_name: data.name,
+            title: data.title,
+            url: data.url,
+            description: data.comment,
+        };
+
+        await postProduct(postProductData);
+        if (error){
+            alert('送信に失敗しました');
+            router.navigate({
+                to: '/write-products',
+                search: location.search,
+            });
+        } else {
+            alert('投稿できました!!!');
+            router.navigate({
+                to: '/',
+            });
+        }
 	};
 
     return (
@@ -37,11 +55,10 @@ export const ConfirmProductsPage: React.FC = () => {
                     <p><strong>名前:</strong>{confirmData.name}</p>
                     <p className='mt-4'><strong>タイトル:</strong> {confirmData.title}</p>
                     <p className='mt-4'><strong>URL:</strong> {confirmData.url}</p>
-                    <p className='mt-4'><strong>コメント</strong>
-                        <div className='border-black appearance-none rounded w-full py-2 px-3 mb-2 leading-tight'>
-                            {confirmData.comment}
-                        </div>
-                    </p>
+                    <p className='mt-4'><strong>コメント</strong></p>
+                    <div className='border-black appearance-none rounded w-full py-2 px-3 mb-2 leading-tight'>
+                        {confirmData.comment}
+                    </div>
                     <div className='flex justify-center space-x-12'>
                         {/* 送信ボタン */}
                         <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8' 
@@ -52,8 +69,11 @@ export const ConfirmProductsPage: React.FC = () => {
 
                         <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8'
                                 onClick={() => router.navigate({to: '/write-products',
-                                                                state: location.state,
-                        })}>
+                                                                search: location.search,
+                                                                })
+                                        }
+                                type="button"
+                        >
                             戻る
                         </button>
                     </div>

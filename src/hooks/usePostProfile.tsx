@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type ProfileData = {
-	user_name: string; // ユーザー名
+	name: string; // ユーザー名
 	introduction: string; // 自己紹介
 	icon_num: number; // アイコンの番号
 	github_url?: string; // GithubのURL (任意入力)
@@ -20,7 +20,7 @@ export const usePostProfile = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('/profiles', profileData);
+			const response = await axios.post('http://localhost:8080/profiles', profileData);
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true);
 			}

@@ -10,11 +10,7 @@ export const IntroductionListPage: React.FC = () => {
 	// 1ページあたりに配置するカードの数
 	const cardsPerPage = 8;
 
-	const {
-		data: introduction = [],
-		loading,
-		error,
-	} = useGetProfile({ page: String(currentIndex), limit: String(cardsPerPage) });
+	const { data: introduction = [], loading, error } = useGetProfile({});
 
 	const allCards = useMemo(() => {
 		return Array.isArray(introduction) ? introduction : [];
