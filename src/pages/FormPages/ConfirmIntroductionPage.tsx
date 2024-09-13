@@ -1,6 +1,7 @@
 import type React from 'react';
-import { SubmitHandler } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { useLocation, useRouter } from '@tanstack/react-router';
+import { usePostProfile } from '../../hooks/usePostProfile';
 
 type IntroductionFormData = {
 	name: string;
@@ -23,12 +24,33 @@ export const ConfirmIntroductionPage: React.FC = () => {
         image: image,
     };
 
-    const onSubmit: SubmitHandler<IntroductionFormData> = (data) => {
+    const { postProfile, loading, error, success } = usePostProfile();
+
+    const onSubmit: SubmitHandler<IntroductionFormData> = async (data) => {
 		console.log('Submitted Data:', data);
-        alert('自己紹介おめでとう！');
-		router.navigate({
-			to: '/',
-		});
+        const postProfileData = {
+            user_name: data.name,
+            introduction: data.introduction,
+            icon_num: Number(data.image),
+            github_url: data.githubUrl,
+            x_url: data.XUrl,
+        };
+
+        await postProfile(postProfileData);
+        if (success){
+            alert('自己紹介おめでとう！');
+            router.navigate({
+                to: '/',
+            });
+		};
+        if (error){
+            alert('送信に失敗しました');
+            console.log(error);
+            router.navigate({
+                to: '/write-introduction',
+                state: location.state,
+            });
+        }
 	};
 
     const dicImage: { [imageNum: string]: string } = {

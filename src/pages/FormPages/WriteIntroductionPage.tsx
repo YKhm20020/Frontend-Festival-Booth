@@ -31,7 +31,6 @@ export const WriteIntroductionPage: React.FC = () => {
 	});
 
 	const onSubmit: SubmitHandler<IntroductionFormData> = (data) => {
-		console.log('Submitted Data:', data);
 		router.navigate({
 			to: '/confirm-introduction',
 			state: data,
