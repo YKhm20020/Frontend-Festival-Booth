@@ -1,8 +1,9 @@
 import type React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useLocation, useRouter } from '@tanstack/react-router';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
+import { Header } from '../../components/Header/Header';
 import { DispImage } from './_components/DispImage';
-import { useLocation } from '@tanstack/react-router';
-import { useRouter } from '@tanstack/react-router';
 
 type IntroductionFormData = {
 	name: string;
@@ -14,170 +15,194 @@ type IntroductionFormData = {
 
 export const WriteIntroductionPage: React.FC = () => {
 	const location = useLocation();
-    const { name, introduction, githubUrl, XUrl, image } = location.state || { name: '', introduction: '', githubUrl: '', Xurl: '', image: '' };
+	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
 
 	const defaultValues: IntroductionFormData = {
-		name: name,
-		introduction: introduction,
-		githubUrl: githubUrl,
-		XUrl: XUrl,
-		image: image,
-	}
+		name: searchParams.get('name') || '',
+		introduction: searchParams.get('introduction') || '',
+		githubUrl: searchParams.get('githubUrl') || '',
+		XUrl: searchParams.get('XUrl') || '',
+		image: searchParams.get('image') || '',
+	};
 
-	const { register, handleSubmit, formState: { errors } } = useForm<IntroductionFormData>({
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<IntroductionFormData>({
 		mode: 'onChange',
-    	defaultValues,
+		defaultValues,
 	});
 
 	const onSubmit: SubmitHandler<IntroductionFormData> = (data) => {
-		console.log('Submitted Data:', data);
 		router.navigate({
 			to: '/confirm-introduction',
-			state: data,
+			search: data,
 		});
 	};
 
 	return (
-		<div className='flex justify-center bg-gray-100'>
-			<div className='w-full max-w-xl'>
-				<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>Write Introduction Page</h1>
-				<form className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700' onSubmit={handleSubmit(onSubmit)}>
-					{/* ユーザ名入力フィールド */}
-					<div className='mt-4'>
-						<label className='block text-sm font-bold mb-2' htmlFor='name'>ユーザ名</label>
-						<input
-							className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
-							id='name'
-							{...register('name',{
-								required: 'ユーザ名は必須です',
-								maxLength: {
-									value: 20,
-									message: '最大20文字です'
-								}
-							})}
-							placeholder='君の名前は？'
-						/>
-						{errors.name && <p className='absolute text-red-500 text-xs italic'>{errors.name.message}</p>}
-					</div>
-
-					{/* 自己紹介コメント入力フィールド */}
-					<div className='mt-8'>
-						<label className='block text-sm font-bold mb-2' htmlFor='introduction'>自己紹介コメント</label>
-						<textarea
-							className={`shadow appearance-none border rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
-							id='introduction'
-							{...register('introduction',{
-								required: '自己紹介コメントは必須です',
-								maxLength: {
-									value: 200,
-									message: '最大200文字です'
-								}
-							})}
-							placeholder='自己紹介スペース'
-						/>
-						{errors.introduction && <p className='absolute text-red-500 text-xs italic'>{errors.introduction.message}</p>}
-					</div>
-					
-					{/* GithubURL入力フィールド */}
-					<div className='mt-8'>
-						<label className='block text-sm font-bold mb-2' htmlFor='githubUrl'>GitHub URL</label>
-						<input
-							className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.githubUrl ? 'border-red-500' : 'border-grey-100'}`}
-							id='githubUrl'
-							{...register('githubUrl',{
-								pattern: {
-									value: /^(https?:\/\/)?(www\.)?github\.com(\/[^\s]*)?$/i,
-									message: 'GitHubのURLを入力してください (例: https://github.com/username)'
-								}
-							})}
-							placeholder='https://github.com/username'
-						/>
-						{errors.githubUrl && <p className='absolute text-red-500 text-xs italic'>{errors.githubUrl.message}</p>}
-					</div>
-
-					{/* X URL入力フィールド */}
-					<div className='mt-8'>
-						<label className='block text-sm font-bold mb-2' htmlFor='XUrl'>X URL</label>
-						<input
-							className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.XUrl ? 'border-red-500' : 'border-grey-100'}`}
-							id='XUrl'
-							{...register('XUrl',{
-								pattern: {
-									value: /^(https?:\/\/)?(www\.)?x\.com(\/[^\s]*)?$/i,
-									message: 'XのURLを入力してください (例: https://x.com/username)'
-								}
-							})}
-							placeholder='https://x.com/username'
-						/>
-						{errors.XUrl && <p className='absolute text-red-500 text-xs italic'>{errors.XUrl.message}</p>}
-					</div>
-
-					{/* イメージ画像選択フィールド */}
-					<div className='mt-8'>
-						<label className={`block text-sm font-bold mb-2 ${errors.image ? 'text-red-500' : 'text-grey-700'}`} htmlFor='image'>画像を選択してください</label>
-						<label>
+		<>
+			<Header />
+			<div className='flex justify-center bg-gray-100'>
+				<div className='w-full max-w-xl'>
+					<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>
+						Write Introduction Page
+					</h1>
+					<form
+						className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'
+						onSubmit={handleSubmit(onSubmit)}
+					>
+						{/* ユーザ名入力フィールド */}
+						<div className='mt-4'>
+							<label className='block text-sm font-bold mb-2' htmlFor='name'>
+								ユーザ名
+							</label>
 							<input
-								type='radio'
-								value='0'
-								{...register('image', {required: '画像を選択してください'})}
+								className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
+								id='name'
+								{...register('name', {
+									required: 'ユーザ名は必須です',
+									maxLength: {
+										value: 20,
+										message: '最大20文字です',
+									},
+								})}
+								placeholder='君の名前は？'
 							/>
-							画像1
-							<DispImage
-								src='/images/robot_and_hogeta.jpeg'
-								alt='sample-alt'
-							/>
-						</label><br />
+							{errors.name && (
+								<p className='absolute text-red-500 text-xs italic'>
+									{errors.name.message}
+								</p>
+							)}
+						</div>
 
-						<label>
+						{/* 自己紹介コメント入力フィールド */}
+						<div className='mt-8'>
+							<label className='block text-sm font-bold mb-2' htmlFor='introduction'>
+								自己紹介コメント
+							</label>
+							<textarea
+								className={`shadow appearance-none border rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
+								id='introduction'
+								{...register('introduction', {
+									required: '自己紹介コメントは必須です',
+									maxLength: {
+										value: 200,
+										message: '最大200文字です',
+									},
+								})}
+								placeholder='自己紹介スペース'
+							/>
+							{errors.introduction && (
+								<p className='absolute text-red-500 text-xs italic'>
+									{errors.introduction.message}
+								</p>
+							)}
+						</div>
+
+						{/* GithubURL入力フィールド */}
+						<div className='mt-8'>
+							<label className='block text-sm font-bold mb-2' htmlFor='githubUrl'>
+								GitHub URL
+							</label>
 							<input
-								type='radio'
-								value='1'
-								{...register('image')}
+								className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.githubUrl ? 'border-red-500' : 'border-grey-100'}`}
+								id='githubUrl'
+								{...register('githubUrl', {
+									pattern: {
+										value: /^(https?:\/\/)?(www\.)?github\.com(\/[^\s]*)?$/i,
+										message:
+											'GitHubのURLを入力してください (例: https://github.com/username)',
+									},
+								})}
+								placeholder='https://github.com/username'
 							/>
-							画像2
-							<DispImage
-								src='/images/robot_and_hogeta.jpeg'
-								alt='sample-alt'
-							/>
-						</label><br />
+							{errors.githubUrl && (
+								<p className='absolute text-red-500 text-xs italic'>
+									{errors.githubUrl.message}
+								</p>
+							)}
+						</div>
 
-						<label>
+						{/* X URL入力フィールド */}
+						<div className='mt-8'>
+							<label className='block text-sm font-bold mb-2' htmlFor='XUrl'>
+								X URL
+							</label>
 							<input
-								type='radio'
-								value='2'
-								{...register('image')}
+								className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.XUrl ? 'border-red-500' : 'border-grey-100'}`}
+								id='XUrl'
+								{...register('XUrl', {
+									pattern: {
+										value: /^(https?:\/\/)?(www\.)?x\.com(\/[^\s]*)?$/i,
+										message:
+											'XのURLを入力してください (例: https://x.com/username)',
+									},
+								})}
+								placeholder='https://x.com/username'
 							/>
-							画像3
-							<DispImage
-								src='/images/robot_and_hogeta.jpeg'
-								alt='sample-alt'
-							/>
-						</label><br />
+							{errors.XUrl && (
+								<p className='absolute text-red-500 text-xs italic'>
+									{errors.XUrl.message}
+								</p>
+							)}
+						</div>
 
-						<label>
-							<input
-								type='radio'
-								value='3'
-								{...register('image')}
-							/>
-							画像4
-							<DispImage
-								src='/images/robot_and_hogeta.jpeg'
-								alt='sample-alt'
-							/>
-						</label><br />
-					</div>
+						{/* イメージ画像選択フィールド */}
+						<div className='mt-8'>
+							<label
+								className={`block text-sm font-bold mb-2 ${errors.image ? 'text-red-500' : 'text-grey-700'}`}
+								htmlFor='image'
+							>
+								画像を選択してください
+							</label>
+							<label>
+								<input
+									type='radio'
+									value='0'
+									{...register('image', { required: '画像を選択してください' })}
+								/>
+								画像1
+								<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+							</label>
+							<br />
 
-					{/* 送信ボタン */}
-					<div className='flex justify-center'>
-						<button className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8' 
-								type='submit'>
-							登録する！！
-						</button>
-					</div>
-				</form>
+							<label>
+								<input type='radio' value='1' {...register('image')} />
+								画像2
+								<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+							</label>
+							<br />
+
+							<label>
+								<input type='radio' value='2' {...register('image')} />
+								画像3
+								<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+							</label>
+							<br />
+
+							<label>
+								<input type='radio' value='3' {...register('image')} />
+								画像4
+								<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+							</label>
+							<br />
+						</div>
+
+						{/* 送信ボタン */}
+						<div className='flex justify-center'>
+							<button
+								className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:ring-2 hover:ring-offset-2 hover:ring-blue-600 mt-8'
+								type='submit'
+							>
+								登録する！！
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
