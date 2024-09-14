@@ -17,40 +17,34 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		const fetchProfile = async () => {
-			setLoading(true);
-			try {
-				const response = await axios.get(`http://localhost8080/products/${user_name}`);
-				console.log(response);
-				setData(response.data);
-			} catch (err: unknown) {
-				if (axios.isAxiosError(err)) {
-					if (err.response) {
-						// リクエストしたけど2xxの範囲外
-						setError(
-							err.response.data?.message || `Failed to fetch product of ${user_name}`,
-						);
-					} else if (err.request) {
-						// リクエストしたけど応答がない
-						setError('No response from server.');
-					} else {
-						// その他のエラー
-						setError(`Error: ${err.message}`);
-					}
+	const fetchProduct = async () => {
+		setLoading(true);
+		try {
+			const response = await axios.get(`http://localhost:8080/products/${user_name}`);
+			console.log(response);
+			setData(response.data);
+		} catch (err: unknown) {
+			if (axios.isAxiosError(err)) {
+				if (err.response) {
+					// リクエストしたけど2xxの範囲外
+					setError(
+						err.response.data?.message || `Failed to fetch product of ${user_name}`,
+					);
+				} else if (err.request) {
+					// リクエストしたけど応答がない
+					setError('No response from server.');
 				} else {
-					// axios 以外のエラーハンドリング
-					setError('An unexpected error occurred.');
+					// その他のエラー
+					setError(`Error: ${err.message}`);
 				}
-			} finally {
-				setLoading(false);
+			} else {
+				// axios 以外のエラーハンドリング
+				setError('An unexpected error occurred.');
 			}
-		};
-
-		if (user_name) {
-			fetchProfile();
+		} finally {
+			setLoading(false);
 		}
-	}, [user_name]);
+	};
 
-	return { data, loading, error };
+	return { fetchProduct, data, loading, error };
 };

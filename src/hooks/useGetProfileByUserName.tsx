@@ -18,43 +18,35 @@ export const useGetProfileByName = ({ name }: UseGetProfileByUserNameProps) => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		const fetchProfile = async () => {
-			setLoading(true);
-			setError(null);
+	const fetchProfile = async () => {
+		setLoading(true);
+		setError(null);
 
-			try {
-				// リクエストしたけど2xxの範囲外
-				const response = await axios.get(`http://localhost:8080/profiles/${name}`);
-				console.log(response);
-				setData(response.data);
-			} catch (err: unknown) {
-				if (axios.isAxiosError(err)) {
-					if (err.response) {
-						// リクエストしたけど2xxの範囲外
-						setError(
-							err.response.data?.message || `Failed to fetch profile of ${name}`,
-						);
-					} else if (err.request) {
-						// リクエストしたけど応答がない
-						setError('No response from server.');
-					} else {
-						// その他のエラー
-						setError(`Error: ${err.message}`);
-					}
+		try {
+			// リクエストしたけど2xxの範囲外
+			const response = await axios.get(`http://localhost:8080/profiles/${name}`);
+			console.log(response);
+			setData(response.data);
+		} catch (err: unknown) {
+			if (axios.isAxiosError(err)) {
+				if (err.response) {
+					// リクエストしたけど2xxの範囲外
+					setError(err.response.data?.message || `Failed to fetch profile of ${name}`);
+				} else if (err.request) {
+					// リクエストしたけど応答がない
+					setError('No response from server.');
 				} else {
-					// axios 以外のエラーハンドリング
-					setError('An unexpected error occurred.');
+					// その他のエラー
+					setError(`Error: ${err.message}`);
 				}
-			} finally {
-				setLoading(false);
+			} else {
+				// axios 以外のエラーハンドリング
+				setError('An unexpected error occurred.');
 			}
-		};
-
-		if (name) {
-			fetchProfile();
+		} finally {
+			setLoading(false);
 		}
-	}, [name]);
+	};
 
-	return { data, loading, error };
+	return { fetchProfile, data, loading, error };
 };
