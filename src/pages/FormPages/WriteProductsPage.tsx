@@ -1,9 +1,10 @@
 import type React from 'react';
-import { useState } from 'react';
-import { useLocation, useRouter } from '@tanstack/react-router';
+import { useState, useEffect } from 'react';
+import { useLocation, useRouter, useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { Header } from '../../components/Header/Header';
+import { useGetLoginStatus } from '../../hooks/useGetLoginStatus';
 
 type ProductsFormData = {
 	name: string;
@@ -13,9 +14,19 @@ type ProductsFormData = {
 };
 
 export const WriteProductsPage: React.FC = () => {
+	const { success, loading } = useGetLoginStatus();
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
+	const navigate = useNavigate();
+
+	// successがfalseのときにauthページにリダイレクトする処理を追加
+	useEffect(() => {
+		if (!loading && success === false) {
+			navigate({ to: '/auth' });
+		}
+	}, [loading, success, navigate]);
+
 
 	const defaultValues: ProductsFormData = {
 		name: searchParams.get('name') || '',
@@ -46,6 +57,10 @@ export const WriteProductsPage: React.FC = () => {
 		<>
 			<Header />
 			<div className='flex justify-center bg-gray-100'>
+
+				{/* ローディング中の処理 */}
+				{loading && <p>Loading...</p>}
+
 				<div className='w-full max-w-xl'>
 					<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>
 						Write Products Page

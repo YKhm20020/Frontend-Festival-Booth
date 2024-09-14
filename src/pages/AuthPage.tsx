@@ -2,7 +2,7 @@ import type React from 'react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSignUp } from '../hooks/useSignUp';
-import { useRouter } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 type FormData = {
 	email: string;
@@ -10,8 +10,8 @@ type FormData = {
 };
 
 export const AuthPage: React.FC = () => {
-	const router = useRouter();
 	const [isLogin, setIsLogin] = useState(true);
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -100,6 +100,15 @@ export const AuthPage: React.FC = () => {
 						>
 							{isLogin ? 'ログイン' : '登録'}
 						</button>
+						<div className='flex justify-center'>
+							<button
+								type='submit'
+								onClick={() => navigate({to: '/'})}
+								className='px-4 text-sm font-medium text-blue-600 hover:text-blue-900 focus:outline-none transition duration-150 ease-in-out'
+							>
+								＞＞ホームに戻る
+							</button>
+						</div>
 					</form>
 				</div>
 				<div

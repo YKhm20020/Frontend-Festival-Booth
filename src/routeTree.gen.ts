@@ -22,6 +22,7 @@ const ProductsListLazyImport = createFileRoute('/products-list')()
 const IntroductionListLazyImport = createFileRoute('/introduction-list')()
 const ConfirmProductsLazyImport = createFileRoute('/confirm-products')()
 const ConfirmIntroductionLazyImport = createFileRoute('/confirm-introduction')()
+const AuthLazyImport = createFileRoute('/auth')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
@@ -66,6 +67,11 @@ const ConfirmIntroductionLazyRoute = ConfirmIntroductionLazyImport.update({
   import('./routes/confirm-introduction.lazy').then((d) => d.Route),
 )
 
+const AuthLazyRoute = AuthLazyImport.update({
+  path: '/auth',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
@@ -80,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthLazyImport
       parentRoute: typeof rootRoute
     }
     '/confirm-introduction': {
@@ -131,6 +144,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/auth': typeof AuthLazyRoute
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
   '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
@@ -141,6 +155,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/auth': typeof AuthLazyRoute
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
   '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
@@ -152,6 +167,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/auth': typeof AuthLazyRoute
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
   '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
@@ -164,6 +180,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/confirm-introduction'
     | '/confirm-products'
     | '/introduction-list'
@@ -173,6 +190,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/confirm-introduction'
     | '/confirm-products'
     | '/introduction-list'
@@ -182,6 +200,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/confirm-introduction'
     | '/confirm-products'
     | '/introduction-list'
@@ -193,6 +212,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  AuthLazyRoute: typeof AuthLazyRoute
   ConfirmIntroductionLazyRoute: typeof ConfirmIntroductionLazyRoute
   ConfirmProductsLazyRoute: typeof ConfirmProductsLazyRoute
   IntroductionListLazyRoute: typeof IntroductionListLazyRoute
@@ -203,6 +223,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AuthLazyRoute: AuthLazyRoute,
   ConfirmIntroductionLazyRoute: ConfirmIntroductionLazyRoute,
   ConfirmProductsLazyRoute: ConfirmProductsLazyRoute,
   IntroductionListLazyRoute: IntroductionListLazyRoute,
@@ -224,6 +245,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/auth",
         "/confirm-introduction",
         "/confirm-products",
         "/introduction-list",
@@ -234,6 +256,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/auth": {
+      "filePath": "auth.lazy.tsx"
     },
     "/confirm-introduction": {
       "filePath": "confirm-introduction.lazy.tsx"
