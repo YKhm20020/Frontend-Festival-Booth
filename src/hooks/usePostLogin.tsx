@@ -1,34 +1,32 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-type ProfileData = {
+type LoginData = {
 	name: string; // ユーザー名
-	introduction: string; // 自己紹介
-	icon_num: number; // アイコンの番号
-	github_url?: string; // GithubのURL (任意入力)
-	x_url?: string; // XのURL (任意入力)
+	password: string; // パスワード (1文字以上50文字以下)
 };
 
-export const usePostProfile = () => {
-	const [loading, setLoading] = useState<boolean>(false);
+export const usePostLogin = () => {
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
 
-	const postProfile = async (profileData: ProfileData) => {
+	const postLogin = async (loginData: LoginData) => {
 		setLoading(true);
 		setError(null);
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('http://localhost:8080/profiles', profileData, { withCredentials: true });
+			const response = await axios.post('http://localhost:8080/login', loginData, { withCredentials: true });
 			if (response.status === 200 || response.status === 201) {
-				setSuccess(true);
+                setSuccess(true); // 成功時
+                console.log(response);
 			}
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				if (err.response) {
 					// リクエストしたけど2xxの範囲外
-					setError(err.response.data?.message || 'Failed to post profile');
+					setError(err.response.data?.message || 'Failed to post login');
 				} else if (err.request) {
 					// リクエストしたけど応答がない
 					setError('No response from server.');
@@ -45,5 +43,5 @@ export const usePostProfile = () => {
 		}
 	};
 
-	return { postProfile, loading, error, success };
+	return { postLogin, loading, error, success };
 };

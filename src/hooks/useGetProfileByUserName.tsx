@@ -21,7 +21,6 @@ export const useGetProfileByName = ({ user_name }: UseGetProfileByUserNameProps)
 	useEffect(() => {
 		const fetchProfile = async () => {
 			setLoading(true);
-			setError(null);
 
 			try {
 				// リクエストしたけど2xxの範囲外

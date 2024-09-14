@@ -28,6 +28,7 @@ export const useGetProfile = ({ page, limit }: UseGetProfileProps) => {
 						page: page || undefined,
 						limit: limit || undefined,
 					},
+					withCredentials: true
 				});
 				setData(response.data);
 				console.log(response);
