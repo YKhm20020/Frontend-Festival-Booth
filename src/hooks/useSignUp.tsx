@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type SignUpData = {
-	user_name: string; // ユーザー名
+	name: string; // ユーザー名
 	password: string; // パスワード (1文字以上50文字以下)
 };
 
@@ -17,7 +17,7 @@ export const useSignUp = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('http://localhost:8080/accounts', signUpData);
+			const response = await axios.post('http://localhost:8080/accounts', signUpData, { withCredentials: true });
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true); // 成功時
 			}

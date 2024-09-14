@@ -2,12 +2,12 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type LoginData = {
-	user_name: string; // ユーザー名
+	name: string; // ユーザー名
 	password: string; // パスワード (1文字以上50文字以下)
 };
 
-export const useLoginData = () => {
-	const [loading, setLoading] = useState<boolean>(false);
+export const usePostLogin = () => {
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
 
@@ -17,9 +17,10 @@ export const useLoginData = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('http://localhost:8080/login', loginData);
+			const response = await axios.post('http://localhost:8080/login', loginData, { withCredentials: true });
 			if (response.status === 200 || response.status === 201) {
-				setSuccess(true); // 成功時
+                setSuccess(true); // 成功時
+                console.log(response);
 			}
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {

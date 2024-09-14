@@ -2,7 +2,8 @@ import type React from 'react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSignUp } from '../hooks/useSignUp';
-import { useRouter } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
+import { usePostLogin } from '../hooks/usePostLogin';
 
 type FormData = {
 	email: string;
@@ -10,29 +11,43 @@ type FormData = {
 };
 
 export const AuthPage: React.FC = () => {
-	const router = useRouter();
 	const [isLogin, setIsLogin] = useState(true);
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormData>();
 
-	const { signUp, error } = useSignUp();
+	const { signUp, success: signUpSuccess } = useSignUp();
+	const { postLogin, success: postSuccess } = usePostLogin();
 
 	const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-		// 認証ロジックを追加
-		const signUpData = {
-			user_name: data.email,
+		const postData = {
+			name: data.email,
 			password: data.password
 		}
-		await signUp(signUpData);
+		// 認証ロジックを追加
+		if (!isLogin) {			
+			await signUp(postData);
+			console.log(signUpSuccess);
 
-		if (error) {
-			alert('送信に失敗しました');
+			if (signUpSuccess === false) {
+				alert('送信に失敗しました');
+			} else {
+				alert('新規登録ありがとう！');
+				setIsLogin(!isLogin);
+			}
 		} else {
-			alert('新規登録ありがとう！');
-			setIsLogin(!isLogin)
+			await postLogin(postData);
+			console.log(postSuccess);
+
+			if (postSuccess === false) {
+				alert('送信に失敗しました');
+			} else {
+				alert('ログインしたお！');
+				navigate({ to: '/' });
+			}
 		}
 	};
 
@@ -60,7 +75,7 @@ export const AuthPage: React.FC = () => {
 							</label>
 							<input
 								id='email'
-								type='email'
+								// type='email'
 								{...register('email', { required: 'メールアドレスは必須です' })}
 								className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out'
 							/>
@@ -100,6 +115,15 @@ export const AuthPage: React.FC = () => {
 						>
 							{isLogin ? 'ログイン' : '登録'}
 						</button>
+						<div className='flex justify-center'>
+							<button
+								type='submit'
+								onClick={() => navigate({to: '/'})}
+								className='px-4 text-sm font-medium text-blue-600 hover:text-blue-900 focus:outline-none transition duration-150 ease-in-out'
+							>
+								＞＞ホームに戻る
+							</button>
+						</div>
 					</form>
 				</div>
 				<div
