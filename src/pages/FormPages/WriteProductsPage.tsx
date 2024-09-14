@@ -7,7 +7,6 @@ import { Header } from '../../components/Header/Header';
 import { useGetLoginStatus } from '../../hooks/useGetLoginStatus';
 
 type ProductsFormData = {
-	name: string;
 	title: string;
 	url: string;
 	comment?: string;
@@ -15,7 +14,6 @@ type ProductsFormData = {
 
 export const WriteProductsPage: React.FC = () => {
 	const { success, loading } = useGetLoginStatus();
-	console.log('loding: ', loading, 'success: ', success);
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
@@ -30,7 +28,6 @@ export const WriteProductsPage: React.FC = () => {
 
 
 	const defaultValues: ProductsFormData = {
-		name: searchParams.get('name') || '',
 		title: searchParams.get('title') || '',
 		url: searchParams.get('url') || '',
 		comment: searchParams.get('comment') || '',
@@ -70,29 +67,6 @@ export const WriteProductsPage: React.FC = () => {
 							className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'
 							onSubmit={handleSubmit(onSubmit)}
 						>
-							{/* ユーザ名入力フィールド */}
-							<div className='mt-4'>
-								<label className='block text-sm font-bold mb-2' htmlFor='name'>
-									ユーザ名
-								</label>
-								<input
-									className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
-									id='name'
-									{...register('name', {
-										required: 'ユーザ名は必須です',
-										maxLength: {
-											value: 20,
-											message: '最大20文字です',
-										},
-									})}
-									placeholder='ユーザ名を入力してけろ'
-								/>
-								{errors.name && (
-									<p className='absolute text-red-500 text-xs italic'>
-										{errors.name.message}
-									</p>
-								)}
-							</div>
 
 							{/* タイトル入力フィールド */}
 							<div className='mt-8'>

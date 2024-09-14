@@ -1,6 +1,7 @@
 import type React from 'react';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { useSignUp } from '../hooks/useSignUp';
 import { useNavigate } from '@tanstack/react-router';
 import { usePostLogin } from '../hooks/usePostLogin';
@@ -12,6 +13,7 @@ type FormData = {
 
 export const AuthPage: React.FC = () => {
 	const [isLogin, setIsLogin] = useState(true);
+	const [isFirstRender, setIsFirstRender] = useState(true);
 	const navigate = useNavigate();
 	const {
 		register,
@@ -19,8 +21,8 @@ export const AuthPage: React.FC = () => {
 		formState: { errors },
 	} = useForm<FormData>();
 
-	const { signUp, success: signUpSuccess } = useSignUp();
-	const { postLogin, success: postSuccess } = usePostLogin();
+	const { signUp, loading: signUploading, success: signUpSuccess } = useSignUp();
+	const { postLogin, loading: postloading, success: postSuccess } = usePostLogin();
 
 	const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
 		const postData = {
@@ -30,26 +32,38 @@ export const AuthPage: React.FC = () => {
 		// 認証ロジックを追加
 		if (!isLogin) {			
 			await signUp(postData);
-			console.log(signUpSuccess);
-
-			if (signUpSuccess === false) {
-				alert('送信に失敗しました');
-			} else {
-				alert('新規登録ありがとう！');
-				setIsLogin(!isLogin);
-			}
 		} else {
 			await postLogin(postData);
-			console.log(postSuccess);
-
-			if (postSuccess === false) {
-				alert('送信に失敗しました');
-			} else {
-				alert('ログインしたお！');
-				navigate({ to: '/' });
-			}
 		}
 	};
+
+	// successがfalseのときにauthページにリダイレクトする処理を追加
+	useEffect(() => {
+		if(isFirstRender){
+			setIsFirstRender(false);
+			return;
+		}
+
+		if(signUploading || postloading){
+			return;
+		}
+
+		if(!isLogin){
+			if (signUpSuccess) {
+				alert('新規登録ありがとう！');
+				setIsLogin(!isLogin);
+			} else {
+				alert('送信に失敗しました');
+			}
+		} else {
+			if (postSuccess) {
+				alert('ログインしたお！');
+				navigate({ to: '/' });
+			} else {
+				alert('ログインに失敗しました');
+			}
+		}
+	}, [signUploading, postloading]);
 
 	// パスワードの最小文字数
 	const minPassLength: number = 8;
@@ -71,12 +85,12 @@ export const AuthPage: React.FC = () => {
 								htmlFor='email'
 								className='block text-sm font-medium text-gray-700'
 							>
-								メールアドレス
+								ユーザ名
 							</label>
 							<input
 								id='email'
 								// type='email'
-								{...register('email', { required: 'メールアドレスは必須です' })}
+								{...register('email', { required: 'ユーザ名は必須です' })}
 								className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out'
 							/>
 							{errors.email && (

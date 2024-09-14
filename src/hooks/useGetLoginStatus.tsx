@@ -17,7 +17,6 @@ export const useGetLoginStatus = () => {
 				console.log(response.data);
 				if (response.status === 200) {
 					// サクセスと判断できる場合
-					console.log('set succcess true');
 					setSuccess(true); // ログイン成功
 				}
 			} catch (err: unknown) {
