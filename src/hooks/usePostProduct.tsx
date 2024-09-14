@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type ProductData = {
-	user_name: string; // ユーザー名
 	title: string; // タイトル (1文字以上50文字以下)
 	url: string; // 成果物のURL
 	description?: string; // 成果物についての説明 (任意入力、1文字以上200文字以下)
