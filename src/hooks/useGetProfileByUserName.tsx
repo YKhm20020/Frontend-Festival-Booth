@@ -26,6 +26,9 @@ export const useGetProfileByName = ({ user_name }: UseGetProfileByUserNameProps)
 				// リクエストしたけど2xxの範囲外
 				const response = await axios.get(
 					`${import.meta.env.VITE_APP_BASE_URL}/profiles/${user_name}`,
+					{
+						withCredentials: true,
+					}
 				);
 				setData(response.data);
 			} catch (err: unknown) {
