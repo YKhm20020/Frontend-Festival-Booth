@@ -75,18 +75,23 @@ export const WritenMatchingPage: React.FC = () => {
 							<div className="mt-2">
 								{Options[qIndex].map((option, oIndex) => (
 									<label key={oIndex} className="block text-lg">
-										<input
-											type="radio"
-											// name={`question-${qIndex}`}
-											value={oIndex}
-											checked
-											{...register(`question${qIndex}`)}
-											// {...register(`question${qIndex}`, { required: '画像を選択してください' })}
-											// {...register('question0', { required: '画像を選択してください' })}
-											// checked={answers[qIndex] === option}
-											// onChange={() => handleChange(qIndex, option)}
-											className="mr-2"
-										/>
+										{
+											oIndex === 0 ?
+											<input
+												type="radio"
+												value={oIndex}
+												checked
+												{...register(`question${qIndex}`)}
+												className="mr-2"
+											/>
+											:
+											<input
+												type="radio"
+												value={oIndex}
+												{...register(`question${qIndex}`)}
+												className="mr-2"
+											/>
+										}
 										{option}
 									</label>
 								))}
