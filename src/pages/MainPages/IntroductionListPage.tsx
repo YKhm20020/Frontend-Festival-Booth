@@ -4,7 +4,6 @@ import { useGetProfile } from '../../hooks/useGetProfile';
 import { useGetProducts } from '../../hooks/useGetProducts';
 import { Header } from '../../components/Header/Header';
 import { Card } from '../../components/Cards/Card';
-import { ProductsListPage } from './ProductsListPage';
 
 export const IntroductionListPage: React.FC = () => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
