@@ -7,7 +7,7 @@ type SignUpData = {
 };
 
 export const useSignUp = () => {
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
 

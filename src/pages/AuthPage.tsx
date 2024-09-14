@@ -20,8 +20,8 @@ export const AuthPage: React.FC = () => {
 		formState: { errors },
 	} = useForm<FormData>();
 
-	const { signUp, success: signUpSuccess } = useSignUp();
-	const { postLogin, success: postSuccess } = usePostLogin();
+	const { signUp, loading: signUploading, success: signUpSuccess } = useSignUp();
+	const { postLogin, loading: postloading, success: postSuccess } = usePostLogin();
 
 	const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
 		const postData = {
@@ -32,7 +32,7 @@ export const AuthPage: React.FC = () => {
 		if (!isLogin) {			
 			await signUp(postData);
 
-			if (signUpSuccess === false) {
+			if (!signUploading && !signUpSuccess) {
 				alert('送信に失敗しました');
 			} else {
 				alert('新規登録ありがとう！');
@@ -41,7 +41,7 @@ export const AuthPage: React.FC = () => {
 		} else {
 			await postLogin(postData);
 
-			if (postSuccess === false) {
+			if (!postloading && !postSuccess) {
 				alert('送信に失敗しました');
 			} else {
 				alert('ログインしたお！');
