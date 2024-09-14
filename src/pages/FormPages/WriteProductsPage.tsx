@@ -15,7 +15,6 @@ type ProductsFormData = {
 
 export const WriteProductsPage: React.FC = () => {
 	const { success, loading } = useGetLoginStatus();
-	console.log('loding: ', loading, 'success: ', success);
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();

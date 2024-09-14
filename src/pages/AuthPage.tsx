@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { useSignUp } from '../hooks/useSignUp';
 import { useNavigate } from '@tanstack/react-router';
 import { usePostLogin } from '../hooks/usePostLogin';
@@ -30,7 +31,6 @@ export const AuthPage: React.FC = () => {
 		// 認証ロジックを追加
 		if (!isLogin) {			
 			await signUp(postData);
-			console.log(signUpSuccess);
 
 			if (signUpSuccess === false) {
 				alert('送信に失敗しました');
@@ -40,7 +40,6 @@ export const AuthPage: React.FC = () => {
 			}
 		} else {
 			await postLogin(postData);
-			console.log(postSuccess);
 
 			if (postSuccess === false) {
 				alert('送信に失敗しました');
