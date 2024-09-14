@@ -18,9 +18,9 @@ const Options = [
 ];
 
 type QuestionsFormData = {
+	question0: number;
 	question1: number;
 	question2: number;
-	question3: number;
 };
 
 export const WritenMatchingPage: React.FC = () => {
@@ -29,23 +29,22 @@ export const WritenMatchingPage: React.FC = () => {
 	const router = useRouter();
 
 	const defaultValues: QuestionsFormData = {
+		question0: Number(searchParams.get('question0')) || 0,
 		question1: Number(searchParams.get('question1')) || 0,
 		question2: Number(searchParams.get('question2')) || 0,
-		question3: Number(searchParams.get('question3')) || 0,
 	};
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<QuestionsFormData>({
+	} = useForm({
 		mode: 'onChange',
-		defaultValues,
 	});
 
-	const onSubmit: SubmitHandler<QuestionsFormData> = (data) => {
+	const onSubmit: SubmitHandler<any> = (data) => {
 		router.navigate({
-			to: '/confirm-introduction',
+			to: '/',
 			search: data,
 		});
 	};
@@ -76,10 +75,12 @@ export const WritenMatchingPage: React.FC = () => {
 									<label key={oIndex} className="block text-lg">
 										<input
 											type="radio"
-											name={`question-${qIndex}`}
-											value={option}
-											checked={answers[qIndex] === option}
-											onChange={() => handleChange(qIndex, option)}
+											// name={`question-${qIndex}`}
+											value={oIndex}
+											{...register(`question${qIndex}`, { required: '画像を選択してください' })}
+											// {...register('question0', { required: '画像を選択してください' })}
+											// checked={answers[qIndex] === option}
+											// onChange={() => handleChange(qIndex, option)}
 											className="mr-2"
 										/>
 										{option}
