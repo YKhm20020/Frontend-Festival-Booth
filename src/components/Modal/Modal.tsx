@@ -1,61 +1,37 @@
 import type React from 'react';
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useStableCallback } from '@tanstack/react-router';
-import { useGetProfileByName } from '../../hooks/useGetProfileByUserName';
-import { useGetProductByUserName } from '../../hooks/useGetProductByUserName';
+import { useLocation } from '@tanstack/react-router';
 
 type ModalProps = {
 	isOpen: boolean;
-	userName: string;
-	productName?: string;
 	src: string;
 	alt: string;
 	modalTitle: string;
 	modalText?: string;
-	modalLink: string;
+	theOtherModalTitle?: string;
+	theOtherModalText?: string;
 	links?: object;
 	closeModal: () => void;
 };
 
 export const Modal: React.FC<ModalProps> = ({
 	isOpen,
-	userName,
 	src,
 	alt,
 	modalTitle,
 	modalText,
-	modalLink,
+	theOtherModalTitle,
+	theOtherModalText,
 	links = {},
 	closeModal,
 }) => {
-	const {
-		data: specifiedUserProfile,
-		profileLoading,
-		profileError,
-	} = useGetProfileByName({ name: userName });
+	const [currentTitle, setCurrentTitle] = useState(modalTitle);
+	const [currentText, setCurrentText] = useState(modalText);
+	const [, setIsSecondary] = useState<boolean>(false);
+	const [linkMessage, setLinkMessage] = useState<string>('');
+	const [modalLinkText, setModalLinkText] = useState<string>('');
 
-	const {
-		data: specifiedUserProduct,
-		productLoading,
-		productError,
-	} = useGetProductByUserName({ user_name: userName });
-
-	const [isNextModalOpen, setIsNextModalOpen] = useState<boolean>(false);
-
-	console.log('specifiedUserProfile:', specifiedUserProfile);
-	console.log('specifiedUserProduct: ', specifiedUserProduct);
-	console.log(userName);
-	console.log('Type of specifiedUserProfile:', typeof specifiedUserProfile);
-
-	// 現在開いているページのパスを取得
 	const location = useLocation();
-	let changeModalText = '';
-
-	if (location.pathname.includes('introduction-list')) {
-		changeModalText = `${userName}さんの成果物へ移動`;
-	} else if (location.pathname.includes('products-list')) {
-		changeModalText = `${userName}さんの自己紹介へ移動`;
-	}
 
 	useEffect(() => {
 		const handleEscapeKey = (event: KeyboardEvent) => {
@@ -76,6 +52,56 @@ export const Modal: React.FC<ModalProps> = ({
 			window.removeEventListener('keydown', handleEscapeKey);
 		};
 	}, [isOpen, closeModal]);
+
+	useEffect(() => {
+		if (!isOpen) {
+			setIsSecondary(false);
+			setLinkMessage('');
+		}
+	}, [isOpen]);
+
+	useEffect(() => {
+		setCurrentTitle(modalTitle);
+		setCurrentText(modalText);
+	}, [modalTitle, modalText]);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const isIntroductionList = location.pathname.includes('introduction-list');
+		const isProductsList = location.pathname.includes('products-list');
+
+		if ((!theOtherModalTitle || !theOtherModalText) && isIntroductionList) {
+			setLinkMessage('成果物がありません');
+			setModalLinkText('成果物へ移動');
+		} else if ((!theOtherModalTitle || !theOtherModalText) && isProductsList) {
+			setLinkMessage('自己紹介がありません');
+			setModalLinkText('自己紹介へ移動');
+		} else {
+			setLinkMessage('');
+			setModalLinkText(isIntroductionList ? '成果物へ移動' : '自己紹介へ移動');
+		}
+	}, [isOpen, theOtherModalTitle, theOtherModalText, location.pathname]);
+
+	const handleModalLinkClick = () => {
+		if (theOtherModalTitle && theOtherModalText) {
+			setIsSecondary((prev) => {
+				const newIsSecondary = !prev;
+				setCurrentTitle(newIsSecondary ? theOtherModalTitle : modalTitle);
+				setCurrentText(newIsSecondary ? theOtherModalText : modalText);
+				setModalLinkText(
+					newIsSecondary
+						? location.pathname.includes('introduction-list')
+							? '自己紹介へ移動'
+							: '成果物へ移動'
+						: location.pathname.includes('introduction-list')
+							? '成果物へ移動'
+							: '自己紹介へ移動',
+				);
+				return newIsSecondary;
+			});
+		}
+	};
 
 	if (!isOpen) {
 		return null;
@@ -111,7 +137,7 @@ export const Modal: React.FC<ModalProps> = ({
 						</svg>
 					</button>
 				</div>
-				<h1 className='text-4xl font-bold mb-4 md:tracking-wide'>{modalTitle}</h1>
+				<h1 className='text-4xl font-bold mb-4 md:tracking-wide'>{currentTitle}</h1>
 				<div className='grid-cols-2 flex flex-row md:gap-4 h-full w-full'>
 					<div className='w-1/2 overflow-hidden bg-gray mb-4 md:mb-0 flex items-center justify-center'>
 						<img
@@ -124,9 +150,15 @@ export const Modal: React.FC<ModalProps> = ({
 					</div>
 					<div className='ml-4 md:w-1/2 flex flex-col items-center'>
 						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>
-							{modalText}
+							{currentText}
 						</p>
-						{modalLink}
+						{linkMessage ? (
+							<p className='text-red-500 mt-2'>{linkMessage}</p>
+						) : (
+							<button type='button' onClick={handleModalLinkClick}>
+								{modalLinkText}
+							</button>
+						)}
 						<div className='container cursor-pointer mt-auto mb-4'>
 							{(Object.keys(links).length > 0
 								? Object.values(links)
