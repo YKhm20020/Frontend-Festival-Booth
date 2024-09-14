@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { QuestionMatchingPage } from '../pages/Matching/QuestionMatchingPage';
+import { WritenMatchingPage } from '../pages/FormPages/WritenMatchingPage'
 
 export const Route = createLazyFileRoute('/question-matching')({
-  component: () =>  <QuestionMatchingPage />,
+  component: () => <WritenMatchingPage />,
 })
