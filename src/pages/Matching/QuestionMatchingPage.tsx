@@ -54,11 +54,15 @@ export const QuestionMatchingPage: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<div className="p-6 max-w-md mx-auto bg-red-100 rounded-xl shadow-lg space-y-4">
-				<h1 className="text-2xl font-bold text-center text-red-700">祭りアンケート</h1>
+			<h1 className="text-2xl font-bold text-center text-red-700">
+				祭りアンケート
+			</h1>
+			<div className="mt-p-6 max-w-md mx-auto bg-red-100 rounded-xl shadow-lg space-y-4">
 				{Questions.map((question, qIndex) => (
 					<div key={qIndex} className="border-t border-red-300 pt-4">
-						<h2 className="text-xl font-semibold text-red-600">{question}</h2>
+						<h2 className="text-xl font-semibold text-red-600">
+							{question}
+						</h2>
 						<div className="mt-2">
 							{Options[qIndex].map((option, oIndex) => (
 								<label key={oIndex} className="block text-lg">
@@ -72,7 +76,7 @@ export const QuestionMatchingPage: React.FC = () => {
 									/>
 									{option}
 								</label>
-						))}
+							))}
 						</div>
 					</div>
 				))}
@@ -80,7 +84,7 @@ export const QuestionMatchingPage: React.FC = () => {
 					type="submit"
 					className="w-full mt-4 bg-red-500 text-white py-2 rounded hover:bg-red-600"
 					>
-					提出する
+					登録する！！
 				</button>
 			</div>
 		</>
