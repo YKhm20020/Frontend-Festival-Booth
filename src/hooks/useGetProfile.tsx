@@ -19,6 +19,8 @@ export const useGetProfile = ({ page, limit }: UseGetProfileProps) => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
+	console.log(`VITE_APP_BASE_URL: ${import.meta.env.VITE_APP_BASE_URL}`);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
