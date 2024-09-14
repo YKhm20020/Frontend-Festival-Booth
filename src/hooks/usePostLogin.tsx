@@ -7,7 +7,7 @@ type LoginData = {
 };
 
 export const usePostLogin = () => {
-	const [loading, setLoading] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
 
@@ -20,7 +20,6 @@ export const usePostLogin = () => {
 			const response = await axios.post('http://localhost:8080/login', loginData, { withCredentials: true });
 			if (response.status === 200 || response.status === 201) {
                 setSuccess(true); // 成功時
-                console.log(response);
 			}
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {

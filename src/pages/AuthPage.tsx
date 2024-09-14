@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { useSignUp } from '../hooks/useSignUp';
@@ -13,6 +13,7 @@ type FormData = {
 
 export const AuthPage: React.FC = () => {
 	const [isLogin, setIsLogin] = useState(true);
+	const [isFirstRender, setIsFirstRender] = useState(true);
 	const navigate = useNavigate();
 	const {
 		register,
@@ -31,24 +32,38 @@ export const AuthPage: React.FC = () => {
 		// 認証ロジックを追加
 		if (!isLogin) {			
 			await signUp(postData);
-
-			if (!signUploading && !signUpSuccess) {
-				alert('送信に失敗しました');
-			} else {
-				alert('新規登録ありがとう！');
-				setIsLogin(!isLogin);
-			}
 		} else {
 			await postLogin(postData);
-
-			if (!postloading && !postSuccess) {
-				alert('送信に失敗しました');
-			} else {
-				alert('ログインしたお！');
-				navigate({ to: '/' });
-			}
 		}
 	};
+
+	// successがfalseのときにauthページにリダイレクトする処理を追加
+	useEffect(() => {
+		if(isFirstRender){
+			setIsFirstRender(false);
+			return;
+		}
+
+		if(signUploading || postloading){
+			return;
+		}
+
+		if(!isLogin){
+			if (signUpSuccess) {
+				alert('新規登録ありがとう！');
+				setIsLogin(!isLogin);
+			} else {
+				alert('送信に失敗しました');
+			}
+		} else {
+			if (postSuccess) {
+				alert('ログインしたお！');
+				navigate({ to: '/' });
+			} else {
+				alert('ログインに失敗しました');
+			}
+		}
+	}, [signUploading, postloading]);
 
 	// パスワードの最小文字数
 	const minPassLength: number = 8;
