@@ -19,7 +19,10 @@ export const usePostComment = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('/comments', postCommentData);
+			const response = await axios.post(
+				`${import.meta.env.VITE_APP_BASE_URL}/comments`,
+				postCommentData,
+			);
 
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true); // 成功時

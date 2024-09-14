@@ -20,7 +20,11 @@ export const usePostProfile = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('http://localhost:8080/profiles', profileData, { withCredentials: true });
+			const response = await axios.post(
+				`${import.meta.env.VITE_APP_BASE_URL}/profiles`,
+				profileData,
+				{ withCredentials: true },
+			);
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true);
 			}

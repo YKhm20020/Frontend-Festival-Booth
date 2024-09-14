@@ -21,7 +21,9 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 		const fetchProfile = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get(`/products/${user_name}`);
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BASE_URL}/products/${user_name}`,
+				);
 				setData(response.data);
 			} catch (err: unknown) {
 				if (axios.isAxiosError(err)) {
