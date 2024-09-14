@@ -27,6 +27,7 @@ export const useGetProducts = ({ page, limit }: useGetProductsProps) => {
 						page: page || undefined,
 						limit: limit || undefined,
 					},
+					withCredentials: true,
 				});
 				setData(response.data);
 			} catch (err: unknown) {

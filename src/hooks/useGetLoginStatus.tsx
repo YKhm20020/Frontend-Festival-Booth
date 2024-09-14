@@ -11,7 +11,7 @@ export const useGetLoginStatus = () => {
 		const fetchStatus = async () => {
 
 			try {
-				const response = await axios.get('http://localhost:8080/login');
+				const response = await axios.get('http://localhost:8080/login', { withCredentials: true });
 				console.log('resst: ', response.status);
 				console.log(response.data);
 				if (response.status === 200) {

@@ -17,7 +17,7 @@ export const usePostLogin = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('http://localhost:8080/login', loginData);
+			const response = await axios.post('http://localhost:8080/login', loginData, { withCredentials: true });
 			if (response.status === 200 || response.status === 201) {
                 setSuccess(true); // 成功時
                 console.log(response);

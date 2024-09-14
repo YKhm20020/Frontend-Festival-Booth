@@ -17,7 +17,7 @@ export const useSignUp = () => {
 		setSuccess(false);
 
 		try {
-			const response = await axios.post('http://localhost:8080/accounts', signUpData);
+			const response = await axios.post('http://localhost:8080/accounts', signUpData, { withCredentials: true });
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true); // 成功時
 			}

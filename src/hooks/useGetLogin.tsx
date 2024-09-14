@@ -15,7 +15,7 @@ export const useGetLogin = () => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get('http://localhost:8080/login');
+				const response = await axios.get('http://localhost:8080/login', { withCredentials: true });
 				setData(response.data);
 				console.log(response);
 			} catch (err: unknown) {
