@@ -25,11 +25,11 @@ export const useGetProfile = ({ page, limit }: UseGetProfileProps) => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}/profiles`, {
-					params: {
-						page: page || undefined,
-						limit: limit || undefined,
-					},
+				const response = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}`, {
+					// params: {
+					// 	page: page || undefined,
+					// 	limit: limit || undefined,
+					// },
 					withCredentials: true,
 				});
 				setData(response.data);
