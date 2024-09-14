@@ -30,18 +30,18 @@ function App() {
             さあ、繋がろう
           </h2>
           <div className="grid grid-cols-2 gap-4">
-            <ToIntroductionPageButton className="btn-primary">
+            <ToIntroductionPageButton>
               自己紹介を見る
             </ToIntroductionPageButton>
-            <ToProductsPageButton className="btn-primary">
+            <ToProductsPageButton>
               成果物を見る
             </ToProductsPageButton>
-            <ToPostIntroductionPageButton className="btn-secondary">
-              自己紹介を投稿する
-            </ToPostIntroductionPageButton>
-            <ToPostProductsPageButton className="btn-secondary">
-              成果物を投稿する
-            </ToPostProductsPageButton>
+			<ToPostIntroductionPageButton>
+			自己紹介を投稿する
+			</ToPostIntroductionPageButton>
+			<ToPostProductsPageButton>
+			成果物を投稿する
+			</ToPostProductsPageButton>
           </div>
         </div>
       </div>

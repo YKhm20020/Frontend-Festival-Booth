@@ -11,7 +11,7 @@ export const ToPostProductsPageButton: React.FC<ToPostProductsPageButtonProps> =
 	const navigate = useNavigate();
 
 	return (
-		<button href="#_" className="relative inline-sky-700 px-4 py-2 font-medium group"
+		<button className="relative inline-sky-700 px-4 py-2 font-medium group btn-secondary"
 			onClick={() => navigate({ to: '/write-products' })}
 			type='button'
 		>

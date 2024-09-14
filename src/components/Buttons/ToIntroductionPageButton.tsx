@@ -11,7 +11,7 @@ export const ToIntroductionPageButton: React.FC<ToIntroductionPageButtonProps> =
 	const navigate = useNavigate();
 
 	return (
-		<button href="#_" className="relative inline-sky-700 px-4 py-2 font-medium group"
+		<button className="relative inline-sky-700 px-4 py-2 font-medium group btn-primary"
 			onClick={() => navigate({ to: '/introduction-list' })}
 			type='button'
 		>
