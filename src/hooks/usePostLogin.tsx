@@ -1,36 +1,36 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-type ProductData = {
-	title: string; // タイトル (1文字以上50文字以下)
-	url: string; // 成果物のURL
-	description?: string; // 成果物についての説明 (任意入力、1文字以上200文字以下)
+type LoginData = {
+	name: string; // ユーザー名
+	password: string; // パスワード (1文字以上50文字以下)
 };
 
-export const usePostProduct = () => {
+export const usePostLogin = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<boolean>(false);
 
-	const postProduct = async (productData: ProductData) => {
+	const postLogin = async (loginData: LoginData) => {
 		setLoading(true);
 		setError(null);
 		setSuccess(false);
 
 		try {
 			const response = await axios.post(
-				`${import.meta.env.VITE_APP_BASE_URL}/products`,
-				productData,
+				`${import.meta.env.VITE_APP_BASE_URL}/login`,
+				loginData,
 				{ withCredentials: true },
 			);
 			if (response.status === 200 || response.status === 201) {
 				setSuccess(true); // 成功時
+				console.log(response);
 			}
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
 				if (err.response) {
 					// リクエストしたけど2xxの範囲外
-					setError(err.response.data?.message || 'Failed to post product');
+					setError(err.response.data?.message || 'Failed to post login');
 				} else if (err.request) {
 					// リクエストしたけど応答がない
 					setError('No response from server.');
@@ -47,5 +47,5 @@ export const usePostProduct = () => {
 		}
 	};
 
-	return { postProduct, loading, error, success };
+	return { postLogin, loading, error, success };
 };

@@ -20,10 +20,11 @@ export const useGetComments = (productId: UseGetCommentsProps) => {
 	useEffect(() => {
 		const fetchComments = async () => {
 			setLoading(true);
-			setError(null);
 
 			try {
-				const response = await axios.get(`/comments/${productId}`);
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BASE_URL}/comments/${productId}`,
+				);
 				setComments(response.data);
 			} catch (err: unknown) {
 				if (axios.isAxiosError(err)) {

@@ -21,11 +21,12 @@ export const useGetProfileByName = ({ user_name }: UseGetProfileByUserNameProps)
 	useEffect(() => {
 		const fetchProfile = async () => {
 			setLoading(true);
-			setError(null);
 
 			try {
 				// リクエストしたけど2xxの範囲外
-				const response = await axios.get(`/profiles/${user_name}`);
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BASE_URL}/profiles/${user_name}`,
+				);
 				setData(response.data);
 			} catch (err: unknown) {
 				if (axios.isAxiosError(err)) {
