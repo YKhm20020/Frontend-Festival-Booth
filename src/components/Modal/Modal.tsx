@@ -33,6 +33,7 @@ export const Modal: React.FC<ModalProps> = ({
 	const [linkMessage, setLinkMessage] = useState<string>('');
 	const [modalLinkText, setModalLinkText] = useState<string>('');
 	const [currentLinks, setCurrentLinks] = useState<object>(links || {});
+	const [heading, setHeading] = useState<string>('自己紹介コメント');
 
 	const location = useLocation();
 
@@ -68,11 +69,20 @@ export const Modal: React.FC<ModalProps> = ({
 		setCurrentText(modalText);
 	}, [modalTitle, modalText]);
 
+	const isIntroductionList = location.pathname.includes('introduction-list');
+	const isProductsList = location.pathname.includes('products-list');
+
+	// モーダルが開かれたときにheadingを更新
+	useEffect(() => {
+		if (isIntroductionList) {
+			setHeading('自己紹介コメント');
+		} else if (isProductsList) {
+			setHeading('成果物コメント');
+		}
+	}, [isOpen, location.pathname]);
+
 	useEffect(() => {
 		if (!isOpen) return;
-
-		const isIntroductionList = location.pathname.includes('introduction-list');
-		const isProductsList = location.pathname.includes('products-list');
 
 		if ((!theOtherModalTitle || !theOtherModalText) && isIntroductionList) {
 			setLinkMessage('成果物がありません');
@@ -85,7 +95,7 @@ export const Modal: React.FC<ModalProps> = ({
 			setModalLinkText(isIntroductionList ? '成果物へ移動' : '自己紹介へ移動');
 		}
 	}, [isOpen, theOtherModalTitle, theOtherModalText, location.pathname, links, theOtherModalLinks]);
-
+	
 	const handleModalLinkClick = () => {
 		if (theOtherModalTitle && theOtherModalText) {
 			setIsSecondary((prev) => {
@@ -93,7 +103,15 @@ export const Modal: React.FC<ModalProps> = ({
 				setCurrentTitle(newIsSecondary ? theOtherModalTitle : modalTitle);
 				setCurrentText(newIsSecondary ? theOtherModalText : modalText);
 				setCurrentLinks(newIsSecondary ? theOtherModalLinks : links);
-
+				setHeading(
+					newIsSecondary
+						? location.pathname.includes('introduction-list')
+							? '成果物コメント'
+							: '自己紹介コメント'	
+						: location.pathname.includes('introduction-list')
+							? '自己紹介コメント'
+							: '成果物コメント'
+				);
 				setModalLinkText(
 					newIsSecondary
 						? location.pathname.includes('introduction-list')
@@ -155,9 +173,9 @@ export const Modal: React.FC<ModalProps> = ({
 						/>
 					</div>
 					<div className='ml-4 md:w-1/2 flex flex-col items-center'>
-						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>
+						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>	
 							<p className='text-[min(13vw,24px)] font-bold'>
-								自己紹介コメント：<br></br>
+								{heading}<br></br>
 							</p>
 							{currentText}
 						</p>
