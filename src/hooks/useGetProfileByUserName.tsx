@@ -14,7 +14,7 @@ type ProfileData = {
 };
 
 export const useGetProfileByName = ({ name }: UseGetProfileByUserNameProps) => {
-	const [data, setData] = useState<ProfileData[]>([]);
+	const [data, setData] = useState<ProfileData>(Object);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +25,7 @@ export const useGetProfileByName = ({ name }: UseGetProfileByUserNameProps) => {
 
 			try {
 				// リクエストしたけど2xxの範囲外
-				const response = await axios.get(`/profiles/${name}`);
+				const response = await axios.get(`http://localhost:8080/profiles/${name}`);
 				console.log(response);
 				setData(response.data);
 			} catch (err: unknown) {

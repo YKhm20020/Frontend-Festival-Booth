@@ -21,7 +21,8 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 		const fetchProfile = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get(`/products/${user_name}`);
+				const response = await axios.get(`http://localhost8080/products/${user_name}`);
+				console.log(response);
 				setData(response.data);
 			} catch (err: unknown) {
 				if (axios.isAxiosError(err)) {

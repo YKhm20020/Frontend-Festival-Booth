@@ -1,25 +1,62 @@
 import type React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useStableCallback } from '@tanstack/react-router';
+import { useGetProfileByName } from '../../hooks/useGetProfileByUserName';
+import { useGetProductByUserName } from '../../hooks/useGetProductByUserName';
 
 type ModalProps = {
 	isOpen: boolean;
+	userName: string;
+	productName?: string;
 	src: string;
 	alt: string;
 	modalTitle: string;
 	modalText?: string;
+	modalLink: string;
 	links?: object;
 	closeModal: () => void;
 };
 
 export const Modal: React.FC<ModalProps> = ({
 	isOpen,
+	userName,
 	src,
 	alt,
 	modalTitle,
 	modalText,
+	modalLink,
 	links = {},
 	closeModal,
 }) => {
+	const {
+		data: specifiedUserProfile,
+		profileLoading,
+		profileError,
+	} = useGetProfileByName({ name: userName });
+
+	const {
+		data: specifiedUserProduct,
+		productLoading,
+		productError,
+	} = useGetProductByUserName({ user_name: userName });
+
+	const [isNextModalOpen, setIsNextModalOpen] = useState<boolean>(false);
+
+	console.log('specifiedUserProfile:', specifiedUserProfile);
+	console.log('specifiedUserProduct: ', specifiedUserProduct);
+	console.log(userName);
+	console.log('Type of specifiedUserProfile:', typeof specifiedUserProfile);
+
+	// 現在開いているページのパスを取得
+	const location = useLocation();
+	let changeModalText = '';
+
+	if (location.pathname.includes('introduction-list')) {
+		changeModalText = `${userName}さんの成果物へ移動`;
+	} else if (location.pathname.includes('products-list')) {
+		changeModalText = `${userName}さんの自己紹介へ移動`;
+	}
+
 	useEffect(() => {
 		const handleEscapeKey = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
@@ -89,6 +126,7 @@ export const Modal: React.FC<ModalProps> = ({
 						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>
 							{modalText}
 						</p>
+						{modalLink}
 						<div className='container cursor-pointer mt-auto mb-4'>
 							{(Object.keys(links).length > 0
 								? Object.values(links)

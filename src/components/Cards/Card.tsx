@@ -1,23 +1,28 @@
 import type React from 'react';
 import { useState } from 'react';
+import { useLocation } from '@tanstack/react-router';
 import { Modal } from '../Modal/Modal';
 
 type CardProps = {
+	userName: string;
 	src: string;
 	alt?: string;
 	title: string;
 	links?: object;
 	modalTitle: string;
 	modalText?: string;
+	modalLink: string;
 };
 
 export const Card: React.FC<CardProps> = ({
+	userName,
 	src,
 	alt,
 	title,
 	links = {},
 	modalTitle,
 	modalText,
+	modalLink,
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -28,6 +33,15 @@ export const Card: React.FC<CardProps> = ({
 	const closeModal = () => {
 		setIsModalOpen(false);
 	};
+
+	// 現在開いているページのパスを取得
+	const location = useLocation();
+
+	if (location.pathname.includes('introduction-list')) {
+		modalLink = `${userName}さんの成果物へ移動`;
+	} else if (location.pathname.includes('products-list')) {
+		modalLink = `${userName}さんの自己紹介へ移動`;
+	}
 
 	return (
 		<>
@@ -64,11 +78,13 @@ export const Card: React.FC<CardProps> = ({
 				</div>
 			</div>
 			<Modal
+				userName={userName}
 				isOpen={isModalOpen}
 				src={src}
 				alt={alt ?? title}
 				modalTitle={modalTitle}
 				modalText={modalText}
+				modalLink={modalLink}
 				links={links}
 				closeModal={closeModal}
 			/>

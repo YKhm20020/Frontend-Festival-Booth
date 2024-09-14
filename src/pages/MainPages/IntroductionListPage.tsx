@@ -1,5 +1,6 @@
 import type React from 'react';
 import { useState, useMemo } from 'react';
+import { useLocation } from '@tanstack/react-router';
 import { useGetProfile } from '../../hooks/useGetProfile';
 import { Header } from '../../components/Header/Header';
 import { Card } from '../../components/Cards/Card';
@@ -24,6 +25,15 @@ export const IntroductionListPage: React.FC = () => {
 		currentIndex * cardsPerPage,
 		(currentIndex + 1) * cardsPerPage,
 	);
+
+	// 現在開いているページのパスを取得
+	const location = useLocation();
+	let changeModalText = '';
+	if (location.pathname.includes('introduction-list')) {
+		changeModalText = 'Go to Introductions';
+	} else if (location.pathname.includes('products-list')) {
+		changeModalText = 'View Products';
+	}
 
 	// カードのモックデータ
 	// const allCards = useMemo(() => {
@@ -61,6 +71,7 @@ export const IntroductionListPage: React.FC = () => {
 						{currentPageCards.map((card, index) => (
 							<Card
 								key={currentIndex * cardsPerPage + index}
+								userName={card.name}
 								src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
 								alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
 								title={card.name}
@@ -70,6 +81,7 @@ export const IntroductionListPage: React.FC = () => {
 								}}
 								modalTitle={card.name}
 								modalText={card.introduction || 'Sample Text'}
+								modalLink={changeModalText}
 							/>
 						))}
 					</div>

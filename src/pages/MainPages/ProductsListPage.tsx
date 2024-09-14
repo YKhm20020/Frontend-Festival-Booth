@@ -61,6 +61,7 @@ export const ProductsListPage: React.FC = () => {
 						{currentPageCards.map((card, index) => (
 							<Card
 								key={currentIndex * cardsPerPage + index}
+								userName={card.user_name}
 								src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
 								alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
 								title={card.title}
@@ -69,6 +70,7 @@ export const ProductsListPage: React.FC = () => {
 								}}
 								modalTitle={card.title}
 								modalText={card.description || 'Sample Text'}
+								modalLink='sample'
 							/>
 						))}
 					</div>
