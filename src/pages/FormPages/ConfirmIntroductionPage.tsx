@@ -4,7 +4,6 @@ import { useLocation, useRouter } from '@tanstack/react-router';
 import { usePostProfile } from '../../hooks/usePostProfile';
 
 type IntroductionFormData = {
-	name: string;
 	introduction: string;
 	githubUrl?: string;
 	XUrl?: string;
@@ -17,7 +16,6 @@ export const ConfirmIntroductionPage: React.FC = () => {
 	const searchParams = new URLSearchParams(location.search);
 
 	const confirmData: IntroductionFormData = {
-		name: searchParams.get('name') || '',
 		introduction: searchParams.get('introduction') || '',
 		githubUrl: searchParams.get('githubUrl') || '',
 		XUrl: searchParams.get('XUrl') || '',
@@ -28,7 +26,6 @@ export const ConfirmIntroductionPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<IntroductionFormData> = async (data) => {
 		const postProfileData = {
-			name: data.name,
 			introduction: data.introduction,
 			icon_num: Number(data.image),
 			github_url: data.githubUrl || undefined,
@@ -53,6 +50,9 @@ export const ConfirmIntroductionPage: React.FC = () => {
 
 	const dicImage: { [imageNum: string]: string } = {
 		'0': '/images/robot_and_hogeta.jpeg',
+		'1': '/images/horse.jpg',
+		'2': 'images/turtle.jpg',
+		'3': 'images/scale.jpg',
 	};
 
 	return (
@@ -62,10 +62,6 @@ export const ConfirmIntroductionPage: React.FC = () => {
 					入力データの確認
 				</h1>
 				<div className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'>
-					<p>
-						<strong>名前:</strong>
-						{confirmData.name}
-					</p>
 					<p className='mt-4'>
 						<strong>自己紹介コメント</strong>
 					</p>
