@@ -1,7 +1,7 @@
 // import type React from 'react';
 import { useState } from 'react';
 import { useLocation, useRouter } from '@tanstack/react-router';
-// import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // import type { SubmitHandler } from 'react-hook-form';
 import { Header } from '../../components/Header/Header';
 
@@ -17,13 +17,32 @@ const Options = [
 	["賑やかさ", "伝統", "食べ物", "仲間との楽しみ"]
 ];
 
-type ProductsFormData = {
+type QuestionsFormData = {
 	question1: number;
 	question2: number;
 	question3: number;
 };
 
 export const QuestionMatchingPage: React.FC = () => {
+	const location = useLocation();
+	const searchParams = new URLSearchParams(location.search);
+	const router = useRouter();
+
+	const defaultValues: QuestionsFormData = {
+		question1: Number(searchParams.get('question1')) || 0,
+		question2: Number(searchParams.get('question2')) || 0,
+		question3: Number(searchParams.get('question3')) || 0,
+	};
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<QuestionsFormData>({
+		mode: 'onChange',
+		defaultValues,
+	});
+
 	const [answers, setAnswers] = useState<string[]>(Array(Questions.length).fill(""));
 
 	const handleChange = (questionIndex: number, option: string) => {
