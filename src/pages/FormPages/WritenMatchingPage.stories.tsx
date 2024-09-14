@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { QuestionMatchingPage } from "./WritenMatchingPage";
+import { WritenMatchingPage } from "./WritenMatchingPage";
 
 const meta = {
-    title: 'FestivalBooth/Pages/Matching/QuestionMatchingPage',
-    component: QuestionMatchingPage,
-} satisfies Meta<typeof QuestionMatchingPage>;
+    title: 'FestivalBooth/Pages/Form/WritenMatchingPage',
+    component: WritenMatchingPage,
+} satisfies Meta<typeof WritenMatchingPage>;
 
 export default meta;
 
