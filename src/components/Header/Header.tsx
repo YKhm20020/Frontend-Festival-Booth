@@ -14,6 +14,7 @@ export const Header: React.FC = () => {
 					<NavLink toLink='/write-introduction'>Write Intro</NavLink>
 					<NavLink toLink='/products-list'>Read Prods</NavLink>
 					<NavLink toLink='/write-products'>Write Prods</NavLink>
+					<NavLink toLink='/matching'>Matching</NavLink>
 				</nav>
 			</div>
 		</header>
