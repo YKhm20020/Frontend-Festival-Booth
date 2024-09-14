@@ -14,7 +14,7 @@ type ProductsFormData = {
 };
 
 export const WriteProductsPage: React.FC = () => {
-	const { success, loading, error } = useGetLoginStatus();
+	const { success, loading } = useGetLoginStatus();
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();

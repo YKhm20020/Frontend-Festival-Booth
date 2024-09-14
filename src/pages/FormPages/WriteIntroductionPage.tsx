@@ -16,7 +16,7 @@ type IntroductionFormData = {
 };
 
 export const WriteIntroductionPage: React.FC = () => {
-	const { success, loading, error } = useGetLoginStatus();
+	const { success, loading } = useGetLoginStatus();
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
@@ -60,7 +60,7 @@ export const WriteIntroductionPage: React.FC = () => {
 
 				{/* ローディング中の処理 */}
 				{loading && <p>Loading...</p>}
-				
+
 				<div className='w-full max-w-xl'>
 					<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>
 						Write Introduction Page
