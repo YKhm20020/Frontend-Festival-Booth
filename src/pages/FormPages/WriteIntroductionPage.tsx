@@ -169,7 +169,7 @@ export const WriteIntroductionPage: React.FC = () => {
 								<label>
 									<input type='radio' value='2' {...register('image')} />
 									画像3
-									<DispImage src='/images/turtle.jpg' alt='sample-alt' />
+									<DispImage src='/images/otter.png' alt='sample-alt' />
 								</label>
 								<br />
 

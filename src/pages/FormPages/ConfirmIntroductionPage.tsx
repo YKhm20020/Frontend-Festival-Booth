@@ -51,7 +51,7 @@ export const ConfirmIntroductionPage: React.FC = () => {
 	const dicImage: { [imageNum: string]: string } = {
 		'0': '/images/robot_and_hogeta.jpeg',
 		'1': '/images/horse.jpg',
-		'2': 'images/turtle.jpg',
+		'2': 'images/otter.png',
 		'3': 'images/scale.jpg',
 	};
 
