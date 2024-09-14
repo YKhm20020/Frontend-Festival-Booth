@@ -1,6 +1,7 @@
 import type React from 'react';
-import { useState } from 'react';
-import { useLocation, useRouter } from '@tanstack/react-router';
+// import { useState } from 'react';
+// import { useLocation, useRouter } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { Header } from '../../components/Header/Header';
@@ -17,45 +18,46 @@ const Options = [
 	["賑やかさ", "伝統", "食べ物", "仲間との楽しみ"]
 ];
 
-type QuestionsFormData = {
-	question0: number;
-	question1: number;
-	question2: number;
-};
+// type QuestionsFormData = {
+// 	question0: number;
+// 	question1: number;
+// 	question2: number;
+// };
 
 export const WritenMatchingPage: React.FC = () => {
-	const location = useLocation();
-	const searchParams = new URLSearchParams(location.search);
+	// const location = useLocation();
+	// const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
 
-	const defaultValues: QuestionsFormData = {
-		question0: Number(searchParams.get('question0')) || 0,
-		question1: Number(searchParams.get('question1')) || 0,
-		question2: Number(searchParams.get('question2')) || 0,
-	};
+	// const defaultValues: QuestionsFormData = {
+	// 	question0: Number(searchParams.get('question0')) || 0,
+	// 	question1: Number(searchParams.get('question1')) || 0,
+	// 	question2: Number(searchParams.get('question2')) || 0,
+	// };
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		// formState: { errors },
 	} = useForm({
 		mode: 'onChange',
 	});
 
 	const onSubmit: SubmitHandler<any> = (data) => {
+		console.log(data)
 		router.navigate({
 			to: '/',
 			search: data,
 		});
 	};
 
-	const [answers, setAnswers] = useState<string[]>(Array(Questions.length).fill(""));
+	// const [answers, setAnswers] = useState<string[]>(Array(Questions.length).fill(""));
 
-	const handleChange = (questionIndex: number, option: string) => {
-		const newAnswers = [...answers];
-		newAnswers[questionIndex] = option;
-		setAnswers(newAnswers);
-	};
+	// const handleChange = (questionIndex: number, option: string) => {
+	// 	const newAnswers = [...answers];
+	// 	newAnswers[questionIndex] = option;
+	// 	setAnswers(newAnswers);
+	// };
 
 	return (
 		<>
@@ -77,7 +79,9 @@ export const WritenMatchingPage: React.FC = () => {
 											type="radio"
 											// name={`question-${qIndex}`}
 											value={oIndex}
-											{...register(`question${qIndex}`, { required: '画像を選択してください' })}
+											checked
+											{...register(`question${qIndex}`)}
+											// {...register(`question${qIndex}`, { required: '画像を選択してください' })}
 											// {...register('question0', { required: '画像を選択してください' })}
 											// checked={answers[qIndex] === option}
 											// onChange={() => handleChange(qIndex, option)}
