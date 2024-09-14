@@ -22,7 +22,9 @@ export const useGetComments = (productId: UseGetCommentsProps) => {
 			setLoading(true);
 
 			try {
-				const response = await axios.get(`/comments/${productId}`);
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BASE_URL}/comments/${productId}`,
+				);
 				setComments(response.data);
 			} catch (err: unknown) {
 				if (axios.isAxiosError(err)) {
