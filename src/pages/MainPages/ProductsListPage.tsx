@@ -75,7 +75,7 @@ export const ProductsListPage: React.FC = () => {
 									userName={card.user_name}
 									src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
 									alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
-									title={card.user_name}
+									title={card.title}
 									links={{
 										url: card.url,
 									}}
