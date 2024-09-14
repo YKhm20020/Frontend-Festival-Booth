@@ -20,6 +20,7 @@ const WriteProductsLazyImport = createFileRoute('/write-products')()
 const WriteIntroductionLazyImport = createFileRoute('/write-introduction')()
 const QuestionMatchingLazyImport = createFileRoute('/question-matching')()
 const ProductsListLazyImport = createFileRoute('/products-list')()
+const MatchingLazyImport = createFileRoute('/matching')()
 const IntroductionListLazyImport = createFileRoute('/introduction-list')()
 const ConfirmProductsLazyImport = createFileRoute('/confirm-products')()
 const ConfirmIntroductionLazyImport = createFileRoute('/confirm-introduction')()
@@ -53,6 +54,11 @@ const ProductsListLazyRoute = ProductsListLazyImport.update({
   path: '/products-list',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/products-list.lazy').then((d) => d.Route))
+
+const MatchingLazyRoute = MatchingLazyImport.update({
+  path: '/matching',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/matching.lazy').then((d) => d.Route))
 
 const IntroductionListLazyRoute = IntroductionListLazyImport.update({
   path: '/introduction-list',
@@ -124,6 +130,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntroductionListLazyImport
       parentRoute: typeof rootRoute
     }
+    '/matching': {
+      id: '/matching'
+      path: '/matching'
+      fullPath: '/matching'
+      preLoaderRoute: typeof MatchingLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/products-list': {
       id: '/products-list'
       path: '/products-list'
@@ -163,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
   '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
+  '/matching': typeof MatchingLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/question-matching': typeof QuestionMatchingLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
@@ -175,6 +189,7 @@ export interface FileRoutesByTo {
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
   '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
+  '/matching': typeof MatchingLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/question-matching': typeof QuestionMatchingLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
@@ -188,6 +203,7 @@ export interface FileRoutesById {
   '/confirm-introduction': typeof ConfirmIntroductionLazyRoute
   '/confirm-products': typeof ConfirmProductsLazyRoute
   '/introduction-list': typeof IntroductionListLazyRoute
+  '/matching': typeof MatchingLazyRoute
   '/products-list': typeof ProductsListLazyRoute
   '/question-matching': typeof QuestionMatchingLazyRoute
   '/write-introduction': typeof WriteIntroductionLazyRoute
@@ -202,6 +218,7 @@ export interface FileRouteTypes {
     | '/confirm-introduction'
     | '/confirm-products'
     | '/introduction-list'
+    | '/matching'
     | '/products-list'
     | '/question-matching'
     | '/write-introduction'
@@ -213,6 +230,7 @@ export interface FileRouteTypes {
     | '/confirm-introduction'
     | '/confirm-products'
     | '/introduction-list'
+    | '/matching'
     | '/products-list'
     | '/question-matching'
     | '/write-introduction'
@@ -224,6 +242,7 @@ export interface FileRouteTypes {
     | '/confirm-introduction'
     | '/confirm-products'
     | '/introduction-list'
+    | '/matching'
     | '/products-list'
     | '/question-matching'
     | '/write-introduction'
@@ -237,6 +256,7 @@ export interface RootRouteChildren {
   ConfirmIntroductionLazyRoute: typeof ConfirmIntroductionLazyRoute
   ConfirmProductsLazyRoute: typeof ConfirmProductsLazyRoute
   IntroductionListLazyRoute: typeof IntroductionListLazyRoute
+  MatchingLazyRoute: typeof MatchingLazyRoute
   ProductsListLazyRoute: typeof ProductsListLazyRoute
   QuestionMatchingLazyRoute: typeof QuestionMatchingLazyRoute
   WriteIntroductionLazyRoute: typeof WriteIntroductionLazyRoute
@@ -249,6 +269,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfirmIntroductionLazyRoute: ConfirmIntroductionLazyRoute,
   ConfirmProductsLazyRoute: ConfirmProductsLazyRoute,
   IntroductionListLazyRoute: IntroductionListLazyRoute,
+  MatchingLazyRoute: MatchingLazyRoute,
   ProductsListLazyRoute: ProductsListLazyRoute,
   QuestionMatchingLazyRoute: QuestionMatchingLazyRoute,
   WriteIntroductionLazyRoute: WriteIntroductionLazyRoute,
@@ -272,6 +293,7 @@ export const routeTree = rootRoute
         "/confirm-introduction",
         "/confirm-products",
         "/introduction-list",
+        "/matching",
         "/products-list",
         "/question-matching",
         "/write-introduction",
@@ -292,6 +314,9 @@ export const routeTree = rootRoute
     },
     "/introduction-list": {
       "filePath": "introduction-list.lazy.tsx"
+    },
+    "/matching": {
+      "filePath": "matching.lazy.tsx"
     },
     "/products-list": {
       "filePath": "products-list.lazy.tsx"
