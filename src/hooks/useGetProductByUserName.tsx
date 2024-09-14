@@ -23,6 +23,9 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 			try {
 				const response = await axios.get(
 					`${import.meta.env.VITE_APP_BASE_URL}/products/${user_name}`,
+					{
+						withCredentials: true,
+					}
 				);
 				setData(response.data);
 			} catch (err: unknown) {
