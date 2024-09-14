@@ -57,14 +57,14 @@ export const WriteProductsPage: React.FC = () => {
 		<>
 			<Header />
 			<div className='flex justify-center bg-gray-100'>
+
+				{/* ローディング中の処理 */}
+				{loading && <p>Loading...</p>}
+
 				<div className='w-full max-w-xl'>
 					<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>
 						Write Products Page
 					</h1>
-
-					{/* ローディング中またはエラーがある場合の処理 */}
-					{loading && <p>Loading...</p>}
-
 					<form
 						className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'
 						onSubmit={handleSubmit(onSubmit)}

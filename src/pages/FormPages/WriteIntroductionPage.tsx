@@ -1,8 +1,10 @@
 import type React from 'react';
-import { useLocation, useRouter } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useLocation, useRouter, useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { Header } from '../../components/Header/Header';
+import { useGetLoginStatus } from '../../hooks/useGetLoginStatus';
 import { DispImage } from './_components/DispImage';
 
 type IntroductionFormData = {
@@ -14,9 +16,18 @@ type IntroductionFormData = {
 };
 
 export const WriteIntroductionPage: React.FC = () => {
+	const { success, loading, error } = useGetLoginStatus();
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
+	const navigate = useNavigate();
+
+	// successがfalseのときにauthページにリダイレクトする処理を追加
+	useEffect(() => {
+		if (!loading && success === false) {
+			navigate({ to: '/auth' });
+		}
+	}, [loading, success, navigate]);
 
 	const defaultValues: IntroductionFormData = {
 		name: searchParams.get('name') || '',
@@ -46,6 +57,10 @@ export const WriteIntroductionPage: React.FC = () => {
 		<>
 			<Header />
 			<div className='flex justify-center bg-gray-100'>
+
+				{/* ローディング中の処理 */}
+				{loading && <p>Loading...</p>}
+				
 				<div className='w-full max-w-xl'>
 					<h1 className='text-lg font-bold text-gray-800 my-4 text-center'>
 						Write Introduction Page
