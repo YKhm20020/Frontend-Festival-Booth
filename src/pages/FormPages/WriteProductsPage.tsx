@@ -15,6 +15,7 @@ type ProductsFormData = {
 
 export const WriteProductsPage: React.FC = () => {
 	const { success, loading } = useGetLoginStatus();
+	console.log('loding: ', loading, 'success: ', success);
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
@@ -22,7 +23,7 @@ export const WriteProductsPage: React.FC = () => {
 
 	// successがfalseのときにauthページにリダイレクトする処理を追加
 	useEffect(() => {
-		if (!loading && success === false) {
+		if (!loading && !success) {
 			navigate({ to: '/auth' });
 		}
 	}, [loading, success, navigate]);

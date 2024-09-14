@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type SignUpData = {
-	user_name: string; // ユーザー名
+	name: string; // ユーザー名
 	password: string; // パスワード (1文字以上50文字以下)
 };
 

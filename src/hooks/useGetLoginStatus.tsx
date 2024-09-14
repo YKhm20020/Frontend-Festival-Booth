@@ -4,17 +4,19 @@ import axios from 'axios';
 // カスタムフック
 export const useGetLoginStatus = () => {
 	const [success, setSuccess] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);  // 最初の通信が完了するまでlodingはtrueにする
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchStatus = async () => {
-			setLoading(true);
 
 			try {
-				const response = await axios.get('/login');
+				const response = await axios.get('http://localhost:8080/login');
+				console.log('resst: ', response.status);
+				console.log(response.data);
 				if (response.status === 200) {
 					// サクセスと判断できる場合
+					console.log('set succcess true');
 					setSuccess(true); // ログイン成功
 				}
 			} catch (err: unknown) {
