@@ -14,6 +14,7 @@ type CardProps = {
 	modalText?: string;
 	theOtherModalTitle?: string;
 	theOtherModalText?: string;
+	theOtherModalLinks?: object;
 };
 
 export const Card: React.FC<CardProps> = ({
@@ -26,6 +27,7 @@ export const Card: React.FC<CardProps> = ({
 	modalText,
 	theOtherModalTitle,
 	theOtherModalText,
+	theOtherModalLinks
 }) => {
 	useGetProfileByName({ name: userName });
 	useGetProductByUserName({ user_name: userName });
@@ -82,6 +84,7 @@ export const Card: React.FC<CardProps> = ({
 				modalText={modalText}
 				theOtherModalTitle={theOtherModalTitle}
 				theOtherModalText={theOtherModalText}
+				theOtherModalLinks={theOtherModalLinks}
 				links={links}
 				closeModal={closeModal}
 			/>

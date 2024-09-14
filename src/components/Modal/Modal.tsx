@@ -11,6 +11,7 @@ type ModalProps = {
 	theOtherModalTitle?: string;
 	theOtherModalText?: string;
 	links?: object;
+	theOtherModalLinks?: object;
 	closeModal: () => void;
 };
 
@@ -23,6 +24,7 @@ export const Modal: React.FC<ModalProps> = ({
 	theOtherModalTitle,
 	theOtherModalText,
 	links = {},
+	theOtherModalLinks = {},
 	closeModal,
 }) => {
 	const [currentTitle, setCurrentTitle] = useState(modalTitle);
@@ -30,6 +32,7 @@ export const Modal: React.FC<ModalProps> = ({
 	const [, setIsSecondary] = useState<boolean>(false);
 	const [linkMessage, setLinkMessage] = useState<string>('');
 	const [modalLinkText, setModalLinkText] = useState<string>('');
+	const [currentLinks, setCurrentLinks] = useState<object>(links || {});
 
 	const location = useLocation();
 
@@ -81,7 +84,7 @@ export const Modal: React.FC<ModalProps> = ({
 			setLinkMessage('');
 			setModalLinkText(isIntroductionList ? '成果物へ移動' : '自己紹介へ移動');
 		}
-	}, [isOpen, theOtherModalTitle, theOtherModalText, location.pathname]);
+	}, [isOpen, theOtherModalTitle, theOtherModalText, location.pathname, links, theOtherModalLinks]);
 
 	const handleModalLinkClick = () => {
 		if (theOtherModalTitle && theOtherModalText) {
@@ -89,6 +92,8 @@ export const Modal: React.FC<ModalProps> = ({
 				const newIsSecondary = !prev;
 				setCurrentTitle(newIsSecondary ? theOtherModalTitle : modalTitle);
 				setCurrentText(newIsSecondary ? theOtherModalText : modalText);
+				setCurrentLinks(newIsSecondary ? theOtherModalLinks : links);
+
 				setModalLinkText(
 					newIsSecondary
 						? location.pathname.includes('introduction-list')
@@ -101,6 +106,7 @@ export const Modal: React.FC<ModalProps> = ({
 				return newIsSecondary;
 			});
 		}
+		console.log(currentLinks)
 	};
 
 	if (!isOpen) {
@@ -156,8 +162,8 @@ export const Modal: React.FC<ModalProps> = ({
 							{currentText}
 						</p>
 						<div className='container cursor-pointer mt-auto mb-4'>
-							{(Object.keys(links).length > 0
-								? Object.values(links)
+							{(Object.keys(currentLinks).length > 0
+								? Object.values(currentLinks)
 								: ['No links available']
 							).map((item, index) => (
 								<p key={index} className='text-base text-blue-400'>

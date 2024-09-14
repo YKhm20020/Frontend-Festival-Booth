@@ -85,6 +85,10 @@ export const ProductsListPage: React.FC = () => {
 									theOtherModalText={
 										isMatched ? introduction[index].introduction : ''
 									}
+									theOtherModalLinks={isMatched ? {
+										github_url: introduction[index].github_url,
+										x_url: introduction[index].x_url
+									} : {}}
 								/>
 							);
 						})}
