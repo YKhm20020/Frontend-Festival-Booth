@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { QuestionMatchingPage } from "./QuestionMatchingPage";
+import { QuestionMatchingPage } from "./WritenMatchingPage";
 
 const meta = {
     title: 'FestivalBooth/Pages/Matching/QuestionMatchingPage',
