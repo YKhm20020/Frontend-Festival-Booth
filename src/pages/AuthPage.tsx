@@ -1,6 +1,8 @@
 import type React from 'react';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useSignUp } from '../hooks/useSignUp';
+import { useRouter } from '@tanstack/react-router';
 
 type FormData = {
 	email: string;
@@ -8,6 +10,7 @@ type FormData = {
 };
 
 export const AuthPage: React.FC = () => {
+	const router = useRouter();
 	const [isLogin, setIsLogin] = useState(true);
 	const {
 		register,
@@ -15,9 +18,22 @@ export const AuthPage: React.FC = () => {
 		formState: { errors },
 	} = useForm<FormData>();
 
-	const onSubmit = (data: FormData) => {
-		console.log(isLogin ? 'Login attempt:' : 'Signup attempt:', data);
+	const { signUp, error } = useSignUp();
+
+	const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
 		// 認証ロジックを追加
+		const signUpData = {
+			user_name: data.email,
+			password: data.password
+		}
+		await signUp(signUpData);
+
+		if (error) {
+			alert('送信に失敗しました');
+		} else {
+			alert('新規登録ありがとう！');
+			setIsLogin(!isLogin)
+		}
 	};
 
 	// パスワードの最小文字数
@@ -79,6 +95,7 @@ export const AuthPage: React.FC = () => {
 						</div>
 						<button
 							type='submit'
+							onClick={() => onSubmit}
 							className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out'
 						>
 							{isLogin ? 'ログイン' : '登録'}
