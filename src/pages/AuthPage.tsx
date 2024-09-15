@@ -27,10 +27,10 @@ export const AuthPage: React.FC = () => {
 	const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
 		const postData = {
 			name: data.email,
-			password: data.password
-		}
+			password: data.password,
+		};
 		// 認証ロジックを追加
-		if (!isLogin) {			
+		if (!isLogin) {
 			await signUp(postData);
 		} else {
 			await postLogin(postData);
@@ -39,16 +39,16 @@ export const AuthPage: React.FC = () => {
 
 	// successがfalseのときにauthページにリダイレクトする処理を追加
 	useEffect(() => {
-		if(isFirstRender){
+		if (isFirstRender) {
 			setIsFirstRender(false);
 			return;
 		}
 
-		if(signUploading || postloading){
+		if (signUploading || postloading) {
 			return;
 		}
 
-		if(!isLogin){
+		if (!isLogin) {
 			if (signUpSuccess) {
 				alert('新規登録ありがとう！');
 				setIsLogin(!isLogin);
@@ -132,7 +132,7 @@ export const AuthPage: React.FC = () => {
 						<div className='flex justify-center'>
 							<button
 								type='submit'
-								onClick={() => navigate({to: '/'})}
+								onClick={() => navigate({ to: '/' })}
 								className='px-4 text-sm font-medium text-blue-600 hover:text-blue-900 focus:outline-none transition duration-150 ease-in-out'
 							>
 								＞＞ホームに戻る

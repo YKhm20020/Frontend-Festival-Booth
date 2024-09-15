@@ -6,6 +6,7 @@ type UseGetProfileByUserNameProps = {
 };
 
 type ProfileData = {
+	answer: number; // アンケート結果番号
 	name: string; // ユーザー名
 	introduction: string; // 自己紹介
 	icon_num: number; // アイコンの番号
