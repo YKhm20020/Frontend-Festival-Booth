@@ -5,7 +5,7 @@ export const Header: React.FC = () => {
 	return (
 		<header className='bg-blue-400 flex w-screen h-auto my-auto py-4'>
 			<div className='container items-center my-auto ml-4 text-lg font-bold'>
-				Festival Booth
+				Online Festival Booth
 			</div>
 			<div className='container mx-auto flex flex-col md:flex-row items-center'>
 				<nav className='ml-auto flex flex-wrap items-center justify-center '>
