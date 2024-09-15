@@ -36,12 +36,12 @@ function App() {
             <ToProductsPageButton>
               成果物を見る
             </ToProductsPageButton>
-			<ToPostIntroductionPageButton>
-			自己紹介を投稿する
-			</ToPostIntroductionPageButton>
-			<ToPostProductsPageButton>
-			成果物を投稿する
-			</ToPostProductsPageButton>
+            <ToPostIntroductionPageButton>
+            自己紹介を投稿する
+            </ToPostIntroductionPageButton>
+            <ToPostProductsPageButton>
+            成果物を投稿する
+            </ToPostProductsPageButton>
           </div>
         </div>
       </div>
