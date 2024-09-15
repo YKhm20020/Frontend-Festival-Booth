@@ -18,14 +18,14 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		const fetchProfile = async () => {
+		const fetchProduct = async () => {
 			setLoading(true);
 			try {
 				const response = await axios.get(
 					`${import.meta.env.VITE_APP_BASE_URL}/products/${user_name}`,
 					{
 						withCredentials: true,
-					}
+					},
 				);
 				setData(response.data);
 			} catch (err: unknown) {
@@ -51,9 +51,7 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 			}
 		};
 
-		if (user_name) {
-			fetchProfile();
-		}
+		fetchProduct();
 	}, [user_name]);
 
 	return { data, loading, error };
