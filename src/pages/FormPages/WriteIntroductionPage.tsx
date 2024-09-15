@@ -8,7 +8,6 @@ import { useGetLoginStatus } from '../../hooks/useGetLoginStatus';
 import { DispImage } from './_components/DispImage';
 
 type IntroductionFormData = {
-	name: string;
 	introduction: string;
 	githubUrl?: string;
 	XUrl?: string;
@@ -30,7 +29,6 @@ export const WriteIntroductionPage: React.FC = () => {
 	}, [loading, success, navigate]);
 
 	const defaultValues: IntroductionFormData = {
-		name: searchParams.get('name') || '',
 		introduction: searchParams.get('introduction') || '',
 		githubUrl: searchParams.get('githubUrl') || '',
 		XUrl: searchParams.get('XUrl') || '',
@@ -69,37 +67,14 @@ export const WriteIntroductionPage: React.FC = () => {
 							className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'
 							onSubmit={handleSubmit(onSubmit)}
 						>
-							{/* ユーザ名入力フィールド */}
-							<div className='mt-4'>
-								<label className='block text-sm font-bold mb-2' htmlFor='name'>
-									ユーザ名
-								</label>
-								<input
-									className={`border shadow appearance-none rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
-									id='name'
-									{...register('name', {
-										required: 'ユーザ名は必須です',
-										maxLength: {
-											value: 20,
-											message: '最大20文字です',
-										},
-									})}
-									placeholder='君の名前は？'
-								/>
-								{errors.name && (
-									<p className='absolute text-red-500 text-xs italic'>
-										{errors.name.message}
-									</p>
-								)}
-							</div>
-
+						
 							{/* 自己紹介コメント入力フィールド */}
 							<div className='mt-8'>
 								<label className='block text-sm font-bold mb-2' htmlFor='introduction'>
 									自己紹介コメント
 								</label>
 								<textarea
-									className={`shadow appearance-none border rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? 'border-red-500' : 'border-grey-100'}`}
+									className={`shadow appearance-none border rounded w-full py-2 px-3 mb-2 leading-tight focus:outline-none focus:shadow-outline ${errors.introduction ? 'border-red-500' : 'border-grey-100'}`}
 									id='introduction'
 									{...register('introduction', {
 										required: '自己紹介コメントは必須です',
@@ -187,21 +162,21 @@ export const WriteIntroductionPage: React.FC = () => {
 								<label>
 									<input type='radio' value='1' {...register('image')} />
 									画像2
-									<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+									<DispImage src='/images/horse.jpg' alt='sample-alt' />
 								</label>
 								<br />
 
 								<label>
 									<input type='radio' value='2' {...register('image')} />
 									画像3
-									<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+									<DispImage src='/images/otter.png' alt='sample-alt' />
 								</label>
 								<br />
 
 								<label>
 									<input type='radio' value='3' {...register('image')} />
 									画像4
-									<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+									<DispImage src='/images/scale.jpg' alt='sample-alt' />
 								</label>
 								<br />
 							</div>

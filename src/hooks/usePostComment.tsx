@@ -22,6 +22,9 @@ export const usePostComment = () => {
 			const response = await axios.post(
 				`${import.meta.env.VITE_APP_BASE_URL}/comments`,
 				postCommentData,
+				{
+					withCredentials: true,
+				}
 			);
 
 			if (response.status === 200 || response.status === 201) {

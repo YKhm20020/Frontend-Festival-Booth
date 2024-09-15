@@ -1,24 +1,37 @@
 import type React from 'react';
 import { useState } from 'react';
 import { Modal } from '../Modal/Modal';
+import { useGetProfileByName } from '../../hooks/useGetProfileByUserName';
+import { useGetProductByUserName } from '../../hooks/useGetProductByUserName';
 
 type CardProps = {
+	userName: string;
 	src: string;
 	alt?: string;
 	title: string;
 	links?: object;
 	modalTitle: string;
 	modalText?: string;
+	theOtherModalTitle?: string;
+	theOtherModalText?: string;
+	theOtherModalLinks?: object;
 };
 
 export const Card: React.FC<CardProps> = ({
+	userName,
 	src,
 	alt,
 	title,
 	links = {},
 	modalTitle,
 	modalText,
+	theOtherModalTitle,
+	theOtherModalText,
+	theOtherModalLinks
 }) => {
+	useGetProfileByName({ name: userName });
+	useGetProductByUserName({ user_name: userName });
+
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	const openModal = () => {
@@ -69,6 +82,9 @@ export const Card: React.FC<CardProps> = ({
 				alt={alt ?? title}
 				modalTitle={modalTitle}
 				modalText={modalText}
+				theOtherModalTitle={theOtherModalTitle}
+				theOtherModalText={theOtherModalText}
+				theOtherModalLinks={theOtherModalLinks}
 				links={links}
 				closeModal={closeModal}
 			/>
