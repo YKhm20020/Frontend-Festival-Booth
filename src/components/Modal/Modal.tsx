@@ -79,7 +79,7 @@ export const Modal: React.FC<ModalProps> = ({
 		} else if (isProductsList) {
 			setHeading('成果物コメント');
 		}
-	}, [isOpen, location.pathname]);
+	}, [isIntroductionList, isProductsList]);
 
 	useEffect(() => {
 		if (!isOpen) return;
@@ -94,8 +94,7 @@ export const Modal: React.FC<ModalProps> = ({
 			setLinkMessage('');
 			setModalLinkText(isIntroductionList ? '成果物へ移動' : '自己紹介へ移動');
 		}
-	}, [isOpen, theOtherModalTitle, theOtherModalText, location.pathname, links, theOtherModalLinks]);
-	
+	}, [isOpen, theOtherModalTitle, theOtherModalText, isIntroductionList, isProductsList]);
 	const handleModalLinkClick = () => {
 		if (theOtherModalTitle && theOtherModalText) {
 			setIsSecondary((prev) => {
@@ -107,10 +106,10 @@ export const Modal: React.FC<ModalProps> = ({
 					newIsSecondary
 						? location.pathname.includes('introduction-list')
 							? '成果物コメント'
-							: '自己紹介コメント'	
+							: '自己紹介コメント'
 						: location.pathname.includes('introduction-list')
 							? '自己紹介コメント'
-							: '成果物コメント'
+							: '成果物コメント',
 				);
 				setModalLinkText(
 					newIsSecondary
@@ -124,7 +123,6 @@ export const Modal: React.FC<ModalProps> = ({
 				return newIsSecondary;
 			});
 		}
-		console.log(currentLinks)
 	};
 
 	if (!isOpen) {
@@ -173,9 +171,10 @@ export const Modal: React.FC<ModalProps> = ({
 						/>
 					</div>
 					<div className='ml-4 md:w-1/2 flex flex-col items-center'>
-						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>	
+						<p className='text-left mr-auto animate-fade-right animate-duration-[1600ms]'>
 							<p className='text-[min(13vw,24px)] font-bold'>
-								{heading}<br></br>
+								{heading}
+								<br></br>
 							</p>
 							{currentText}
 						</p>
@@ -185,12 +184,34 @@ export const Modal: React.FC<ModalProps> = ({
 								: ['No links available']
 							).map((item, index) => (
 								<p key={index} className='text-base text-blue-400'>
-									<div className="flex items-center space-x-4 space-y-2">
-										{index === 0 ? 
-											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M12.5.75C6.146.75 1 5.896 1 12.25c0 5.089 3.292 9.387 7.863 10.91.575.101.79-.244.79-.546 0-.273-.014-1.178-.014-2.142-2.889.532-3.636-.704-3.866-1.35-.13-.331-.69-1.352-1.18-1.625-.402-.216-.977-.748-.014-.762.906-.014 1.553.834 1.769 1.179 1.035 1.74 2.688 1.25 3.349.948.1-.747.402-1.25.733-1.538-2.559-.287-5.232-1.279-5.232-5.678 0-1.25.445-2.285 1.178-3.09-.115-.288-.517-1.467.115-3.048 0 0 .963-.302 3.163 1.179.92-.259 1.897-.388 2.875-.388.977 0 1.955.13 2.875.388 2.2-1.495 3.162-1.179 3.162-1.179.633 1.581.23 2.76.115 3.048.733.805 1.179 1.825 1.179 3.09 0 4.413-2.688 5.39-5.247 5.678.417.36.776 1.05.776 2.128 0 1.538-.014 2.774-.014 3.162 0 .302.216.662.79.547C20.709 21.637 24 17.324 24 12.25 24 5.896 18.854.75 12.5.75Z"></path></svg>
-											: <svg className="ml-1 mt-4" viewBox="0 0 24 24" width="32" height="32"><path d="m11.68 8.62 6.55-7.62h-1.55l-5.69 6.62-4.55-6.62h-5.25l6.88 10.01-6.88 7.99h1.55l6.01-6.99 4.8 6.99h5.24l-7.13-10.38zm-2.13 2.47-.7-1-5.54-7.92h2.39l4.47 6.4.7 1 5.82 8.32h-2.39l-4.75-6.79z"></path></svg>
-										}
-										<a className='text-lg' target='_blank' href={item}>{item}</a>
+									<div className='flex items-center space-x-4 space-y-2'>
+										{index === 0 ? (
+											<svg
+												xmlns='http://www.w3.org/2000/svg'
+												viewBox='0 0 24 24'
+												width='32'
+												height='32'
+											>
+												<path d='M12.5.75C6.146.75 1 5.896 1 12.25c0 5.089 3.292 9.387 7.863 10.91.575.101.79-.244.79-.546 0-.273-.014-1.178-.014-2.142-2.889.532-3.636-.704-3.866-1.35-.13-.331-.69-1.352-1.18-1.625-.402-.216-.977-.748-.014-.762.906-.014 1.553.834 1.769 1.179 1.035 1.74 2.688 1.25 3.349.948.1-.747.402-1.25.733-1.538-2.559-.287-5.232-1.279-5.232-5.678 0-1.25.445-2.285 1.178-3.09-.115-.288-.517-1.467.115-3.048 0 0 .963-.302 3.163 1.179.92-.259 1.897-.388 2.875-.388.977 0 1.955.13 2.875.388 2.2-1.495 3.162-1.179 3.162-1.179.633 1.581.23 2.76.115 3.048.733.805 1.179 1.825 1.179 3.09 0 4.413-2.688 5.39-5.247 5.678.417.36.776 1.05.776 2.128 0 1.538-.014 2.774-.014 3.162 0 .302.216.662.79.547C20.709 21.637 24 17.324 24 12.25 24 5.896 18.854.75 12.5.75Z'></path>
+											</svg>
+										) : (
+											<svg
+												className='ml-1 mt-4'
+												viewBox='0 0 24 24'
+												width='32'
+												height='32'
+											>
+												<path d='m11.68 8.62 6.55-7.62h-1.55l-5.69 6.62-4.55-6.62h-5.25l6.88 10.01-6.88 7.99h1.55l6.01-6.99 4.8 6.99h5.24l-7.13-10.38zm-2.13 2.47-.7-1-5.54-7.92h2.39l4.47 6.4.7 1 5.82 8.32h-2.39l-4.75-6.79z'></path>
+											</svg>
+										)}
+										<a
+											className='text-lg'
+											target='_blank'
+											href={item}
+											rel='noreferrer'
+										>
+											{item}
+										</a>
 									</div>
 								</p>
 							))}
@@ -198,7 +219,11 @@ export const Modal: React.FC<ModalProps> = ({
 						{linkMessage ? (
 							<p className='text-red-500 mt-2'>{linkMessage}</p>
 						) : (
-							<button type='button' className='mt-auto ml-auto bg-blue-500 text-white border-none py-2 px-4 rounded-md text-lg cursor-pointer transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:bg-blue-600' onClick={handleModalLinkClick}>
+							<button
+								type='button'
+								className='mt-auto ml-auto bg-blue-500 text-white border-none py-2 px-4 rounded-md text-lg cursor-pointer transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:bg-blue-600'
+								onClick={handleModalLinkClick}
+							>
 								{modalLinkText}
 							</button>
 						)}
