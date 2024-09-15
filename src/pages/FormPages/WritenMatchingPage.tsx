@@ -1,7 +1,5 @@
 import type React from 'react';
-import { useState } from 'react';
 import { useLocation, useRouter } from '@tanstack/react-router';
-// import { useRouter } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { Header } from '../../components/Header/Header';
@@ -35,11 +33,7 @@ export const WritenMatchingPage: React.FC = () => {
 		question2: Number(searchParams.get('question2')) || 0,
 	};
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({
+	const { register, handleSubmit } = useForm({
 		mode: 'onChange',
 		defaultValues,
 	});

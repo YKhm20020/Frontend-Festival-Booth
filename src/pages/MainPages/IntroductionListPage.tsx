@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useState, useMemo } from 'react';
 import { useGetProfile } from '../../hooks/useGetProfile';
+import { useGetProducts } from '../../hooks/useGetProducts';
 import { Header } from '../../components/Header/Header';
 import { Card } from '../../components/Cards/Card';
 
@@ -11,6 +12,7 @@ export const IntroductionListPage: React.FC = () => {
 	const cardsPerPage = 8;
 
 	const { data: introduction = [], loading, error } = useGetProfile({});
+	const { data: products } = useGetProducts({});
 
 	const allCards = useMemo(() => {
 		return Array.isArray(introduction) ? introduction : [];
@@ -58,20 +60,36 @@ export const IntroductionListPage: React.FC = () => {
 						{loading && <p>Loading...</p>}
 						{error && <p>Error: {error}</p>}
 						{/* カードコンポーネント（1ページにつき8個） */}
-						{currentPageCards.map((card, index) => (
-							<Card
-								key={currentIndex * cardsPerPage + index}
-								src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
-								alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
-								title={card.name}
-								links={{
-									github_url: card.github_url,
-									x_url: card.x_url,
-								}}
-								modalTitle={card.name}
-								modalText={card.introduction || 'Sample Text'}
-							/>
-						))}
+						{currentPageCards.map((card, index) => {
+							const isMatched =
+								products &&
+								index < products.length &&
+								products[index].user_name === card.name;
+							console.log(products[index]);
+							console.log(currentPageCards.length);
+							console.log(index);
+
+							return (
+								<Card
+									key={currentIndex * cardsPerPage + index}
+									userName={card.name}
+									src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
+									alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
+									title={card.name}
+									links={{
+										github_url: card.github_url,
+										x_url: card.x_url,
+									}}
+									modalTitle={card.name}
+									modalText={card.introduction || 'Sample Text'}
+									theOtherModalTitle={isMatched ? products[index].title : ''}
+									theOtherModalText={isMatched ? products[index].description : ''}
+									theOtherModalLinks={isMatched ? {
+										url: products[index].url
+									} : {}}
+								/>
+							);
+						})}
 					</div>
 
 					{/* 左右のボタン */}
