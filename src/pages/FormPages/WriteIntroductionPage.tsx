@@ -55,7 +55,6 @@ export const WriteIntroductionPage: React.FC = () => {
 		<>
 			<Header />
 			<div className='flex justify-center bg-gray-100'>
-
 				{/* ローディング中の処理 */}
 				{loading && <p>Loading...</p>}
 				{success && (
@@ -67,10 +66,12 @@ export const WriteIntroductionPage: React.FC = () => {
 							className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'
 							onSubmit={handleSubmit(onSubmit)}
 						>
-						
 							{/* 自己紹介コメント入力フィールド */}
 							<div className='mt-8'>
-								<label className='block text-sm font-bold mb-2' htmlFor='introduction'>
+								<label
+									className='block text-sm font-bold mb-2'
+									htmlFor='introduction'
+								>
 									自己紹介コメント
 								</label>
 								<textarea
@@ -152,10 +153,15 @@ export const WriteIntroductionPage: React.FC = () => {
 									<input
 										type='radio'
 										value='0'
-										{...register('image', { required: '画像を選択してください' })}
+										{...register('image', {
+											required: '画像を選択してください',
+										})}
 									/>
 									画像1
-									<DispImage src='/images/robot_and_hogeta.jpeg' alt='sample-alt' />
+									<DispImage
+										src='/images/robot_and_hogeta.jpeg'
+										alt='sample-alt'
+									/>
 								</label>
 								<br />
 

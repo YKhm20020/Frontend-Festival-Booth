@@ -6,15 +6,15 @@ import { usePostAnswers } from '../../hooks/usePostAnswers';
 import { Header } from '../../components/Header/Header';
 
 const Questions = [
-	'好きな祭りのタイプはどれですか？',
-	'祭りで楽しみたいアクティビティは？',
-	'祭りの雰囲気で一番大事だと思うのは？',
+	'開発は好き？',
+	'どっちの開発が好き？',
+	'Gopherくんは国民的キャラクターだと思う？',
 ] as const;
 
 const Options = [
-	['花火大会', '屋台'],
-	['屋台めぐり', '踊り'],
-	['賑やかさ', '伝統'],
+	['大好き！', 'それなりに好き'],
+	['フロントエンド', 'バックエンド'],
+	['もちろん！', '誰？ それ'],
 ] as const;
 
 type QuestionsFormData = {
@@ -66,47 +66,52 @@ export const WritenMatchingPage: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<h1 className='text-2xl font-bold text-center text-red-700'>祭りアンケート</h1>
-			<div className='mt-p-6 max-w-md mx-auto bg-red-100 rounded-xl shadow-lg space-y-4'>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					{Questions.map((question, qIndex) => (
-						<div key={qIndex} className='border-t border-red-300 pt-4'>
-							<h2 className='text-xl font-semibold text-red-600'>{question}</h2>
-							<div className='mt-2'>
-								{Options[qIndex].map((option, oIndex) => (
-									<label key={oIndex} className='block text-lg'>
-										{oIndex === 0 ? (
-											<input
-												type='radio'
-												value={oIndex}
-												{...register(
-													`question${qIndex}` as `question${0 | 1 | 2}`,
-												)}
-												className='mr-2'
-											/>
-										) : (
-											<input
-												type='radio'
-												value={oIndex}
-												{...register(
-													`question${qIndex}` as `question${0 | 1 | 2}`,
-												)}
-												className='mr-2'
-											/>
-										)}
-										{option}
-									</label>
-								))}
+			<div className='mt-8'>
+				<h1 className='text-2xl font-bold text-center text-red-700'>
+					誰とつながるかな？ マッチング診断
+				</h1>
+				<div className='px-4 max-w-md mx-auto bg-red-100 shadow-lg space-y-4'>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						{Questions.map((question, qIndex) => (
+							<div key={qIndex} className='border-t border-red-300 pt-4 px-4'>
+								<h2 className='text-xl font-semibold text-red-600'>{question}</h2>
+								<div className='mt-2'>
+									{Options[qIndex].map((option, oIndex) => (
+										<label key={oIndex} className='block text-lg'>
+											{oIndex === 0 ? (
+												<input
+													type='radio'
+													value={oIndex}
+													{...register(
+														`question${qIndex}` as `question${0 | 1 | 2}`,
+													)}
+													className='mr-2'
+												/>
+											) : (
+												<input
+													type='radio'
+													value={oIndex}
+													required
+													{...register(
+														`question${qIndex}` as `question${0 | 1 | 2}`,
+													)}
+													className='mr-2'
+												/>
+											)}
+											{option}
+										</label>
+									))}
+								</div>
 							</div>
-						</div>
-					))}
-					<button
-						type='submit'
-						className='w-full mt-4 bg-red-500 text-white py-2 rounded hover:bg-red-600'
-					>
-						登録する！！
-					</button>
-				</form>
+						))}
+						<button
+							type='submit'
+							className='w-full mt-4 bg-red-500 text-white py-2 rounded hover:bg-red-600'
+						>
+							登録する！！
+						</button>
+					</form>
+				</div>
 			</div>
 		</>
 	);
