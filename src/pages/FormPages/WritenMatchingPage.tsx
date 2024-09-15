@@ -2,6 +2,7 @@ import type React from 'react';
 import { useLocation, useRouter } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
+import { usePostAnswers } from '../../hooks/usePostAnswers';
 import { Header } from '../../components/Header/Header';
 
 const Questions = [
@@ -23,6 +24,8 @@ type QuestionsFormData = {
 };
 
 export const WritenMatchingPage: React.FC = () => {
+	const { postAnswers, error } = usePostAnswers();
+
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const router = useRouter();
@@ -38,24 +41,27 @@ export const WritenMatchingPage: React.FC = () => {
 		defaultValues,
 	});
 
-	const onSubmit: SubmitHandler<QuestionsFormData> = (data) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<QuestionsFormData> = async (data) => {
 		// question0, question1, question2 の値を基に一意の3進数の値を生成
-		const answer = data.question0 * 100 + data.question1 * 10 + data.question2 * 1;
-		console.log(answer);
-		router.navigate({
-			to: '/introduction-list',
-			search: { answer: answer.toString() },
-		});
+		const answer: number = data.question0 * 100 + data.question1 * 10 + data.question2 * 1;
+		await postAnswers({ answer });
+		if (error) {
+			alert('送信に失敗しました');
+			router.navigate({
+				to: '/write-products',
+				search: location.search,
+			});
+		} else {
+			alert('投稿できました! あなたと同じ趣味の人とつながろう！');
+			router.navigate({
+				to: '/introduction-list',
+				search: (current) => ({
+					...current, // 既存のパラメータを保持
+					answer: answer.toString(), // answerを文字列に変換して渡す
+				}),
+			});
+		}
 	};
-
-	// const [answers, setAnswers] = useState<string[]>(Array(Questions.length).fill(''));
-
-	// const handleChange = (questionIndex: number, option: string) => {
-	// 	const newAnswers = [...answers];
-	// 	newAnswers[questionIndex] = option;
-	// 	setAnswers(newAnswers);
-	// };
 
 	return (
 		<>
