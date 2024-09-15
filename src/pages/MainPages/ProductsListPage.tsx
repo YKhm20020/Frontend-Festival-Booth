@@ -65,15 +65,12 @@ export const ProductsListPage: React.FC = () => {
 								introduction &&
 								index < introduction.length &&
 								introduction[index].name === card.user_name;
-							console.log(introduction[index]);
-							console.log(currentPageCards.length);
-							console.log(index);
 
 							return (
 								<Card
 									key={currentIndex * cardsPerPage + index}
 									userName={card.user_name}
-									src='/images/robot_and_hogeta.jpeg' // TODO: src を icon_num に対応した画像のパスに変更する
+									src='/images/OnFES.png' // TODO: src を icon_num に対応した画像のパスに変更する
 									alt='Sample Alt' // TODO: alt は icon_num に対応する画像データに合わせて変更
 									title={card.title}
 									links={{
@@ -85,10 +82,14 @@ export const ProductsListPage: React.FC = () => {
 									theOtherModalText={
 										isMatched ? introduction[index].introduction : ''
 									}
-									theOtherModalLinks={isMatched ? {
-										github_url: introduction[index].github_url,
-										x_url: introduction[index].x_url
-									} : {}}
+									theOtherModalLinks={
+										isMatched
+											? {
+													github_url: introduction[index].github_url,
+													x_url: introduction[index].x_url,
+												}
+											: {}
+									}
 								/>
 							);
 						})}
