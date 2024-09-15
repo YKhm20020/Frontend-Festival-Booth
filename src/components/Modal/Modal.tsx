@@ -221,7 +221,10 @@ export const Modal: React.FC<ModalProps> = ({
 						) : (
 							<button
 								type='button'
-								className='mt-auto ml-auto bg-blue-500 text-white border-none py-2 px-4 rounded-md text-lg cursor-pointer transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:bg-blue-600'
+								className='mt-auto flex items-center justify-center md:ml-auto bg-blue-500 text-white border-none py-2 px-4 rounded-md text-lg cursor-pointer transition-colors duration-300
+                                hover:bg-blue-500
+                                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                                active:bg-blue-600'
 								onClick={handleModalLinkClick}
 							>
 								{modalLinkText}
