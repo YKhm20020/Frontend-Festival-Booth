@@ -14,7 +14,7 @@ type ProfileData = {
 };
 
 export const useGetProfileByName = ({ name }: UseGetProfileByUserNameProps) => {
-	const [data, setData] = useState<ProfileData>(Object);
+	const [data, setData] = useState<ProfileData | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -23,9 +23,12 @@ export const useGetProfileByName = ({ name }: UseGetProfileByUserNameProps) => {
 		setError(null);
 
 		try {
-			// リクエストしたけど2xxの範囲外
-			const response = await axios.get(`http://localhost:8080/profiles/${name}`);
-			console.log(response);
+			const response = await axios.get(
+				`${import.meta.env.VITE_APP_BASE_URL}/profiles/${name}`, // 修正: user_name → name
+				{
+					withCredentials: true,
+				},
+			);
 			setData(response.data);
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {
@@ -41,7 +44,7 @@ export const useGetProfileByName = ({ name }: UseGetProfileByUserNameProps) => {
 				}
 			} else {
 				// axios 以外のエラーハンドリング
-				setError('An unexpected error occurred.');
+				setError(`Error: ${err instanceof Error ? err.message : 'Unknown error'}`);
 			}
 		} finally {
 			setLoading(false);

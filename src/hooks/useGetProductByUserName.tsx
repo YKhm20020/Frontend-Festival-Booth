@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 type UseGetProductByUserNameProps = {
@@ -17,34 +17,42 @@ export const useGetProductByUserName = ({ user_name }: UseGetProductByUserNamePr
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
-	const fetchProduct = async () => {
-		setLoading(true);
-		try {
-			const response = await axios.get(`http://localhost:8080/products/${user_name}`);
-			console.log(response);
-			setData(response.data);
-		} catch (err: unknown) {
-			if (axios.isAxiosError(err)) {
-				if (err.response) {
-					// リクエストしたけど2xxの範囲外
-					setError(
-						err.response.data?.message || `Failed to fetch product of ${user_name}`,
-					);
-				} else if (err.request) {
-					// リクエストしたけど応答がない
-					setError('No response from server.');
+	useEffect(() => {
+		const fetchProduct = async () => {
+			setLoading(true);
+			try {
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BASE_URL}/products/${user_name}`,
+					{
+						withCredentials: true,
+					},
+				);
+				setData(response.data);
+			} catch (err: unknown) {
+				if (axios.isAxiosError(err)) {
+					if (err.response) {
+						// リクエストしたけど2xxの範囲外
+						setError(
+							err.response.data?.message || `Failed to fetch product of ${user_name}`,
+						);
+					} else if (err.request) {
+						// リクエストしたけど応答がない
+						setError('No response from server.');
+					} else {
+						// その他のエラー
+						setError(`Error: ${err.message}`);
+					}
 				} else {
-					// その他のエラー
-					setError(`Error: ${err.message}`);
+					// axios 以外のエラーハンドリング
+					setError('An unexpected error occurred.');
 				}
-			} else {
-				// axios 以外のエラーハンドリング
-				setError('An unexpected error occurred.');
+			} finally {
+				setLoading(false);
 			}
-		} finally {
-			setLoading(false);
-		}
-	};
+		};
 
-	return { fetchProduct, data, loading, error };
+		fetchProduct();
+	}, [user_name]);
+
+	return { data, loading, error };
 };

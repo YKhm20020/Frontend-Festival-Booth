@@ -4,7 +4,6 @@ import { useLocation, useRouter } from '@tanstack/react-router';
 import { usePostProduct } from '../../hooks/usePostProduct';
 
 type ProductsFormData = {
-	name: string;
 	title: string;
 	url: string;
 	comment?: string;
@@ -16,7 +15,6 @@ export const ConfirmProductsPage: React.FC = () => {
 	const searchParams = new URLSearchParams(location.search);
 
 	const confirmData: ProductsFormData = {
-		name: searchParams.get('name') || '',
 		title: searchParams.get('title') || '',
 		url: searchParams.get('url') || '',
 		comment: searchParams.get('comment') || '',
@@ -26,7 +24,6 @@ export const ConfirmProductsPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<ProductsFormData> = async (data) => {
 		const postProductData = {
-			user_name: data.name,
 			title: data.title,
 			url: data.url,
 			description: data.comment,
@@ -55,10 +52,6 @@ export const ConfirmProductsPage: React.FC = () => {
 				</h1>
 				<div className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 text-gray-700'>
 					<p>
-						<strong>名前:</strong>
-						{confirmData.name}
-					</p>
-					<p className='mt-4'>
 						<strong>タイトル:</strong> {confirmData.title}
 					</p>
 					<p className='mt-4'>

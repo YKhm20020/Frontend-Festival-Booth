@@ -4,19 +4,19 @@ import axios from 'axios';
 // カスタムフック
 export const useGetLoginStatus = () => {
 	const [success, setSuccess] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(true);  // 最初の通信が完了するまでlodingはtrueにする
+	const [loading, setLoading] = useState<boolean>(true); // 最初の通信が完了するまでlodingはtrueにする
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchStatus = async () => {
-
 			try {
-				const response = await axios.get('http://localhost:8080/login', { withCredentials: true });
+				const response = await axios.get(`${import.meta.env.VITE_APP_BASE_URL}/login`, {
+					withCredentials: true,
+				});
 				console.log('resst: ', response.status);
 				console.log(response.data);
 				if (response.status === 200) {
 					// サクセスと判断できる場合
-					console.log('set succcess true');
 					setSuccess(true); // ログイン成功
 				}
 			} catch (err: unknown) {
