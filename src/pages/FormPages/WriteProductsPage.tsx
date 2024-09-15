@@ -103,7 +103,7 @@ export const WriteProductsPage: React.FC = () => {
 									{...register('url', {
 										required: 'URLは必須です',
 										pattern: {
-											value: /^(https?:\/\/)?([a-z0-9]+[.])*[a-z0-9]+\.[a-z]+(\/[^\s]*)?$/i,
+											value: /^(https?:\/\/)?([a-zA-Z0-9-_.]+)\.[a-zA-Z]{2,}(\/[^\s]*)?$/i,
 											message: '有効なURLを入力してください',
 										},
 									})}
