@@ -40,10 +40,11 @@ export const WritenMatchingPage: React.FC = () => {
 
 	const onSubmit: SubmitHandler<QuestionsFormData> = (data) => {
 		console.log(data);
-
+		// question0, question1, question2 の値を基に一意の3進数の値を生成
+		const answer = data.question0 * 100 + data.question1 * 10 + data.question2;
 		router.navigate({
 			to: '/',
-			search: data,
+			search: answer,
 		});
 	};
 
