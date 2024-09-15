@@ -11,9 +11,9 @@ const Questions = [
 ] as const;
 
 const Options = [
-	['花火大会', '盆踊り', '屋台', 'その他'],
-	['屋台めぐり', 'ゲーム', '踊り', '音楽'],
-	['賑やかさ', '伝統', '食べ物', '仲間との楽しみ'],
+	['花火大会', '屋台'],
+	['屋台めぐり', '踊り'],
+	['賑やかさ', '伝統'],
 ] as const;
 
 type QuestionsFormData = {
@@ -41,10 +41,11 @@ export const WritenMatchingPage: React.FC = () => {
 	const onSubmit: SubmitHandler<QuestionsFormData> = (data) => {
 		console.log(data);
 		// question0, question1, question2 の値を基に一意の3進数の値を生成
-		const answer = data.question0 * 100 + data.question1 * 10 + data.question2;
+		const answer = data.question0 * 100 + data.question1 * 10 + data.question2 * 1;
+		console.log(answer);
 		router.navigate({
-			to: '/',
-			search: answer,
+			to: '/introduction-list',
+			search: { answer: answer.toString() },
 		});
 	};
 
