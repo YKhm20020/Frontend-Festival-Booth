@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 
 type ProfileData = {
-	name: string; // ユーザー名
 	introduction: string; // 自己紹介
 	icon_num: number; // アイコンの番号
 	github_url?: string; // GithubのURL (任意入力)
