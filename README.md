@@ -1,176 +1,117 @@
-# Frontend-Festival-Booth
-Frontend-Festival-Booth
+# OnFess (Online Festival Booth)
 
-# TanStack Router の導入と使い方
+サポーターズが開催する、[【技育CAMP2024】ハッカソン Vol.14(テーマあり)【オンライン開催】](https://talent.supporterz.jp/events/6f769c37-5709-4ddc-804e-4c4ff38d2112/)での成果物のひとつ。テーマは「祭」。
 
-ルーティングに関する設定は、ビルド時に自動でプロジェクトを走査し、設定してくれる。
+本リポジトリは、技育祭などのオンラインフェスのサブブースとして機能する自己紹介、個人開発物とそのリンクを掲載し、ブースを出すことでエンジニアとつながれるWebアプリの、フロントエンドのリポジトリである。
 
+発表スライドリンク: [KatLab_Online Festival Booth(OnFes) - Google スライド](https://docs.google.com/presentation/d/1iMzPGfuHGFE-4xP5HDIdzmaOzY39G8cRd-i6tG31mSw/edit#slide=id.p)
 
-1. TanStack Router とその開発ツールの導入
-
-以下のコマンドを実行する。下のインストールコマンドは、開発ツールのインストール。
-
-```sh
-npm i @tanstack/react-router
-npm i -D @tanstack/router-plugin @tanstack/router-devtools
-```
-
-また、tsconfig.json に以下の記述を追加する。
-
-```json:
-// tsconfig.json
-  "routesDirectory": "./src/routes",
-  "generatedRouteTree": "./src/routeTree.gen.ts",
-  "routeFileIgnorePrefix": "-",
-  "quoteStyle": "single"
-```
-
-さらに、vite.config.ts の plugins: に、TanStackRouterVite を追加する。
-
-```ts:
-// vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite' // 追加！
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    TanStackRouterVite(), // 追加！
-],
-  optimizeDeps: {
-    force: true,
-	exclude: ['node_modules/.cache/storybook']
-  },
-})
-```
-
-2. 遷移先・遷移元のページを作成する
-
-各ページに必要なコンポーネントを記述し、どのページにどのコンポーネントがあり、さらにそのコンポーネントではどのページへと遷移する予定なのかを記述する。なお、Linkコンポーネントは、@tanstack/react-router からimportすること。
-
-```tsx
-// Header.tsx
-import type React from 'react';
-import { Link } from '@tanstack/react-router';
-
-export const Header: React.FC = () => {
-	return (
-		<header className='bg-black'>
-			<ul className=''>
-				<Link to='/' className=''>
-					Home
-				</Link>
-			</ul>
-			<ul className=''>
-				<Link to='/write' className=''>
-					Write
-				</Link>
-			</ul>
-		</header>
-	);
-};
-```
-
-```tsx
-// Write.tsx
-import type React from 'react';
-
-export const Write: React.FC = () => {
-	return (
-		<div>
-			<h1>Write Page</h1>
-		</div>
-	);
-};
-```
-
-3. routesディレクトリとその直下に __root.tsx ファイルを作成する
-
-```tsx
-// routes/__root.tsx
-import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-
-export const Route = createRootRoute({
-	component: () => (
-		<>
-			<Outlet />
-			<TanStackRouterDevtools />
-		</>
-	),
-});
-```
-
-4. xx.lazy.tsx ファイルを、routesディレクトリに作成する。
-
-xx は、新たに追加するページの名前を入れる。ページを別ディレクトリで作成済みである場合は、それをコンポーネントとしてimport、呼び出しするとよい。
-なお、lazyとつけなくてもよいが、lazyとつけることにより、初期のロードから遅延させてロードすることにより、初期ページの表示を高速化することができるため、遷移先のページについては基本lazyをおすすめする。
-
-```tsx
-// routes/write.lazy.tsx
-import { createLazyFileRoute } from '@tanstack/react-router';
-import { Write } from '../pages/Write';
-
-export const Route = createLazyFileRoute('/write')({
-	component: () => <Write />,
-});
-```
-
-5. `npm run dev` コマンドで routeTree.gen.ts を更新する
-
-`npm run dev`コマンドにより、自動でファイルの位置関係を走査し、xx.lazy.tsxの記述をもとに自動でルーティングを作成してくれる。この際、routeTree.gen.ts ファイルが自動で更新される。これにより、最新のルーティング設定が反映される。
+バックエンドのリポジトリ: [Backend-Festival-Booth](https://github.com/aridome222/Backend-Festival-Booth)
 
 
 
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## 機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ユーザー認証機能
+- 自己紹介投稿機能 (認証必須)
+- 自己紹介閲覧機能
+- 成果物投稿機能 (認証必須)
+- 成果物閲覧機能
+- マッチング機能 (認証必須)
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### ユーザー認証機能
 
-- Configure the top-level `parserOptions` property like this:
+ユーザー登録とログインを行う機能。自己紹介投稿ページなど、一部のページに遷移した際、自動でリダイレクトする。
+ユーザーは、ユーザー名とパスワードを入力し、ユーザー登録を行う。ユーザー名は他ユーザーと重複不可。
+ログイン情報は、バックエンド側でJWTとCookieを用いて管理。認証必須のページに遷移する際、ログイン時に生成したトークンの有効期限を確認する。
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 自己紹介投稿機能
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+ユーザーが自己紹介を投稿する機能。認証必須。
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+ユーザーは、フォームに自己紹介のコメント、アイコン、ソーシャルメディア(Github, X)のリンクを入力する。
+アイコンは用意した4つの画像から1つをユーザーが選択し、ソーシャルメディアのリンクは任意入力である。
+自己紹介を入力し、入力確認ページで入力内容を確認後、投稿ボタンを押して自己紹介を投稿する。
+投稿した自己紹介は、後述する自己紹介閲覧機能で他ユーザーに見せることができる。
+
+
+### 自己紹介閲覧機能
+
+ユーザーが投稿した自己紹介を閲覧する機能。
+
+スライダー1枚につき8つのアイコン付きの自己紹介カードを配置しており、スライダー左右にあるボタンを押すと他8つの自己紹介カードを表示する。自己紹介カードはユーザー名を表示しており、自己紹介カードをクリックするとユーザー名、自己紹介についてのコメント、アイコン、ソーシャルメディアのリンクを記載したモーダルを表示する。
+
+
+### 成果物投稿機能
+
+ユーザーが成果物を投稿する機能。認証必須。
+
+ユーザーは、フォームに成果物のタイトル、成果物についての説明、成果物のリンクを入力する。成果物のリンクは任意入力である。
+成果物の情報を入力し、入力確認ページで入力内容を確認後、投稿ボタンを押して成果物を投稿する。
+投稿した成果物は、後述する成果物閲覧機能で他ユーザーに見せることができる。
+
+
+### 成果物閲覧機能
+ユーザーが投稿した成果物を閲覧する機能。
+
+スライダー1枚につき8つのアイコン付きの成果物カードを配置しており、スライダー左右にあるボタンを押すと他8つの成果物カードを表示する。成果物カードはユーザー名を表示しており、成果物カードをクリックすると成果物のタイトル、成果物についてのコメント、アイコン、成果物のリンクを記載したモーダルを表示する。
+現在、アイコンは、自己紹介投稿機能で選択したアイコンではなく、OnFesのロゴで統一である。
+
+
+### マッチング機能
+アンケートに対して2択の回答を行い、同じ回答のユーザーの自己紹介カードを表示する機能。認証必須。
+
+アンケート画面には、3つの質問を掲載している。これら3つの質問に対して、ユーザーはラジオボタンを用いて2択で回答する。
+3つ全ての質問に対してラジオボタンにチェックし、マッチングするボタンを押すと、自己紹介閲覧機能で表示する自己紹介カードから、アンケートの結果が同じユーザーの自己紹介カードをフィルタリングして表示する。
+
+
+
+## 使用技術
+
+### フロントエンド
+
+- 言語: TypeScript
+- UIライブラリ: React
+- CSSライブラリ: TailwindCSS
+- ルーティング: Tanstack Router
+- ランタイム: Node.js
+- ビルドツール: Vite
+- 開発ツール: Storybook
+- コードフォーマット/リンター: Biome
+
+### バックエンド
+
+- 言語: Go
+- フレームワーク: Gin
+- データベース: PostgreSQL
+- ORM: Gorm
+- 開発ランタイム: Air (ホットリロード用)
+- 管理ツール: PgAdmin
+
+### インフラ
+
+- コンテナツール: Docker
+- ホスティング: Vercel (フロントエンド), Render.com (バックエンド)
+- データベース: PostgreSQL
+
+
+
+## 環境構築
+Webアプリの私用については、リポジトリのページ左上にあるリンク(frontend-festival-booth.vercel.app)でデプロイしている。
+
+以降は、手元で開発環境を動作するためのコマンドである。
+
+
+1. `npm intall` コマンドでパッケージをインストールする
+
+リポジトリをクローン後、リポジトリのルートディレクトリにて、 `npm install` コマンドを入力し、実行する。実行後、ルートディレクトリに node_modules ディレクトリが作成されるまで待機する。待機後、2.へ移る。
+
+
+2. `npm run dev` コマンドで開発用サーバーを構築する
+
+リポジトリのルートディレクトリにて、 `npm run dev` コマンドを入力し、実行する。実行後、開発用サーバーが構築される。開発用サーバーにおける動作確認は、http://localhost:5173/ で確認できる。
+
