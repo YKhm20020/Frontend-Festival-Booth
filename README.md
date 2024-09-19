@@ -1,10 +1,10 @@
-# OnFess (Online Festival Booth)
+# OnFES (Online Festival Booth)
 
 サポーターズが開催する、[【技育CAMP2024】ハッカソン Vol.14(テーマあり)【オンライン開催】](https://talent.supporterz.jp/events/6f769c37-5709-4ddc-804e-4c4ff38d2112/)での成果物のひとつ。テーマは「祭」。
 
 本リポジトリは、技育祭などのオンラインフェスのサブブースとして機能する自己紹介、個人開発物とそのリンクを掲載し、ブースを出すことでエンジニアとつながれるWebアプリの、フロントエンドのリポジトリである。
 
-発表スライドリンク: [KatLab_Online Festival Booth(OnFes) - Google スライド](https://docs.google.com/presentation/d/1iMzPGfuHGFE-4xP5HDIdzmaOzY39G8cRd-i6tG31mSw/edit#slide=id.p)
+発表スライドリンク: [KatLab_Online Festival Booth(OnFES) - Google スライド](https://docs.google.com/presentation/d/1iMzPGfuHGFE-4xP5HDIdzmaOzY39G8cRd-i6tG31mSw/edit#slide=id.p)
 
 バックエンドのリポジトリ: [Backend-Festival-Booth](https://github.com/aridome222/Backend-Festival-Booth)
 
